@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Admin Sidebar — Liquid Glass Design System
+   ========================================================================== */
+
+.admin-sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: transparent;
+  border-right: var(--border-glass);
+}
+
+/* ---- Header ---- */
+.admin-sidebar-container .admin-sidebar-header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  border-bottom: var(--border-glass);
+  flex-shrink: 0;
+}
+
+.admin-sidebar-container .admin-sidebar-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-hover), var(--text-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Navigation ---- */
+.admin-sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-sidebar-nav .admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.admin-sidebar-nav .admin-nav-item:hover {
+  background: var(--glass-thin);
+  color: var(--text-primary);
+}
+
+.admin-sidebar-nav .admin-nav-item.active {
+  background: var(--glass-regular);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.admin-sidebar-nav .admin-nav-item.active svg {
+  color: var(--accent);
+}
+
+/* ---- Nav Divider ---- */
+.admin-nav-divider {
+  height: 1px;
+  background: var(--glass-regular);
+  margin: 8px 4px;
+}
+
+/* ---- Section Label ---- */
+.admin-nav-section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-nav-section-label svg {
+  opacity: 0.6;
+}
+
+/* ---- Loading ---- */
+.admin-sidebar-nav .admin-nav-loading {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---- Bottom / Back Button ---- */
+.admin-sidebar-bottom {
+  padding: 16px;
+  border-top: var(--border-glass);
+  flex-shrink: 0;
+}
+
+.admin-sidebar-bottom .admin-back-btn {
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: var(--radius-md);
+  background: var(--glass-regular);
+  border: var(--border-glass);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.admin-sidebar-bottom .admin-back-btn:hover {
+  background: var(--glass-thick);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+}

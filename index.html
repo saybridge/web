@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Saybridge — Modern team communication platform with end-to-end encryption, real-time messaging, and powerful integrations." />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Saybridge</title>
+    <!-- Anti-FOUC: apply saved theme before any CSS/JS loads -->
+    <script>
+      (function() {
+        var t = localStorage.getItem('saybridge-theme') || 'dark';
+        var r = t;
+        if (t === 'system') {
+          r = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', r);
+        var bg = r === 'light' ? '#cdd0de' : '#0a0a0f';
+        document.documentElement.style.background = bg;
+        var mc = document.querySelector('meta[name="theme-color"]');
+        if (mc) mc.setAttribute('content', bg);
+      })();
+    </script>
+  </head>
+  <body style="margin:0;padding:0;overflow:hidden;width:100%;height:100%;background:#0a0a0f">
+    <div id="root" style="position:fixed;top:0;left:0;right:0;bottom:0;overflow:hidden"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      var r = document.documentElement.getAttribute('data-theme') || 'dark';
+      document.body.style.background = r === 'light' ? '#cdd0de' : '#0a0a0f';
+    </script>
+  </body>
+</html>

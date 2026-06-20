@@ -1,0 +1,160 @@
+/* ═══════════════════════════════════════════════
+   AMBIENT BACKGROUND — Liquid Glass Foundation
+   Static mesh gradient (no animation = no jank)
+   ═══════════════════════════════════════════════ */
+
+/* ── Dark Mode ── */
+.layout-root {
+  background-color: var(--bg-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.layout-root::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 600px 600px at 15% 25%, rgba(99, 102, 241, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 85% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 700px 700px at 75% 80%, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+}
+
+/* Default Wallpaper Image Layer */
+.layout-root::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/default-wallpaper.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.06;
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+
+/* Hide default image wallpaper layer for non-ambient presets */
+[data-wallpaper="solid"] .layout-root::after,
+[data-wallpaper="aurora"] .layout-root::after,
+[data-wallpaper="sunset"] .layout-root::after,
+[data-wallpaper="bubblegum"] .layout-root::after,
+[data-wallpaper="custom"] .layout-root::after {
+  opacity: 0;
+}
+
+[data-theme="light"] .layout-root::after {
+  opacity: 0.03;
+}
+
+/* All layout children above the ambient layer */
+.layout-root > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Auth screen ambient ── */
+.auth-container {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    var(--bg-base);
+}
+
+/* ── Accessibility ── */
+@media (prefers-reduced-transparency: reduce) {
+  .layout-root::before { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   LIGHT MODE — Vibrant Static Mesh
+   ═══════════════════════════════════════════════ */
+[data-theme="light"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 750px 650px at 5% 10%, rgba(99, 102, 241, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 550px 550px at 95% 5%, rgba(236, 72, 153, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 700px at 90% 90%, rgba(139, 92, 246, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 600px at 8% 85%, rgba(6, 182, 212, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 1000px 1000px at 50% 50%, rgba(79, 70, 229, 0.03) 0%, transparent 70%);
+}
+
+[data-theme="light"] .auth-container {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(79, 70, 229, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.06) 0%, transparent 60%),
+    var(--bg-base);
+}
+
+/* ═══════════════════════════════════════════════
+   CUSTOM WALLPAPER PRESETS
+   ═══════════════════════════════════════════════ */
+
+/* ── Solid (Trơn tối giản) ── */
+[data-wallpaper="solid"] .layout-root::before {
+  display: none;
+}
+
+/* ── Aurora (Cực quang) ── */
+[data-wallpaper="aurora"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 800px 600px at 20% 10%, rgba(16, 185, 129, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 500px at 70% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 700px at 50% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+}
+[data-theme="light"][data-wallpaper="aurora"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 850px 650px at 15% 10%, rgba(16, 185, 129, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 550px at 75% 15%, rgba(6, 182, 212, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 800px 800px at 50% 85%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 50% 30%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
+}
+
+/* ── Sunset (Hoàng hôn) ── */
+[data-wallpaper="sunset"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 800px 600px at 10% 20%, rgba(244, 63, 94, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 500px at 80% 10%, rgba(249, 115, 22, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 700px at 50% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+}
+[data-theme="light"][data-wallpaper="sunset"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 850px 650px at 10% 15%, rgba(244, 63, 94, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 550px at 85% 10%, rgba(249, 115, 22, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 800px 800px at 50% 90%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 50% 40%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+}
+
+/* ── Bubblegum (Kẹo ngọt) ── */
+[data-wallpaper="bubblegum"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 800px 600px at 15% 15%, rgba(236, 72, 153, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 500px at 80% 20%, rgba(6, 182, 212, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 700px at 45% 85%, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+}
+[data-theme="light"][data-wallpaper="bubblegum"] .layout-root::before {
+  background:
+    radial-gradient(ellipse 850px 650px at 15% 10%, rgba(236, 72, 153, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 650px 550px at 80% 25%, rgba(6, 182, 212, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 800px 800px at 45% 85%, rgba(245, 158, 11, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 50% 30%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+}
+
+/* ── Custom (Hình nền tự chọn) ── */
+[data-wallpaper="custom"] .layout-root::before {
+  background-image: var(--custom-wallpaper-url);
+  background-size: var(--custom-wallpaper-size, cover);
+  background-repeat: var(--custom-wallpaper-repeat, no-repeat);
+  background-position: center;
+  opacity: 0.12; /* Blends nicely with the dark background */
+}
+[data-theme="light"][data-wallpaper="custom"] .layout-root::before {
+  background-image: var(--custom-wallpaper-url);
+  background-size: var(--custom-wallpaper-size, cover);
+  background-repeat: var(--custom-wallpaper-repeat, no-repeat);
+  background-position: center;
+  opacity: 0.06; /* Blends nicely with the light background */
+}

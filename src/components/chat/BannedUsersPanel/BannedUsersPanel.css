@@ -1,0 +1,216 @@
+/* ============================================
+   Banned Users Panel
+   ============================================ */
+
+@keyframes bannedSlideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bannedSpin {
+  to { transform: rotate(360deg); }
+}
+
+.banned-panel {
+  width: 360px;
+  height: 100%;
+  background: transparent;
+  border-left: 1px solid var(--glass-border);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  animation: bannedSlideIn 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.banned-panel-header {
+  height: 56px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.banned-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.banned-panel-title svg {
+  color: var(--danger);
+}
+
+.banned-panel-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.banned-panel-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-bright);
+}
+
+.banned-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* Loading */
+.banned-panel-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.banned-spinner {
+  animation: bannedSpin 0.8s linear infinite;
+  color: var(--danger);
+}
+
+/* Empty */
+.banned-panel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  gap: 12px;
+  text-align: center;
+}
+
+.banned-panel-empty-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(244, 63, 94, 0.08);
+  margin-bottom: 4px;
+}
+
+.banned-panel-empty-icon svg {
+  color: var(--text-muted);
+}
+
+.banned-panel-empty h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.banned-panel-empty p {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 240px;
+}
+
+/* List */
+.banned-panel-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.banned-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.15s ease;
+}
+
+.banned-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.banned-item-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(244, 63, 94, 0.12);
+}
+
+.banned-item-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banned-item-initial {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f87171;
+}
+
+.banned-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.banned-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-bright);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.banned-item-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.banned-item-unban {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.08);
+  color: #4ade80;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.banned-item-unban:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.banned-item-unban:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,712 @@
+/* ═══════════════════════════════════════════════
+   LIGHT MODE COMPONENT OVERRIDES
+   
+   Fixes hardcoded rgba(255,255,255,...) values in 
+   component CSS files that don't automatically 
+   invert in light mode. Groups overrides by 
+   component area for maintainability.
+   ═══════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════
+   LAYOUT PANELS — Three floating glass cards
+   White frosted glass with colorful ambient 
+   mesh gradient visible through each panel.
+   ═══════════════════════════════════════════════ */
+
+/* Shared card overrides — floating glass with depth */
+[data-theme="light"] .layout-sidebar,
+[data-theme="light"] .layout-roomlist {
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.50);
+}
+
+/* Detail panel — glass card */
+[data-theme="light"] .layout-detail {
+  background: var(--bg-glass-panel);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Drag handle */
+[data-theme="light"] .drag-handle:hover,
+[data-theme="light"] .drag-handle.active {
+  background: rgba(79, 70, 229, 0.10);
+}
+[data-theme="light"] .drag-handle::after {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar container — transparent inside card */
+[data-theme="light"] .sidebar-container {
+  background: transparent;
+}
+
+/* Sidebar icon buttons */
+[data-theme="light"] .sidebar-icon-btn {
+  color: rgba(0, 0, 0, 0.55);
+}
+[data-theme="light"] .sidebar-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.80);
+}
+[data-theme="light"] .sidebar-icon-btn.active {
+  background: rgba(79, 70, 229, 0.10);
+  color: var(--accent);
+}
+
+/* Logo glow → subtle shadow */
+[data-theme="light"] .sidebar-logo {
+  text-shadow: none;
+}
+[data-theme="light"] .sidebar-logo svg {
+  filter: drop-shadow(0 1px 3px rgba(79, 70, 229, 0.15));
+}
+
+/* Room list header */
+[data-theme="light"] .roomlist-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Room list search */
+[data-theme="light"] .roomlist-search-input {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text-primary);
+}
+[data-theme="light"] .roomlist-search-input:focus {
+  border-color: rgba(79, 70, 229, 0.40);
+  background: rgba(0, 0, 0, 0.02);
+}
+[data-theme="light"] .roomlist-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+/* Room items */
+[data-theme="light"] .room-item {
+  color: var(--text-primary);
+}
+[data-theme="light"] .room-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .room-item.active {
+  background: var(--accent-glass);
+  border-color: var(--accent-muted);
+  color: var(--accent);
+}
+
+/* Chat header */
+[data-theme="light"] .chat-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.80);
+}
+[data-theme="light"] .chat-header::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.03), transparent);
+}
+
+/* Chat input bar */
+[data-theme="light"] .chat-input-bar {
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .chat-input-bar::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.03), transparent);
+}
+[data-theme="light"] .chat-input-textarea {
+  color: var(--text-primary);
+}
+[data-theme="light"] .chat-input-textarea::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+/* Message bubbles */
+[data-theme="light"] .message-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Message action toolbar */
+[data-theme="light"] .message-actions {
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Day separator */
+[data-theme="light"] .day-separator-badge {
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text-secondary);
+}
+
+/* Kebab/dropdown menus */
+[data-theme="light"] .kebab-menu,
+[data-theme="light"] .action-dropdown {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .kebab-menu-item:hover,
+[data-theme="light"] .action-dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Section labels */
+[data-theme="light"] .room-section-label {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* Welcome screen */
+[data-theme="light"] .welcome-icon {
+  color: rgba(0, 0, 0, 0.20);
+}
+[data-theme="light"] .welcome-title {
+  color: var(--text-primary);
+}
+[data-theme="light"] .welcome-text {
+  color: var(--text-secondary);
+}
+
+/* User profile card popup */
+[data-theme="light"] .user-profile-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Context menu */
+[data-theme="light"] .context-menu {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .context-menu-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Reactions */
+[data-theme="light"] .reaction-pill {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .reaction-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .reaction-pill.reacted {
+  background: rgba(79, 70, 229, 0.08);
+  border-color: rgba(79, 70, 229, 0.20);
+}
+
+/* Detail panel sections */
+[data-theme="light"] .detail-section {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .detail-member-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .glass-modal-overlay {
+  background: rgba(220, 225, 235, 0.35);
+}
+[data-theme="light"] .glass-modal-card {
+  background: rgba(255, 255, 255, 0.62) !important;
+  border: 1px solid rgba(255, 255, 255, 0.60) !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.50) !important;
+}
+[data-theme="light"] .glass-modal-card::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(0, 0, 0, 0.06) 25%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.06) 75%,
+    transparent
+  );
+}
+
+/* ── LiquidModal (sb-modal) light glass — match header capsules ── */
+[data-theme="light"] .sb-modal-backdrop {
+  background: rgba(220, 225, 235, 0.35) !important;
+}
+[data-theme="light"] .sb-modal-container {
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.60) !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.50) !important;
+}
+
+[data-theme="light"] .glass-modal-confirm {
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.15);
+}
+[data-theme="light"] .glass-modal-confirm::before {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.30), transparent);
+}
+[data-theme="light"] .glass-modal-cancel {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+[data-theme="light"] .glass-modal-cancel:hover {
+  border-color: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ── UI Kit form controls in light mode ── */
+[data-theme="light"] .sb-input,
+[data-theme="light"] .sb-select {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(0, 0, 0, 0.10) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] .sb-input:focus,
+[data-theme="light"] .sb-select:focus {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(79, 70, 229, 0.40) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10) !important;
+}
+[data-theme="light"] .sb-input::placeholder {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+[data-theme="light"] .sb-label {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .acct-sidebar-item.active::before {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), transparent 60%);
+}
+[data-theme="light"] .acct-avatar-wrapper {
+  background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .acct-theme-preview--dark {
+  background: #1a1a24;
+}
+[data-theme="light"] .acct-theme-preview--light {
+  background: #f0f0f5;
+}
+[data-theme="light"] .acct-theme-preview--system {
+  background: linear-gradient(135deg, #1a1a24 50%, #f0f0f5 50%);
+}
+[data-theme="light"] .acct-theme-option.active {
+  border-color: var(--accent);
+}
+[data-theme="light"] .acct-theme-bar {
+  background: rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .acct-theme-lines > div {
+  background: rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .acct-field input,
+[data-theme="light"] .acct-field select,
+[data-theme="light"] .acct-select-wrapper select,
+[data-theme="light"] .acct-password-input input {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text-primary);
+}
+[data-theme="light"] .acct-field input:focus,
+[data-theme="light"] .acct-field select:focus,
+[data-theme="light"] .acct-select-wrapper select:focus,
+[data-theme="light"] .acct-password-input input:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+[data-theme="light"] .acct-session-card {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+}
+[data-theme="light"] .acct-session-card:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+[data-theme="light"] .acct-session-card--current {
+  border-color: var(--accent);
+  background: var(--accent-glass);
+}
+
+/* ── SetupWizard ── */
+[data-theme="light"] .setup-card {
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .setup-card::before {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03), transparent 60%);
+}
+[data-theme="light"] .setup-input {
+  border: 1.5px solid rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .setup-input:focus {
+  border-color: rgba(0, 0, 0, 0.20);
+}
+[data-theme="light"] .setup-step {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .setup-toggle-track {
+  background: rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .setup-select {
+  border: 1.5px solid rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .setup-select:focus {
+  border-color: rgba(0, 0, 0, 0.20);
+}
+[data-theme="light"] .setup-radio-dot {
+  border: 1px solid rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .setup-avatar {
+  border: 3px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ── Chat Sub-panels ── */
+[data-theme="light"] .prune-input,
+[data-theme="light"] .forward-search-input,
+[data-theme="light"] .search-results-input {
+  background: rgba(0, 0, 0, 0.03);
+}
+[data-theme="light"] .prune-checkbox-visual {
+  background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .banned-user-item,
+[data-theme="light"] .forward-room-item {
+  background: rgba(0, 0, 0, 0.02);
+}
+[data-theme="light"] .banned-user-item:hover,
+[data-theme="light"] .forward-room-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ── Admin Panel ── */
+[data-theme="light"] .admin-nav-item.active {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+[data-theme="light"] .admin-nav-item:hover {
+  border-color: rgba(0, 0, 0, 0.10);
+}
+
+/* ── Admin Dashboard & Cards: Liquid Glass Light Mode ── */
+[data-theme="light"] .admin-stat-card,
+[data-theme="light"] .quick-action-btn,
+[data-theme="light"] .analytics-stat-card,
+[data-theme="light"] .fed-stat-card,
+[data-theme="light"] .pm-plugin-card,
+[data-theme="light"] .pm-stat-card,
+[data-theme="light"] .app-card,
+[data-theme="light"] .wf-card {
+  background: rgba(255, 255, 255, 0.50) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.70) !important;
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.04), 
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  transition: all var(--duration-normal) var(--ease-smooth) !important;
+}
+
+[data-theme="light"] .admin-stat-card:hover,
+[data-theme="light"] .quick-action-btn:hover,
+[data-theme="light"] .analytics-stat-card:hover,
+[data-theme="light"] .pm-plugin-card:hover,
+[data-theme="light"] .pm-stat-card:hover,
+[data-theme="light"] .app-card:hover,
+[data-theme="light"] .wf-card:hover {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(99, 102, 241, 0.40) !important;
+  box-shadow: 
+    0 8px 24px rgba(99, 102, 241, 0.08), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── Admin: WorkflowEditor ── */
+[data-theme="light"] .wf-editor-sidebar {
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-editor-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-node {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-node:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+[data-theme="light"] .wf-node-handle {
+  background: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-node-input {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-node-select {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-add-node {
+  border: 1px dashed rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .wf-connector {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-run-btn-group {
+  border: 1px solid rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .wf-run-btn-group:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+[data-theme="light"] .wf-details-header,
+[data-theme="light"] .wf-sidebar-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ── Admin: WorkflowList ── */
+
+[data-theme="light"] .wf-card-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .wf-stat {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .wf-toggle-track {
+  background: rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .wf-version {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .wf-trigger-badge {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ── Admin: WorkflowRunsPanel ── */
+[data-theme="light"] .wf-runs-header {
+  background: rgba(0, 0, 0, 0.03);
+}
+[data-theme="light"] .wf-run-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .wf-run-detail-sidebar {
+  border-left: 2px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ── Admin: AnalyticsDashboard ── */
+[data-theme="light"] .analytics-chart-container {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="light"] .analytics-progress-bg {
+  background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .analytics-progress-fill {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+
+/* ── Admin: AuditLogViewer ── */
+[data-theme="light"] .audit-filter-group {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="light"] .audit-detail-panel {
+  background: rgba(0, 0, 0, 0.02);
+}
+[data-theme="light"] .audit-json-viewer {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* ── Admin: FederationPanel ── */
+[data-theme="light"] .fed-server-avatar {
+  border: 2px solid rgba(0, 0, 0, 0.10);
+}
+
+
+
+/* ── Admin: SystemSettings ── */
+[data-theme="light"] .sys-setting-row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .sys-code-block {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .sys-toggle-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ── Admin: UserManagement ── */
+
+
+/* ── Admin: PluginMonitor ── */
+
+[data-theme="light"] .pm-log-entry {
+  background: rgba(0, 0, 0, 0.03);
+}
+[data-theme="light"] .pm-section-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+
+/* ── Call Components ── */
+[data-theme="light"] .call-view-card::before {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), transparent 60%);
+}
+[data-theme="light"] .call-controls-btn:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* ── Admin: AppPlayground ── */
+
+/* ═══════════════════════════════════════════════
+   TEXT COLOR OVERRIDES
+   Fixes hardcoded color: white / color: #fff 
+   that become invisible on light backgrounds.
+   Note: Only override elements that are NOT 
+   buttons with colored backgrounds (those should 
+   keep white text).
+   ═══════════════════════════════════════════════ */
+
+/* Section headers & titles — use dark text */
+[data-theme="light"] .acct-section-header h1,
+[data-theme="light"] .acct-card-title,
+[data-theme="light"] .admin-panel-title,
+[data-theme="light"] .admin-section-title,
+[data-theme="light"] .wf-card-title,
+[data-theme="light"] .wf-editor-title {
+  color: var(--text-primary);
+}
+
+/* General white text in admin cards → dark text */
+[data-theme="light"] .admin-stat-value,
+[data-theme="light"] .admin-stat-label,
+[data-theme="light"] .admin-nav-item {
+  color: var(--text-primary);
+}
+
+/* Setup wizard text */
+[data-theme="light"] .setup-title,
+[data-theme="light"] .setup-step-title,
+[data-theme="light"] .setup-label {
+  color: var(--text-primary);
+}
+
+/* Mention popover */
+[data-theme="light"] .mention-item-name {
+  color: var(--text-primary);
+}
+
+/* Federation panel avatar border */
+[data-theme="light"] .fed-server-avatar {
+  border-top-color: rgba(0, 0, 0, 0.10);
+}
+
+/* ═══════════════════════════════════════════════
+   GLOBAL LIGHT MODE UTILITIES
+   ═══════════════════════════════════════════════ */
+
+/* Firefox scrollbar */
+[data-theme="light"] * {
+  scrollbar-color: rgba(0, 0, 0, 0.10) transparent;
+}
+
+/* Text selection */
+[data-theme="light"] ::selection {
+  background: rgba(79, 70, 229, 0.15);
+  color: var(--text-primary);
+}
+
+/* Placeholder text */
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+/* Code blocks */
+[data-theme="light"] code,
+[data-theme="light"] pre {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Tooltips */
+[data-theme="light"] [data-tooltip]::after {
+  background: rgba(0, 0, 0, 0.80);
+  color: #fff;
+}
+
+/* Focus rings */
+[data-theme="light"] :focus-visible {
+  outline-color: rgba(79, 70, 229, 0.40);
+}
+
+/* HR / Dividers */
+[data-theme="light"] hr {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Typing Indicator Pill */
+[data-theme="light"] .typing-content {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Unified Tables: Liquid Glass Light Mode ── */
+[data-theme="light"] .um-table-container,
+[data-theme="light"] .audit-table-container,
+[data-theme="light"] .federation-table-wrapper,
+[data-theme="light"] .workflow-table-wrap,
+[data-theme="light"] .analytics-top-rooms {
+  background: rgba(255, 255, 255, 0.50) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  overflow: hidden !important;
+}
+
+[data-theme="light"] .um-table,
+[data-theme="light"] .audit-table,
+[data-theme="light"] .federation-table,
+[data-theme="light"] .workflow-table,
+[data-theme="light"] .analytics-rooms-table {
+  background: transparent !important;
+  border-collapse: collapse !important;
+}
+
+[data-theme="light"] .um-table thead tr,
+[data-theme="light"] .audit-table thead tr,
+[data-theme="light"] .federation-table thead tr,
+[data-theme="light"] .workflow-table thead tr,
+[data-theme="light"] .analytics-rooms-table thead tr {
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+[data-theme="light"] .um-table th,
+[data-theme="light"] .audit-table th,
+[data-theme="light"] .federation-table th,
+[data-theme="light"] .workflow-table th,
+[data-theme="light"] .analytics-rooms-table th {
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .um-table td,
+[data-theme="light"] .audit-table td,
+[data-theme="light"] .federation-table td,
+[data-theme="light"] .workflow-table td,
+[data-theme="light"] .analytics-rooms-table td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .um-table tbody tr:hover,
+[data-theme="light"] .audit-table tbody tr:hover,
+[data-theme="light"] .federation-table tbody tr:hover,
+[data-theme="light"] .workflow-table tbody tr:hover,
+[data-theme="light"] .analytics-rooms-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.04) !important;
+}
+

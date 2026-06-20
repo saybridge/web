@@ -1,0 +1,195 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(5, 5, 7, 0.75);
+  backdrop-filter: var(--blur-subtle);
+  -webkit-backdrop-filter: var(--blur-subtle);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dialog-card {
+  position: relative;
+  width: 520px;
+  max-width: 90vw;
+  background: var(--glass-thick);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: var(--border-glass-highlight);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass-xl);
+  display: flex;
+  flex-direction: column;
+  animation: cardFadeIn 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Specular highlight on dialog card */
+.dialog-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  pointer-events: none;
+}
+
+.dialog-header {
+  height: 56px;
+  border-bottom: var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-5);
+}
+
+.dialog-title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dialog-close-btn {
+  color: var(--text-secondary);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+.dialog-close-btn:hover {
+  background-color: var(--glass-regular);
+  color: var(--text-primary);
+}
+
+.dialog-form {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.input-with-prefix {
+  position: relative;
+  width: 100%;
+}
+
+.prefix-symbol {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+.prefix-padding {
+  padding-left: 28px;
+}
+
+.form-help-text {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Type Toggle */
+.type-toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.type-toggle-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--glass-thin);
+  border: var(--border-glass);
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+.type-toggle-btn:hover {
+  background-color: var(--glass-regular);
+  border-color: rgba(255,255,255,0.12);
+}
+.type-toggle-btn.selected {
+  background-color: var(--accent-muted);
+  border-color: var(--accent);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.type-btn-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.type-title-text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.type-toggle-btn.selected .type-title-text {
+  color: var(--text-primary);
+}
+
+.type-desc-text {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.dialog-btn-cancel {
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  transition: var(--transition-smooth);
+  border: var(--border-glass);
+}
+.dialog-btn-cancel:hover {
+  background-color: var(--glass-regular);
+  color: var(--text-primary);
+}
+
+.dialog-btn-submit {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  transition: var(--transition-bounce);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+.dialog-btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--accent-glow), var(--shadow-glow);
+}
+.dialog-btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

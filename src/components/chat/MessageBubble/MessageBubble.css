@@ -1,0 +1,1320 @@
+.message-bubble-container {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--message-gap);
+  padding: 1px var(--message-padding-h);
+  margin-top: 12px;
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  animation: mb-fadeIn 0.4s var(--ease-spring);
+  transform-origin: bottom left;
+  transition: background-color 0.1s ease;
+  position: relative;
+}
+.message-bubble-container:hover {
+  background-color: transparent;
+}
+.message-bubble-container.is-me {
+  flex-direction: row;
+  transform-origin: bottom left;
+}
+.message-bubble-container.consecutive {
+  margin-top: 2px;
+}
+.message-bubble-container.consecutive .message-content-wrapper {
+  gap: 0;
+}
+/* If message is consecutive and doesn't show avatar, offset to align with previous */
+.message-bubble-container.consecutive {
+  padding-left: calc(var(--message-padding-h) + var(--message-avatar-size) + var(--message-gap));
+}
+
+.message-avatar {
+  width: var(--message-avatar-size);
+  min-width: var(--message-avatar-size);
+  max-width: var(--message-avatar-size);
+  height: var(--message-avatar-size);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.message-avatar.placeholder {
+  height: auto;
+  position: relative;
+  pointer-events: none;
+}
+.avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--glass-thick);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-glass);
+}
+.avatar-circle .avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.is-me-circle {
+  background-color: var(--accent-muted);
+  border-color: var(--accent);
+}
+
+.message-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.message-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 16px;
+}
+
+.message-sender-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.message-time {
+  display: none;
+}
+
+/* Incoming — frosted dark glass */
+.message-content-box {
+  position: relative;
+  background: var(--bubble-in, var(--glass-thin, rgba(255, 255, 255, 0.04)));
+  backdrop-filter: var(--bubble-blur);
+  -webkit-backdrop-filter: var(--bubble-blur);
+  border: 1px solid var(--bubble-in-border, rgba(255, 255, 255, 0.05));
+  border-radius: var(--bubble-radius, var(--radius-lg, 16px));
+  padding: 10px 16px;
+  box-shadow: none;
+  min-width: 0;
+  word-break: break-word;
+  width: 100%;
+}
+
+/* Outgoing — frosted accent glass */
+.is-me .message-content-box {
+  background: var(--bubble-out, linear-gradient(135deg, rgba(var(--accent-rgb, 99, 102, 241), 0.12) 0%, rgba(var(--accent-rgb, 99, 102, 241), 0.03) 100%));
+  border: 1px solid var(--bubble-out-border, rgba(var(--accent-rgb, 99, 102, 241), 0.18));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+
+/* Grouped corner radii are removed, defaulting to uniform border-radius on all message content boxes */
+
+.message-text {
+  font-size: var(--msg-font-size, var(--text-base));
+  line-height: var(--msg-line-height, 1.45);
+  color: var(--text-primary);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+  overflow: hidden;
+}
+.message-text p {
+  margin: 0;
+}
+.message-text p + p {
+  margin-top: 4px;
+}
+
+/* Edited badge — small italic */
+.edited-badge {
+  font-size: 10px;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-left: 6px;
+  cursor: default;
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) ease;
+}
+.edited-badge:hover {
+  opacity: 1;
+}
+
+.deleted-text {
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--text-tertiary);
+}
+
+/* ==========================================================================
+   Image Attachment — Enhanced
+   ========================================================================== */
+.message-attachment-image {
+  position: relative;
+  margin-top: 8px;
+  max-width: 420px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-glass-sm);
+}
+.attachment-img {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+.message-attachment-image:hover .attachment-img {
+  transform: scale(1.02);
+}
+
+.image-download-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+.message-attachment-image:hover .image-download-overlay {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   File Card — Replaces simple file link
+   ========================================================================== */
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--glass-regular);
+  border: var(--border-glass);
+  margin-top: 6px;
+  transition: border-color 0.2s ease;
+}
+.file-card:hover {
+  border-color: var(--accent);
+}
+
+.file-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.file-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.file-card-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-card-meta {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.file-card-download {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-glass);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.file-card-download:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Floating Action Toolbar — floating action pill
+   ========================================================================== */
+.message-action-toolbar {
+  display: none !important; /* disabled hover toolbar per user request */
+  position: absolute;
+  top: -16px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  background: var(--glass-ultra);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: var(--border-glass-highlight);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  /* Use transition-delay to delay disappearing so quick movements don't close it */
+  transition: opacity 0.15s ease-out 0.1s, transform 0.15s ease-out 0.1s, visibility 0s linear 0.25s;
+  box-shadow: var(--shadow-glass-md);
+  z-index: 20;
+  pointer-events: auto;
+}
+.message-action-toolbar::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 24px; /* thick bridge below the toolbar to keep it connected to the container */
+  background: transparent;
+}
+
+.message-bubble-container:hover .message-action-toolbar {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  /* Clear delay when appearing */
+  transition: opacity 0.1s ease-out 0s, transform 0.1s ease-out 0s, visibility 0s linear 0s;
+}
+
+.toolbar-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+.toolbar-btn:hover {
+  background-color: var(--glass-thick);
+  color: var(--text-primary);
+}
+.toolbar-btn.delete:hover {
+  color: var(--danger);
+  background-color: rgba(244, 63, 94, 0.15);
+}
+
+/* More dropdown wrapper */
+.toolbar-more-wrapper {
+  position: relative;
+}
+
+/* More Dropdown Menu */
+.toolbar-more-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  background: rgba(23, 33, 43, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 5px;
+  box-shadow: var(--shadow-glass-lg);
+  z-index: 30;
+  animation: mb-dropdownSlideIn 0.15s ease-out;
+}
+.toolbar-more-dropdown::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  pointer-events: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+.dropdown-item:hover {
+  background-color: var(--glass-thick);
+  color: var(--text-primary);
+}
+.dropdown-item.danger:hover {
+  background-color: rgba(244, 63, 94, 0.15);
+  color: var(--danger);
+}
+
+@keyframes mb-dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Reaction Pills — Upgraded
+   ========================================================================== */
+.reactions-pills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.reaction-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--glass-regular);
+  border: var(--border-glass);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+  transition: all var(--duration-fast) ease;
+  cursor: pointer;
+}
+.reaction-pill:hover {
+  background-color: var(--glass-thick);
+  border-color: var(--accent);
+}
+.reaction-pill.reacted {
+  background-color: var(--accent-muted);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+.reaction-emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+.reaction-count {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Reaction tooltip */
+.reaction-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-deep);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) ease;
+  z-index: 25;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reaction-pill:hover .reaction-tooltip {
+  opacity: 1;
+}
+
+/* Add reaction button */
+.reaction-add-btn {
+  border: 1px dashed var(--text-tertiary) !important;
+  background: transparent !important;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  box-shadow: none !important;
+}
+.reaction-add-btn:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  background: var(--accent-glass) !important;
+}
+
+/* ==========================================================================
+   Thread Indicator
+   ========================================================================== */
+.thread-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color var(--duration-fast) ease;
+}
+.thread-indicator:hover {
+  color: var(--accent);
+}
+.thread-indicator svg {
+  color: inherit;
+}
+
+/* Mini Emoji Picker overlay */
+.mini-emoji-picker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 24px;
+  background: rgba(60, 63, 80, 0.92);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+  padding: 6px 8px;
+  display: flex;
+  gap: 2px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  white-space: nowrap;
+}
+
+.picker-emoji-btn {
+  font-size: 20px;
+  padding: 6px 8px;
+  transition: all 0.12s ease;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.picker-emoji-btn:hover {
+  transform: scale(1.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Edit message input */
+.message-edit-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-edit-input {
+  background-color: var(--bg-deep);
+  border: var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: var(--text-sm);
+  width: 240px;
+  color: var(--text-primary);
+}
+
+.message-edit-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.edit-btn-action {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) ease;
+}
+.edit-btn-action.confirm {
+  background-color: var(--success);
+  color: var(--text-primary);
+}
+.edit-btn-action.cancel {
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+}
+.edit-btn-action.confirm:hover {
+  filter: brightness(1.1);
+}
+.edit-btn-action.cancel:hover {
+  background-color: var(--glass-thick);
+}
+
+.message-row {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.message-time-hover,
+.message-time-hover-left {
+  display: none !important;
+}
+
+.bubble-footer {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+/* Inline timestamp inside bubble */
+.bubble-time {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.40);
+  line-height: 1;
+  user-select: none;
+  margin-left: auto;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+.is-me .bubble-time {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Adjust position of action toolbar for outgoing messages */
+.message-bubble-container.is-me .message-action-toolbar {
+  right: 24px;
+  left: auto;
+}
+
+@keyframes mb-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   Smart Message (SDUI) — Plugin-defined rich messages in chat
+   ========================================================================== */
+
+.message-text.sdui-message {
+  padding: 0;
+  background: transparent;
+}
+
+.message-sdui-card {
+  min-width: 280px;
+  max-width: 380px;
+  padding: 0.85rem 1rem;
+  background: var(--bg-elevated);
+  border: var(--border-glass);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.message-sdui-card .sdui-renderer-wrapper {
+  padding: 0;
+  background: transparent;
+}
+
+/* Override SDUI Button styles inside chat messages */
+.message-sdui-card button {
+  font-size: 0.82rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--glass-regular);
+  border: var(--border-glass);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+.message-sdui-card button:hover {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.message-sdui-card button:active {
+  transform: scale(0.98);
+}
+
+/* Plugin origin badge */
+.message-sdui-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  padding-top: 0.5rem;
+  border-top: var(--border-glass);
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.sdui-plugin-icon {
+  font-size: 0.7rem;
+}
+
+/* ==========================================================================
+   Clickable Avatar & Sender Name
+   ========================================================================== */
+.avatar-circle.clickable,
+.message-sender-name.clickable {
+  cursor: pointer;
+  transition: opacity var(--duration-fast) ease;
+}
+.avatar-circle.clickable:hover {
+  opacity: 0.85;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.message-sender-name.clickable:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   User Profile Popup Card — Liquid Glass
+   ========================================================================== */
+.user-profile-card {
+  position: fixed;
+  width: 280px;
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.04);
+  z-index: 9000;
+  padding: 14px;
+  animation: upcSlideIn 0.18s var(--ease-smooth);
+  overflow: hidden;
+}
+.user-profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.12) 50%, transparent 90%);
+  pointer-events: none;
+}
+
+@keyframes upcSlideIn {
+  from { opacity: 0; transform: translateX(-6px) scale(0.96); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.upc-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.upc-avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.upc-avatar-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px var(--accent-glow);
+}
+
+.upc-status-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(18, 20, 30, 0.65);
+}
+.upc-status-dot.online {
+  background: var(--success);
+  box-shadow: 0 0 6px var(--success);
+}
+.upc-status-dot.offline {
+  background: var(--text-tertiary);
+}
+
+.upc-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.upc-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all var(--duration-fast) ease;
+}
+.upc-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.upc-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.upc-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.upc-role-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--accent-glass);
+  color: var(--text-accent);
+  border: 1px solid var(--accent-muted);
+  letter-spacing: 0.03em;
+}
+
+.upc-time {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.upc-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.upc-action-btn {
+  flex: 1;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all var(--duration-fast) ease;
+  cursor: pointer;
+}
+.upc-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 12px var(--accent-glass);
+}
+
+/* Light mode */
+[data-theme="light"] .user-profile-card {
+  background: var(--bg-glass-panel);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.3);
+}
+[data-theme="light"] .user-profile-card::before {
+  background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.5) 50%, transparent 90%);
+}
+[data-theme="light"] .upc-status-dot {
+  border-color: rgba(255, 255, 255, 0.72);
+}
+[data-theme="light"] .upc-close {
+  color: rgba(0, 0, 0, 0.25);
+}
+[data-theme="light"] .upc-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.6);
+}
+[data-theme="light"] .upc-actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+[data-theme="light"] .upc-action-btn {
+  border-color: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+}
+[data-theme="light"] .upc-action-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--accent-glow);
+}
+
+/* ==========================================================================
+   Right-Click Context Menu
+   ========================================================================== */
+.message-context-menu {
+  position: fixed;
+  min-width: 220px;
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 6px;
+  box-shadow: var(--shadow-glass-xl), 0 0 0 1px var(--accent-glass);
+  z-index: 1000;
+  animation: mb-ctxMenuIn 0.12s ease-out;
+}
+.message-context-menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  pointer-events: none;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+@keyframes mb-ctxMenuIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  white-space: nowrap;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+.ctx-item:hover {
+  background-color: var(--accent-glass);
+  color: var(--text-primary);
+}
+.ctx-item.danger {
+  color: var(--danger);
+}
+.ctx-item.danger:hover {
+  background-color: rgba(244, 63, 94, 0.12);
+  color: var(--danger);
+}
+
+.ctx-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 4px 10px;
+}
+
+.ctx-quick-reactions {
+  display: flex;
+  justify-content: space-around;
+  padding: 4px 6px;
+  gap: 4px;
+}
+
+.ctx-quick-reaction-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-spring), background-color var(--duration-fast) ease;
+}
+
+.ctx-quick-reaction-btn:hover {
+  background-color: var(--glass-thick);
+  transform: scale(1.22);
+}
+
+[data-theme="light"] .ctx-quick-reaction-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+/* ==========================================================================
+   Dropdown Divider (for more-dropdown)
+   ========================================================================== */
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 4px 8px;
+}
+
+/* ═══════════════════════════════════════════════
+   LIGHT MODE
+   ═══════════════════════════════════════════════ */
+
+/* Hover background */
+[data-theme="light"] .message-bubble-container:hover {
+  background-color: transparent;
+}
+
+
+[data-theme="light"] .message-text {
+  color: #1a1a1a;
+}
+[data-theme="light"] .is-me .message-text {
+  color: #1a1a1a;
+}
+[data-theme="light"] .is-me .message-content-box {
+  background: var(--bubble-out);
+  border: 1px solid var(--bubble-out-border);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+[data-theme="light"] .bubble-time {
+  color: rgba(0, 0, 0, 0.35);
+}
+[data-theme="light"] .is-me .bubble-time {
+  color: rgba(0, 0, 0, 0.40);
+}
+
+/* Avatar circle */
+[data-theme="light"] .avatar-circle {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-color: rgba(255, 255, 255, 0.40);
+}
+
+/* File card */
+[data-theme="light"] .file-card {
+  background-color: rgba(255, 255, 255, 0.30);
+  border-color: rgba(255, 255, 255, 0.40);
+}
+
+/* Context menu — frosted glass */
+[data-theme="light"] .message-context-menu {
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.40);
+}
+[data-theme="light"] .message-context-menu::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.30), transparent);
+}
+[data-theme="light"] .ctx-item:hover {
+  background-color: rgba(255, 255, 255, 0.40);
+}
+[data-theme="light"] .ctx-divider {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Dropdown divider */
+[data-theme="light"] .dropdown-divider {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Specular highlights */
+[data-theme="light"] .message-hover-actions::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.30), transparent);
+}
+
+/* Action bar — frosted glass */
+[data-theme="light"] .message-hover-actions {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+[data-theme="light"] .hover-action-btn:hover {
+  background: rgba(255, 255, 255, 0.40);
+}
+
+/* URL preview card */
+[data-theme="light"] .upc-card {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Action toolbar — frosted glass */
+[data-theme="light"] .message-action-toolbar {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+[data-theme="light"] .toolbar-btn:hover {
+  background-color: rgba(255, 255, 255, 0.40);
+}
+
+/* More dropdown — frosted glass */
+[data-theme="light"] .toolbar-more-dropdown {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255,255,255,0.40);
+}
+[data-theme="light"] .toolbar-more-dropdown::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.30), transparent);
+}
+[data-theme="light"] .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.40);
+}
+
+/* Emoji picker — light */
+[data-theme="light"] .mini-emoji-picker {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .picker-emoji-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   Copilot Inline Results (Liquid Glass)
+   ========================================================================== */
+.copilot-inline-result {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--glass-regular, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: ccFadeIn 0.2s var(--ease-smooth);
+}
+
+.copilot-inline-result.loading {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.copilot-inline-result.error {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--danger, #ff4d4f);
+  font-size: 0.82rem;
+  background: rgba(239, 68, 68, 0.05);
+  border-color: rgba(239, 68, 68, 0.15);
+}
+
+.copilot-inline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.copilot-inline-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent, #6366f1);
+}
+
+.copilot-inline-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.copilot-inline-close:hover {
+  background: var(--glass-thin);
+  color: var(--text-primary);
+}
+
+.copilot-inline-content {
+  font-size: var(--text-sm, 13px);
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+.copilot-inline-content .markdown-renderer-wrapper {
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* ==========================================================================
+   Reply Message Quote Preview (Liquid Glass style)
+   ========================================================================== */
+.message-reply-quote {
+  display: flex;
+  align-items: stretch;
+  background: var(--glass-thin, rgba(255, 255, 255, 0.03));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md, 8px);
+  padding: 6px 12px;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  max-width: 90%;
+  align-self: flex-start;
+  transition: all var(--duration-fast) ease;
+  user-select: none;
+}
+
+.is-me .message-reply-quote {
+  align-self: flex-start;
+}
+
+.message-reply-quote:hover {
+  background: var(--glass-thick, rgba(255, 255, 255, 0.08));
+  border-color: rgba(var(--accent-rgb, 99, 102, 241), 0.3);
+}
+
+.reply-quote-line {
+  width: 3px;
+  background-color: var(--accent, #6366f1);
+  border-radius: 2px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.reply-quote-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.reply-quote-sender {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent, #6366f1);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.reply-quote-content {
+  font-size: 12px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* Light mode overrides */
+[data-theme="light"] .message-reply-quote {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .message-reply-quote:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(var(--accent-rgb, 99, 102, 241), 0.5);
+}
+
+[data-theme="light"] .reply-quote-content {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Highlight flash animation */
+@keyframes highlight-flash-anim {
+  0% {
+    background-color: rgba(var(--accent-rgb, 99, 102, 241), 0.25);
+    box-shadow: 0 0 15px rgba(var(--accent-rgb, 99, 102, 241), 0.4);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.message-bubble-container.highlight-flash {
+  animation: highlight-flash-anim 2s ease-out;
+  border-radius: var(--radius-md, 8px);
+}

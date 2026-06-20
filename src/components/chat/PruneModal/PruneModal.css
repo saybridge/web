@@ -1,0 +1,173 @@
+/* ============================================
+   Prune Messages Modal
+   ============================================ */
+
+
+.prune-modal-header {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.prune-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.prune-modal-title svg {
+  color: var(--danger);
+}
+
+.prune-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prune-modal-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-bright);
+}
+
+/* Warning banner */
+.prune-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(244, 63, 94, 0.08);
+  border-bottom: 1px solid rgba(244, 63, 94, 0.15);
+  color: #f87171;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.prune-warning svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Form */
+.prune-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.prune-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.prune-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prune-form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.prune-form-group input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--text-bright);
+  transition: all 0.2s ease;
+  color-scheme: dark;
+}
+
+.prune-form-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.prune-form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.prune-form-group input:disabled {
+  opacity: 0.5;
+}
+
+/* Actions */
+.prune-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.prune-cancel-btn {
+  padding: 8px 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prune-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-bright);
+}
+
+.prune-submit-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prune-submit-btn:hover:not(:disabled) {
+  background: #e11d48;
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.3);
+}
+
+.prune-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.prune-error {
+  font-size: 12px;
+  color: #f87171;
+}
+
+.prune-success {
+  font-size: 12px;
+  color: #4ade80;
+}

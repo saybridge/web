@@ -1,0 +1,202 @@
+/* ═══════════════════════════════════════════════
+   LAYOUT — Liquid Glass Floating Cards
+   
+   Three separate glass cards with gaps:
+   ┌────┐ ┌──────────┐ ┌──────────────────────┐
+   │Side│ │  Room    │ │    Main Content      │
+   │bar │ │  List    │ │  Chat    │  Detail   │
+   │pill│ │  card    │ │  (flex)  │  (resize) │
+   └────┘ └──────────┘ └──────────────────────┘
+   ═══════════════════════════════════════════════ */
+
+.layout-root {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--bg-deep);
+  gap: 6px;
+  padding: 6px;
+}
+
+/* ── Shared glass card styles (Sidebar & Roomlist) ── */
+.layout-sidebar,
+.layout-roomlist {
+  height: 100%;
+  border-radius: 24px;
+  border: var(--border-glass);
+  box-shadow:
+    var(--shadow-glass-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  position: relative;
+  /* Same glass values as .room-welcome */
+  background: var(--glass-thin);
+  backdrop-filter: var(--blur-subtle);
+  -webkit-backdrop-filter: var(--blur-subtle);
+}
+
+/* Ensure sidebar content sits above the wallpaper echo layer */
+.layout-sidebar > *,
+.layout-roomlist > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Specular highlight — top rim light (matches .room-welcome) */
+.layout-sidebar::before,
+.layout-roomlist::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.10), transparent);
+  pointer-events: none;
+  border-radius: 24px 24px 0 0;
+  z-index: 3;
+}
+
+/* Wallpaper echo — renders custom wallpaper (blurred) directly
+   inside sidebar to match frosted glass look of .room-welcome.
+   backdrop-filter alone can't see through stacking contexts,
+   so we duplicate the wallpaper here with filter: blur(). */
+[data-wallpaper="custom"] .layout-sidebar::after,
+[data-wallpaper="custom"] .layout-roomlist::after {
+  content: '';
+  position: absolute;
+  inset: -24px;              /* extend past edges to avoid dark blur fringe */
+  background-image: var(--custom-wallpaper-url, none);
+  background-size: var(--custom-wallpaper-size, cover);
+  background-repeat: var(--custom-wallpaper-repeat, no-repeat);
+  background-position: center;
+  filter: blur(6px);
+  opacity: 0.12;             /* same as .layout-root::before custom wallpaper */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Main Content Panel (Borderless & Transparent) ── */
+.layout-main {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  min-width: 0;
+  background: transparent;
+}
+
+/* Ensure main content sits above the wallpaper echo */
+.layout-main > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Wallpaper echo for main content area */
+[data-wallpaper="custom"] .layout-main::after {
+  content: '';
+  position: absolute;
+  inset: -24px;
+  background-image: var(--custom-wallpaper-url, none);
+  background-size: var(--custom-wallpaper-size, cover);
+  background-repeat: var(--custom-wallpaper-repeat, no-repeat);
+  background-position: center;
+  filter: blur(6px);
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Sidebar ── */
+.layout-sidebar {
+  width: 64px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Room List ── */
+.layout-roomlist {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Chat Panel (fills main content) ── */
+.layout-chat {
+  height: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Admin/Settings Content (fills main content) ── */
+.layout-admin-content {
+  height: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Detail Panel (inside main content) ── */
+.layout-detail {
+  height: 100%;
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.45), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.09);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ── Drag Handle ── */
+.drag-handle {
+  width: 4px;
+  height: 100%;
+  cursor: col-resize;
+  flex-shrink: 0;
+  position: relative;
+  transition: background 0.15s var(--ease-smooth);
+}
+
+.drag-handle:hover,
+.drag-handle.active {
+  background: var(--accent-muted);
+}
+
+.drag-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--text-tertiary);
+  opacity: 0;
+  transition: opacity 0.15s var(--ease-smooth);
+}
+
+.drag-handle:hover::after,
+.drag-handle.active::after {
+  opacity: 1;
+}

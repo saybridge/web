@@ -1,0 +1,108 @@
+/* Dynamic plugin picker panel — used by backend-driven composer plugins */
+
+.sb-plugin-picker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  max-height: 360px;
+  background: var(--bg-secondary, #1a1b1e);
+  border: 1px solid var(--border-light, #2a2b30);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 100;
+  animation: pluginPickerSlideIn 0.15s ease-out;
+}
+
+@keyframes pluginPickerSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sb-plugin-picker-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light, #2a2b30);
+}
+
+.sb-plugin-picker-search {
+  flex: 1;
+  background: var(--bg-tertiary, #2F3136);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text-main, #D8DEE9);
+  font-size: 13px;
+  outline: none;
+}
+
+.sb-plugin-picker-search::placeholder {
+  color: var(--text-dark, #5A5D60);
+}
+
+.sb-plugin-picker-close {
+  background: none;
+  border: none;
+  color: var(--text-dark, #5A5D60);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.sb-plugin-picker-close:hover {
+  color: var(--text-main, #D8DEE9);
+}
+
+.sb-plugin-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 4px;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 280px;
+}
+
+.sb-plugin-picker-item {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.sb-plugin-picker-item:hover {
+  background: var(--bg-tertiary, #2F3136);
+}
+
+.sb-plugin-picker-emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.sb-plugin-picker-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.sb-plugin-picker-loading,
+.sb-plugin-picker-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-dark, #5A5D60);
+  font-size: 12px;
+  padding: 16px 0;
+}

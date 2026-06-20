@@ -1,0 +1,110 @@
+/* ═══════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS — Liquid Glass
+   ═══════════════════════════════════════════════ */
+
+/* ── Laptop ≤1200px ── */
+/* Hides resizers, overlays detail panel as a glass sheet */
+@media (max-width: 1200px) {
+  .drag-handle {
+    display: none !important;
+  }
+  
+  .sb-side-panel-wrapper {
+    position: absolute !important;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+    z-index: 90;
+    width: 320px !important;
+    height: calc(100% - 12px) !important;
+    animation: resp-slideInRight 0.3s var(--ease-spring);
+  }
+  
+  .layout-detail {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: 100% !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    border-radius: 24px !important;
+  }
+}
+
+/* ── Tablet ≤900px ── */
+/* Collapses sidebar to save space */
+@media (max-width: 900px) {
+  .layout-sidebar {
+    width: 0 !important;
+    overflow: hidden;
+    border-right: none;
+  }
+  
+  .layout-roomlist {
+    width: 240px !important;
+  }
+}
+
+/* ── Mobile ≤600px ── */
+/* Single viewport navigation */
+@media (max-width: 600px) {
+  .layout-roomlist {
+    width: 100% !important;
+    flex-grow: 1;
+  }
+
+  /* When chat is active, hide the room list completely for single viewport navigation */
+  .layout-root:has(.chatpanel-container) .layout-roomlist {
+    display: none !important;
+  }
+
+  .layout-chat {
+    width: 100% !important;
+    flex-grow: 1;
+  }
+
+  .sb-side-panel-wrapper {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 90;
+  }
+
+  .layout-detail {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+
+  /* Mobile touch targets: min 44px */
+  button, [role="button"], a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce glass blur on mobile for performance */
+  .layout-sidebar,
+  .layout-roomlist,
+  .layout-detail {
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE ANIMATIONS (uniquely named)
+   ═══════════════════════════════════════════════ */
+
+@keyframes resp-slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
