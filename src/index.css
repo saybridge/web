@@ -1,83 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('./styles/liquid-glass.css');
 @import url('./styles/ambient.css');
 @import url('./styles/responsive.css');
 @import url('./styles/light-overrides.css');
 
 :root {
-  /* ═══════════════════════════════════════════════
-     SAYBRIDGE LIQUID GLASS DESIGN SYSTEM
-     Inspired by Apple's Liquid Glass (WWDC 2025)
-     ═══════════════════════════════════════════════ */
-
-  /* ── Background Layers ── */
-  --bg-deep: #000000;
-  --bg-base: #0a0a0c;
-  --bg-elevated: #121214;
-  --bg-glass-panel: rgba(10, 10, 12, 0.65);
-  --bg-glass-input: rgba(18, 18, 20, 0.45);
-
-
-  /* ── Glass Materials ── */
-  --glass-thin: rgba(255, 255, 255, 0.015);
-  --glass-regular: rgba(255, 255, 255, 0.04);
-  --glass-thick: rgba(255, 255, 255, 0.08);
-  --glass-ultra: rgba(255, 255, 255, 0.12);
-
-  /* ── Glass Blur Levels ── */
-  --blur-subtle: blur(6px) saturate(120%);
-  --blur-regular: blur(10px) saturate(130%);
-  --blur-heavy: blur(16px) saturate(140%);
-  --blur-ultra: blur(24px) saturate(150%);
-
-  /* ── Specular Borders (rim lighting) ── */
-  --border-glass: 1px solid rgba(255, 255, 255, 0.08);
-  --border-glass-highlight: 1px solid rgba(255, 255, 255, 0.15);
-  --border-glass-active: 1px solid rgba(255, 255, 255, 0.20);
-
-  /* ── Accent: Slate-Gray ── */
-  --accent: #94a3b8;
-  --accent-hover: #cbd5e1;
-  --accent-muted: rgba(148, 163, 184, 0.15);
-  --accent-glow: rgba(148, 163, 184, 0.30);
-  --accent-glass: rgba(148, 163, 184, 0.08);
-
-  /* ── Text ── */
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.55);
-  --text-tertiary: rgba(255, 255, 255, 0.35);
-  --text-accent: #cbd5e1;
-
-  /* ── Shadows (Liquid depth) ── */
-  --shadow-glass-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-glass-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-glass-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glass-xl: 0 16px 64px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 20px rgba(148, 163, 184, 0.15);
-
-  /* ── Spacing Scale (4px grid) ── */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-
-  /* ── Typography ── */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-  --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
-  --text-xs: 11px;
-  --text-sm: 13px;
-  --text-base: 14px;
-  --text-lg: 16px;
-  --text-xl: 18px;
-  --text-2xl: 22px;
-  --text-3xl: 28px;
-  --text-4xl: 36px;
-
   /* ── Message Display (overridden by usePreferencesStore) ── */
   --msg-font-size: 14px;
   --msg-line-height: 1.5;
@@ -98,29 +24,6 @@
   --bubble-radius-tail: 4px;
   --bubble-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
   --bubble-shadow-out: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(var(--accent-rgb, 148, 163, 184), 0.20);
-
-
-  /* ── Border Radius (organic shapes) ── */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-pill: 9999px;
-
-  /* ── Transitions ── */
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-  --duration-slow: 400ms;
-
-  /* ── Semantic Colors ── */
-  --success: #10B981;
-  --warning: #F59E0B;
-  --danger: #EF4444;
-  --info: #3B82F6;
 
   /* ═══════════════════════════════════════════════
      BACKWARD-COMPATIBLE ALIASES
@@ -182,10 +85,10 @@
   --glass-ultra: rgba(255, 255, 255, 0.20);
 
   /* ── Glass Blur Levels ── */
-  --blur-subtle: blur(6px) saturate(120%);
-  --blur-regular: blur(10px) saturate(130%);
-  --blur-heavy: blur(16px) saturate(140%);
-  --blur-ultra: blur(24px) saturate(150%);
+  --blur-subtle: blur(4px) saturate(120%);
+  --blur-regular: blur(7px) saturate(140%);
+  --blur-heavy: blur(14px) saturate(150%);
+  --blur-ultra: blur(24px) saturate(160%);
 
   /* ── Specular Borders (white inner glow) ── */
   --border-glass: 1px solid rgba(255, 255, 255, 0.45);
@@ -910,7 +813,7 @@ textarea:-webkit-autofill:active {
 .brand-logo-container {
   width: 64px;
   height: 64px;
-  background: rgba(255, 255, 255, 0.03);
+  background-color: var(--bg-glass-panel);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-xl);
   display: flex;
@@ -918,7 +821,8 @@ textarea:-webkit-autofill:active {
   justify-content: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   margin-bottom: 24px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
 }
 
 .brand-logo-svg {

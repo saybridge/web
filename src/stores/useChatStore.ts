@@ -35,6 +35,7 @@ export interface Message {
   content: string;
   msg_type: string;
   parent_id?: string;
+  reply_to_id?: string;
   thread_count?: number;
   is_edited: boolean;
   is_deleted: boolean;

@@ -138,6 +138,7 @@ export default function App() {
           const mapped: Room[] = rawRooms.map((r: any) => ({
             id: r.id,
             name: r.name,
+            slug: r.slug || '',
             type: r.type === 'group' ? 'private' : r.type === 'direct' ? 'dm' : 'public',
             unread_count: r.unread_count || 0,
             created_at: r.created_at,

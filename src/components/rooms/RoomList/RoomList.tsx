@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Hash, Lock, Plus, Search, Settings, LogOut, Shield, HardDrive } from 'lucide-react';
 import { useChatStore, Room } from '../../../stores/useChatStore';
 import { usePreferencesStore } from '../../../stores/usePreferencesStore';
@@ -35,17 +36,34 @@ export const RoomList: React.FC<RoomListProps> = ({
   const { confirm, modal } = useGlassConfirm();
 
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [menuPosition, setMenuPosition] = useState<{ bottom: number; left: number; width: number } | null>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!showProfileMenu) return;
     const handleClickOutside = (e: MouseEvent) => {
-      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      const insideFooter = profileRef.current?.contains(target) ?? false;
+      const insideMenu = menuRef.current?.contains(target) ?? false;
+      if (!insideFooter && !insideMenu) {
         setShowProfileMenu(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showProfileMenu]);
+
+  const toggleProfileMenu = useCallback(() => {
+    if (!showProfileMenu && profileRef.current) {
+      const rect = profileRef.current.getBoundingClientRect();
+      setMenuPosition({
+        bottom: window.innerHeight - rect.top + 8,
+        left: rect.left,
+        width: rect.width,
+      });
+    }
+    setShowProfileMenu(!showProfileMenu);
   }, [showProfileMenu]);
 
   const handleLogout = async () => {
@@ -231,7 +249,7 @@ export const RoomList: React.FC<RoomListProps> = ({
       <div className="roomlist-footer" ref={profileRef}>
         <div
           className="roomlist-footer-profile clickable"
-          onClick={() => setShowProfileMenu(!showProfileMenu)}
+          onClick={toggleProfileMenu}
           title="User Profile Actions"
         >
           <div className="sidebar-profile-avatar">
@@ -248,8 +266,17 @@ export const RoomList: React.FC<RoomListProps> = ({
           </div>
         </div>
 
-        {showProfileMenu && (
-          <div className="profile-context-menu">
+        {showProfileMenu && menuPosition && createPortal(
+          <div
+            ref={menuRef}
+            className="profile-context-menu"
+            style={{
+              position: 'fixed',
+              bottom: menuPosition.bottom,
+              left: menuPosition.left,
+              width: menuPosition.width,
+            }}
+          >
             {showAdminLink && (
               <button
                 className={`profile-menu-item ${viewMode === 'admin' ? 'active' : ''}`}
@@ -297,7 +324,8 @@ export const RoomList: React.FC<RoomListProps> = ({
               <LogOut size={16} />
               <span>{t('sidebar.logout', 'Đăng xuất')}</span>
             </button>
-          </div>
+          </div>,
+          document.body
         )}
       </div>
 

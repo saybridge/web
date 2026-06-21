@@ -89,8 +89,8 @@
   .layout-sidebar,
   .layout-roomlist,
   .layout-detail {
-    backdrop-filter: blur(8px) saturate(140%);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    backdrop-filter: var(--blur-regular);
+    -webkit-backdrop-filter: var(--blur-regular);
   }
 }
 

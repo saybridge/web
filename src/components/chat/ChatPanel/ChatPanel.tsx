@@ -257,6 +257,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ onToggleDetail, onOpenThre
             content: m.content,
             msg_type: m.msg_type || 'text',
             parent_id: m.parent_id || undefined,
+            reply_to_id: m.reply_to_id || undefined,
             is_edited: m.is_edited || false,
             is_deleted: m.is_deleted || false,
             reactions: m.reactions ? JSON.stringify(m.reactions) : undefined,
@@ -307,19 +308,20 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ onToggleDetail, onOpenThre
     setNewMsgCount(0);
   }, []);
 
-  // Scroll to bottom on new messages (only if already near bottom)
+  // Scroll to bottom on new messages (only if already near bottom or sent by me)
   const lastMsgContent = messages.length > 0 ? messages[messages.length - 1]?.content : '';
   useEffect(() => {
     if (messages.length > prevMessagesLenRef.current) {
-      if (isNearBottom()) {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-        setNewMsgCount(0);
+      const lastMsg = messages[messages.length - 1];
+      const isMyMsg = lastMsg && currentUser && lastMsg.sender_id === currentUser.id;
+      if (isMyMsg || isNearBottom()) {
+        scrollToBottom(true);
       } else {
         setNewMsgCount((c) => c + (messages.length - prevMessagesLenRef.current));
       }
     }
     prevMessagesLenRef.current = messages.length;
-  }, [messages, isNearBottom]);
+  }, [messages, isNearBottom, currentUser, scrollToBottom]);
 
   // Auto-scroll during streaming (content updates on existing message)
   useEffect(() => {
@@ -408,7 +410,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ onToggleDetail, onOpenThre
       sender_name: currentUser.username,
       content: hookResult.content,
       msg_type: hookResult.msg_type,
-      parent_id: replyToId,
+      reply_to_id: replyToId,
       is_edited: false,
       is_deleted: false,
       created_at: new Date().toISOString(),
@@ -424,7 +426,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ onToggleDetail, onOpenThre
       roomId: activeRoomId,
       content: hookResult.content,
       msgType: hookResult.msg_type,
-      parentId: replyToId,
+      replyToId: replyToId,
     });
 
     setInputText('');
@@ -750,12 +752,16 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ onToggleDetail, onOpenThre
                           const isConsecutive = !!(
                             prevMsg &&
                             prevMsg.sender_id === msg.sender_id &&
+                            !msg.reply_to_id &&
+                            !prevMsg.reply_to_id &&
                             new Date(msg.created_at).getTime() - new Date(prevMsg.created_at).getTime() < 1 * 60 * 1000
                           );
 
                           const hasNextConsecutive = !!(
                             nextMsg &&
                             nextMsg.sender_id === msg.sender_id &&
+                            !msg.reply_to_id &&
+                            !nextMsg.reply_to_id &&
                             new Date(nextMsg.created_at).getTime() - new Date(msg.created_at).getTime() < 1 * 60 * 1000
                           );
 

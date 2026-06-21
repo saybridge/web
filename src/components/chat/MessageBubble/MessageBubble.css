@@ -21,7 +21,9 @@
   transform-origin: bottom left;
 }
 .message-bubble-container.consecutive {
-  margin-top: 2px;
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .message-bubble-container.consecutive .message-content-wrapper {
   gap: 0;
@@ -29,6 +31,49 @@
 /* If message is consecutive and doesn't show avatar, offset to align with previous */
 .message-bubble-container.consecutive {
   padding-left: calc(var(--message-padding-h) + var(--message-avatar-size) + var(--message-gap));
+}
+.message-bubble-container.has-next {
+  padding-bottom: 0;
+}
+
+/* Group consecutive message bubbles visually by flattening adjacent corners and merging borders */
+.message-bubble-container.has-next .message-content-box {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom: none !important;
+  padding-bottom: 6px;
+}
+.message-bubble-container.consecutive .message-content-box {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: none !important;
+  padding-top: 6px;
+}
+.message-bubble-container.consecutive.has-next .message-content-box {
+  border-radius: 0 !important;
+  padding-bottom: 6px;
+}
+
+/* Outgoing consecutive group background override (flat color to avoid gradient seams) */
+.message-bubble-container.is-me.has-next .message-content-box,
+.message-bubble-container.is-me.consecutive .message-content-box {
+  background: rgba(var(--accent-rgb, 99, 102, 241), 0.08) !important;
+}
+
+/* Specific shadows for consecutive outgoing messages to avoid double highlights and middle shadows */
+.message-bubble-container.is-me.has-next .message-content-box {
+  box-shadow: none !important;
+}
+.message-bubble-container.is-me.has-next:not(.consecutive) .message-content-box {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+.message-bubble-container.is-me.consecutive:not(.has-next) .message-content-box {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20) !important;
+}
+
+/* Hide timestamp for consecutive messages, showing only for the last message in a group */
+.message-bubble-container.has-next .bubble-time {
+  display: none;
 }
 
 .message-avatar {
@@ -346,10 +391,10 @@
   top: calc(100% + 6px);
   right: 0;
   min-width: 200px;
-  background: rgba(23, 33, 43, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: var(--border-glass-highlight);
   border-radius: var(--radius-md);
   padding: 5px;
   box-shadow: var(--shadow-glass-lg);
@@ -502,10 +547,10 @@
   position: absolute;
   bottom: calc(100% + 8px);
   right: 24px;
-  background: rgba(60, 63, 80, 0.92);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  border: var(--border-glass-highlight);
   border-radius: var(--radius-pill);
   padding: 6px 8px;
   display: flex;
@@ -587,6 +632,16 @@
 .message-time-hover,
 .message-time-hover-left {
   display: none !important;
+}
+
+.message-content-box-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
 }
 
 .bubble-footer {
@@ -1092,10 +1147,10 @@
 
 /* Action bar — frosted glass */
 [data-theme="light"] .message-hover-actions {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.50);
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: var(--border-glass);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.35);
 }
 [data-theme="light"] .hover-action-btn:hover {
@@ -1110,10 +1165,10 @@
 
 /* Action toolbar — frosted glass */
 [data-theme="light"] .message-action-toolbar {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.50);
+  background: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: var(--border-glass);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.35);
 }
 [data-theme="light"] .toolbar-btn:hover {
@@ -1122,10 +1177,10 @@
 
 /* More dropdown — frosted glass */
 [data-theme="light"] .toolbar-more-dropdown {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: 1px solid rgba(0, 0, 0, 0.10);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255,255,255,0.40);
 }
 [data-theme="light"] .toolbar-more-dropdown::before {
@@ -1231,10 +1286,10 @@
 .message-reply-quote {
   display: flex;
   align-items: stretch;
-  background: var(--glass-thin, rgba(255, 255, 255, 0.03));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--glass-thin);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
+  border: var(--border-glass);
   border-radius: var(--radius-md, 8px);
   padding: 6px 12px;
   margin-top: 4px;

@@ -74,14 +74,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
   // Find parent message for replies
   const parentMessage = useMemo(() => {
-    if (!message.parent_id || !activeRoomId) return null;
+    if (!message.reply_to_id || !activeRoomId) return null;
     const roomMessages = messagesByRoom[activeRoomId] || [];
-    return roomMessages.find((m) => m.id === message.parent_id) || null;
-  }, [message.parent_id, activeRoomId, messagesByRoom]);
+    return roomMessages.find((m) => m.id === message.reply_to_id) || null;
+  }, [message.reply_to_id, activeRoomId, messagesByRoom]);
 
   const scrollToParent = useCallback(() => {
-    if (!message.parent_id) return;
-    const parentEl = document.getElementById(`msg-${message.parent_id}`);
+    if (!message.reply_to_id) return;
+    const parentEl = document.getElementById(`msg-${message.reply_to_id}`);
     if (parentEl) {
       parentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       parentEl.classList.add('highlight-flash');
@@ -89,7 +89,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         parentEl.classList.remove('highlight-flash');
       }, 2000);
     }
-  }, [message.parent_id]);
+  }, [message.reply_to_id]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(message.content);
@@ -575,7 +575,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         <SlotRenderer slot="message_header" context={{ message }} />
 
         {/* Reply Quote Preview */}
-        {message.parent_id && !inThread && (
+        {message.reply_to_id && !inThread && (
           <div className="message-reply-quote" onClick={scrollToParent}>
             <div className="reply-quote-line" />
             <div className="reply-quote-body">
@@ -601,37 +601,43 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
         <div className="message-row">
           <div className="message-content-box">
-            {isDeleted ? (
-              <span className="deleted-text">Tin nhắn đã bị thu hồi</span>
-            ) : isEditing ? (
-              <div className="message-edit-input-wrapper">
-                <input
-                  type="text"
-                  className="message-edit-input"
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleEditSubmit()}
-                />
-                <div className="message-edit-actions">
-                  <button className="edit-btn-action confirm" onClick={handleEditSubmit}>
-                    <Check size={14} />
-                  </button>
-                  <button className="edit-btn-action cancel" onClick={() => setIsEditing(false)}>
-                    <X size={14} />
-                  </button>
+            <div className="message-content-box-main">
+              {isDeleted ? (
+                <span className="deleted-text">Tin nhắn đã bị thu hồi</span>
+              ) : isEditing ? (
+                <div className="message-edit-input-wrapper">
+                  <input
+                    type="text"
+                    className="message-edit-input"
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleEditSubmit()}
+                  />
+                  <div className="message-edit-actions">
+                    <button className="edit-btn-action confirm" onClick={handleEditSubmit}>
+                      <Check size={14} />
+                    </button>
+                    <button className="edit-btn-action cancel" onClick={() => setIsEditing(false)}>
+                      <X size={14} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className={`message-text ${sduiData ? 'sdui-message' : ''}`}>
-                {message.msg_type === 'text' ? renderSmartContent(displayContent) : renderAttachments()}
-                {isEdited && !sduiData && (
-                  <span className="edited-badge" title={`Edited at ${formatTime(message.created_at)}`}>
-                    (edited)
-                  </span>
-                )}
-                <SlotRenderer slot="message_after_body" context={{ message }} />
-              </div>
-            )}
+              ) : (
+                <div className={`message-text ${sduiData ? 'sdui-message' : ''}`}>
+                  {message.msg_type === 'text' ? renderSmartContent(displayContent) : renderAttachments()}
+                  {isEdited && !sduiData && (
+                    <span className="edited-badge" title={`Edited at ${formatTime(message.created_at)}`}>
+                      (edited)
+                    </span>
+                  )}
+                  <SlotRenderer slot="message_after_body" context={{ message }} />
+                </div>
+              )}
+              
+              {!isEditing && reactionsKeys.length === 0 && (
+                <span className="bubble-time">{formatTime(message.created_at)}</span>
+              )}
+            </div>
             
             {/* Inline AI Results */}
             {aiLoading && (
@@ -673,9 +679,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
               </div>
             )}
             {/* Bubble footer containing reactions and/or time */}
-            {!isEditing && (
+            {!isEditing && reactionsKeys.length > 0 && (
               <div className="bubble-footer">
-                {reactionsKeys.length > 0 && !isDeleted && (
+                {!isDeleted && (
                   <div className="reactions-pills-list">
                     {reactionsKeys.map((emoji) => {
                       const users = reactions[emoji] || [];

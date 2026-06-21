@@ -234,8 +234,8 @@
 }
 [data-theme="light"] .sb-modal-container {
   background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(18px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  backdrop-filter: var(--blur-heavy) !important;
+  -webkit-backdrop-filter: var(--blur-heavy) !important;
   border: 1px solid rgba(255, 255, 255, 0.60) !important;
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.06),
@@ -396,8 +396,8 @@
 [data-theme="light"] .app-card,
 [data-theme="light"] .wf-card {
   background: rgba(255, 255, 255, 0.50) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  backdrop-filter: var(--blur-regular) !important;
+  -webkit-backdrop-filter: var(--blur-regular) !important;
   border: 1px solid rgba(255, 255, 255, 0.70) !important;
   box-shadow: 
     0 4px 14px rgba(0, 0, 0, 0.04), 
@@ -656,8 +656,8 @@
 [data-theme="light"] .workflow-table-wrap,
 [data-theme="light"] .analytics-top-rooms {
   background: rgba(255, 255, 255, 0.50) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  backdrop-filter: var(--blur-regular) !important;
+  -webkit-backdrop-filter: var(--blur-regular) !important;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
   box-shadow: 
     0 4px 12px rgba(0, 0, 0, 0.02),

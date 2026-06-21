@@ -668,7 +668,8 @@
   font-size: 12px;
   font-weight: 600;
   z-index: 100;
-  backdrop-filter: blur(12px);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   animation: dpToastIn 0.2s ease-out;
 }
 
@@ -695,8 +696,8 @@
   inset: 0;
   z-index: 9500;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -714,9 +715,9 @@
   max-height: 70vh;
   display: flex;
   flex-direction: column;
-  background: rgba(22, 24, 36, 0.85);
-  backdrop-filter: blur(40px) saturate(1.5);
-  -webkit-backdrop-filter: blur(40px) saturate(1.5);
+  background-color: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-ultra);
+  -webkit-backdrop-filter: var(--blur-ultra);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   box-shadow:

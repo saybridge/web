@@ -593,9 +593,9 @@
   font-size: 12px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
-  background: rgba(0, 0, 0, 0.30);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  background-color: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   border: none;
   border-radius: 999px;
   padding: 4px 14px;
@@ -699,9 +699,9 @@
   max-width: 480px;
   margin: auto;
   animation: cp-fadeInUp 0.4s ease;
-  background: var(--glass-thin);
-  backdrop-filter: var(--blur-subtle);
-  -webkit-backdrop-filter: var(--blur-subtle);
+  background-color: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   border: var(--border-glass);
   border-radius: var(--radius-xl);
   position: relative;
@@ -845,9 +845,9 @@
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  background: rgba(23, 33, 43, 0.85);
-  backdrop-filter: var(--blur-subtle);
-  -webkit-backdrop-filter: var(--blur-subtle);
+  background-color: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
@@ -935,9 +935,9 @@
 
 /* ─── File Preview Banner ────────────────────────────────────────────── */
 .file-preview-banner {
-  background: var(--glass-regular);
-  backdrop-filter: var(--blur-subtle);
-  -webkit-backdrop-filter: var(--blur-subtle);
+  background-color: var(--bg-glass-panel);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   border: var(--border-glass);
   border-radius: var(--radius-md);
   margin-bottom: 8px;
@@ -1171,7 +1171,8 @@
 
 [data-theme="light"] .date-separator-text {
   background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: var(--blur-regular);
+  -webkit-backdrop-filter: var(--blur-regular);
   border: 1px solid rgba(255, 255, 255, 0.50);
   color: rgba(0, 0, 0, 0.70);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);

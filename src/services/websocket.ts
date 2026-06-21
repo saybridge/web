@@ -17,6 +17,7 @@ interface SendQueueItem {
   content: string;
   msgType?: string;
   parentId?: string;
+  replyToId?: string;
 }
 
 let sendQueue: SendQueueItem[] = [];
@@ -79,6 +80,7 @@ export const initWebSocket = async () => {
                   content: serverMsg.content,
                   msg_type: serverMsg.msg_type || 'text',
                   parent_id: serverMsg.parent_id || undefined,
+                  reply_to_id: serverMsg.reply_to_id || undefined,
                   is_edited: serverMsg.is_edited || false,
                   is_deleted: serverMsg.is_deleted || false,
                   reactions: serverMsg.reactions ? JSON.stringify(serverMsg.reactions) : undefined,
@@ -247,6 +249,7 @@ export const sendMessageViaWS = (item: SendQueueItem) => {
         content: item.content,
         msg_type: item.msgType || 'text',
         parent_id: item.parentId || '',
+        reply_to_id: item.replyToId || '',
       },
     };
     socket.send(JSON.stringify(payload));

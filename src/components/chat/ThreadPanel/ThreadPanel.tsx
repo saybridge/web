@@ -60,6 +60,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
             content: m.content,
             msg_type: m.msg_type || 'text',
             parent_id: m.parent_id,
+            reply_to_id: m.reply_to_id,
             is_edited: m.is_edited || false,
             is_deleted: m.is_deleted || false,
             reactions: m.reactions ? (typeof m.reactions === 'string' ? m.reactions : JSON.stringify(m.reactions)) : undefined,
