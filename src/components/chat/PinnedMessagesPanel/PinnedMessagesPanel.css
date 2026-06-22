@@ -59,7 +59,7 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .pinned-panel-close:hover {
@@ -137,7 +137,7 @@
 .pinned-item {
   padding: 12px 16px;
   border-bottom: var(--border-glass);
-  transition: background var(--duration-fast) ease;
+  transition: background var(--duration-fast) var(--ease-smooth);
 }
 
 .pinned-item:hover {
@@ -184,7 +184,7 @@
   font-size: var(--text-xs);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .pinned-item-unpin:hover:not(:disabled) {

@@ -93,7 +93,7 @@
   background: var(--glass-thick);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s var(--ease-smooth);
 }
 
 .invite-modal-search-clear:hover {
@@ -118,7 +118,7 @@
 .invite-modal-body::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 3px;
-  transition: background 0.2s ease;
+  transition: background 0.2s var(--ease-smooth);
 }
 .invite-modal-body:hover::-webkit-scrollbar-thumb {
   background: var(--glass-thick);

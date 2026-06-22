@@ -147,7 +147,7 @@
 .search-results-content::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 3px;
-  transition: background 0.2s ease;
+  transition: background 0.2s var(--ease-smooth);
 }
 .search-results-content:hover::-webkit-scrollbar-thumb {
   background: var(--glass-thick);

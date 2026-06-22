@@ -492,7 +492,7 @@
   border: none;
   cursor: pointer;
   text-align: left;
-  transition: all var(--duration-fast) ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
 }
 
 .profile-menu-item:hover {

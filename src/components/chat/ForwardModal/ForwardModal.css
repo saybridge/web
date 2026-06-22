@@ -22,7 +22,7 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: var(--blur-subtle);
   -webkit-backdrop-filter: var(--blur-subtle);
-  animation: forwardFadeIn 0.2s ease;
+  animation: forwardFadeIn 0.2s var(--ease-out);
 }
 
 .forward-modal {
@@ -66,7 +66,7 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .forward-modal-close:hover {
@@ -154,7 +154,7 @@
   color: var(--text-main);
   font-size: 13px;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s var(--ease-smooth);
   text-align: left;
 }
 
@@ -176,7 +176,7 @@
 .forward-room-arrow {
   color: var(--text-muted);
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s var(--ease-smooth);
 }
 
 .forward-room-item:hover .forward-room-arrow {

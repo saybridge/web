@@ -450,7 +450,7 @@
   z-index: 20;
   min-width: 140px;
   box-shadow: var(--shadow-glass-lg);
-  animation: um-dropdown-in 0.15s ease;
+  animation: um-dropdown-in 0.15s var(--ease-out);
 }
 
 @keyframes um-dropdown-in {
@@ -596,7 +596,7 @@
   font-weight: 500;
   color: #fff;
   z-index: 2000;
-  animation: um-toast-in 0.3s ease, um-toast-out 0.3s ease 2.7s;
+  animation: um-toast-in 0.3s var(--ease-out), um-toast-out 0.3s var(--ease-out) 2.7s;
   box-shadow: var(--shadow-glass-lg);
   display: flex;
   align-items: center;

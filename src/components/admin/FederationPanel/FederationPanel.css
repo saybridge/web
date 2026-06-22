@@ -96,7 +96,7 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .federation-toggle-add-btn:hover {
@@ -106,7 +106,7 @@
 }
 
 .federation-toggle-add-btn svg {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s var(--ease-smooth);
 }
 
 .federation-toggle-add-btn.is-open svg {
@@ -124,7 +124,7 @@
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .federation-refresh-btn:hover {
@@ -154,7 +154,7 @@
   border-radius: var(--radius-lg);
   padding: 22px 24px;
   overflow: hidden;
-  transition: all 0.25s ease;
+  transition: all 0.25s var(--ease-smooth);
   animation: fedFadeInUp 0.4s cubic-bezier(0.19, 1, 0.22, 1) backwards;
 }
 
@@ -301,7 +301,7 @@
   padding: 10px 14px;
   font-size: 13px;
   color: var(--text-bright);
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
 }
 
@@ -340,7 +340,7 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .federation-submit-btn:hover:not(:disabled) {
@@ -450,7 +450,7 @@
 }
 
 .federation-table tbody tr {
-  transition: background 0.2s ease;
+  transition: background 0.2s var(--ease-smooth);
 }
 
 .federation-table tbody tr:hover {
@@ -565,7 +565,7 @@
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
   border: 1px solid transparent;
   white-space: nowrap;
 }
@@ -616,7 +616,7 @@
   border-radius: 50%;
   background: rgba(var(--accent-rgb), 0.08);
   margin-bottom: 4px;
-  animation: fedPulseGlow 3s ease infinite;
+  animation: fedPulseGlow 3s var(--ease-out) infinite;
 }
 
 .federation-empty-icon svg {

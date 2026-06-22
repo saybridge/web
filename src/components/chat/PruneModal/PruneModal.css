@@ -36,7 +36,7 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .prune-modal-close:hover {
@@ -97,7 +97,7 @@
   padding: 9px 12px;
   font-size: 13px;
   color: var(--text-bright);
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
   color-scheme: dark;
 }
 
@@ -132,7 +132,7 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .prune-cancel-btn:hover {
@@ -149,7 +149,7 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .prune-submit-btn:hover:not(:disabled) {

@@ -70,7 +70,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  transition: all 0.12s ease;
+  transition: all 0.12s var(--ease-smooth);
 }
 .tp-header-close:hover {
   background: var(--glass-thick);
@@ -164,7 +164,7 @@
 .tp-parent-text::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 2px;
-  transition: background 0.2s ease;
+  transition: background 0.2s var(--ease-smooth);
 }
 .tp-parent-text:hover::-webkit-scrollbar-thumb {
   background: var(--glass-thick);
@@ -213,7 +213,7 @@
 .tp-replies::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 3px;
-  transition: background 0.2s ease;
+  transition: background 0.2s var(--ease-smooth);
 }
 .tp-replies:hover::-webkit-scrollbar-thumb {
   background: var(--glass-thick);
@@ -380,7 +380,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s var(--ease-smooth);
 }
 .tp-modal-close:hover {
   background: var(--glass-thick);
@@ -428,7 +428,7 @@
 .tp-modal-body::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 3px;
-  transition: background 0.2s ease;
+  transition: background 0.2s var(--ease-smooth);
 }
 .tp-modal-body:hover::-webkit-scrollbar-thumb {
   background: var(--glass-thick);
@@ -447,7 +447,7 @@
   font-size: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s var(--ease-smooth);
   margin-left: auto;
 }
 .tp-parent-expand-btn:hover {

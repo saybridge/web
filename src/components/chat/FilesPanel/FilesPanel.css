@@ -59,7 +59,7 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .files-panel-close:hover {
@@ -84,7 +84,7 @@
   font-size: var(--text-xs);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .files-tab:hover {
@@ -171,7 +171,7 @@
   gap: 12px;
   padding: 12px 16px;
   border-bottom: var(--border-glass);
-  transition: background var(--duration-fast) ease;
+  transition: background var(--duration-fast) var(--ease-smooth);
 }
 
 .file-card:hover {
@@ -233,7 +233,7 @@
   height: 32px;
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
   text-decoration: none;
 }
 

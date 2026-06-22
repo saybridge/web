@@ -89,7 +89,7 @@
   font-size: 13px;
   font-weight: 600;
   box-shadow: var(--shadow-glass-lg);
-  animation: settFadeInUp 0.3s ease;
+  animation: settFadeInUp 0.3s var(--ease-out);
   z-index: 1000;
 }
 
@@ -217,7 +217,7 @@
   max-height: 0;
   opacity: 0;
   transition: max-height 0.35s cubic-bezier(0.19, 1, 0.22, 1),
-              opacity 0.25s ease,
+              opacity 0.25s var(--ease-smooth),
               padding 0.35s cubic-bezier(0.19, 1, 0.22, 1);
   padding: 0 24px;
 }
@@ -547,7 +547,7 @@
   background: var(--warning);
   display: inline-block;
   margin-left: 8px;
-  animation: settCheckPop 0.3s ease;
+  animation: settCheckPop 0.3s var(--ease-out);
 }
 
 /* ---- Responsive ---- */

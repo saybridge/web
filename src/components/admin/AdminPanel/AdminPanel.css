@@ -394,7 +394,7 @@
 .plugins-page {
   padding: 2rem;
   max-width: 1200px;
-  animation: adminFadeIn 0.2s ease;
+  animation: adminFadeIn 0.2s var(--ease-out);
 }
 
 .plugins-header {
@@ -687,7 +687,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: modalOverlayIn 0.2s ease;
+  animation: modalOverlayIn 0.2s var(--ease-out);
 }
 
 .plugin-modal {

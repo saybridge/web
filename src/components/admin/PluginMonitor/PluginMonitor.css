@@ -89,7 +89,7 @@
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .pm-refresh-btn:hover {
@@ -119,7 +119,7 @@
   border-radius: var(--radius-lg);
   padding: 22px 24px;
   overflow: hidden;
-  transition: all 0.25s ease;
+  transition: all 0.25s var(--ease-smooth);
   animation: pmFadeInUp 0.4s cubic-bezier(0.19, 1, 0.22, 1) backwards;
 }
 
@@ -238,7 +238,7 @@
   border-radius: var(--radius-lg);
   padding: 20px;
   overflow: hidden;
-  transition: all 0.25s ease;
+  transition: all 0.25s var(--ease-smooth);
   cursor: pointer;
   animation: pmFadeInUp 0.4s cubic-bezier(0.19, 1, 0.22, 1) backwards;
 }
@@ -255,7 +255,7 @@
   mask-composite: exclude;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s var(--ease-smooth);
 }
 
 .pm-plugin-card:hover {
@@ -466,9 +466,9 @@
   max-height: 0;
   opacity: 0;
   transition: max-height 0.35s cubic-bezier(0.19, 1, 0.22, 1),
-              opacity 0.35s ease,
-              margin-top 0.35s ease,
-              padding 0.35s ease;
+              opacity 0.35s var(--ease-smooth),
+              margin-top 0.35s var(--ease-smooth),
+              padding 0.35s var(--ease-smooth);
   margin-top: 0;
   padding: 0 0;
 }
@@ -522,7 +522,7 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--glass-thick);
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .pm-permission-pill:hover {
@@ -582,7 +582,7 @@
   border-radius: 50%;
   background: rgba(var(--accent-rgb), 0.08);
   margin-bottom: 4px;
-  animation: pmPulseGlow 3s ease infinite;
+  animation: pmPulseGlow 3s var(--ease-out) infinite;
 }
 
 .pm-empty-icon svg {
@@ -658,7 +658,7 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
   margin-top: 4px;
 }
 
@@ -739,7 +739,7 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .pm-filter-chip:hover {

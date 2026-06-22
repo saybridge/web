@@ -10,7 +10,7 @@
   box-sizing: border-box;
   animation: mb-fadeIn 0.4s var(--ease-spring);
   transform-origin: bottom left;
-  transition: background-color 0.1s ease;
+  transition: background-color 0.1s var(--ease-smooth);
   position: relative;
 }
 .message-bubble-container:hover {
@@ -193,7 +193,7 @@
   margin-left: 6px;
   cursor: default;
   opacity: 0.7;
-  transition: opacity var(--duration-fast) ease;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
 }
 .edited-badge:hover {
   opacity: 1;
@@ -222,7 +222,7 @@
   max-height: 320px;
   object-fit: cover;
   display: block;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s var(--ease-smooth);
 }
 .message-attachment-image:hover .attachment-img {
   transform: scale(1.02);
@@ -236,7 +236,7 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.45);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s var(--ease-smooth);
   color: var(--text-primary);
   text-decoration: none;
   border-radius: var(--radius-md);
@@ -257,7 +257,7 @@
   background-color: var(--glass-regular);
   border: var(--border-glass);
   margin-top: 6px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s var(--ease-smooth);
 }
 .file-card:hover {
   border-color: var(--accent);
@@ -309,7 +309,7 @@
   border: var(--border-glass);
   text-decoration: none;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
 }
 .file-card-download:hover {
   background: var(--accent);
@@ -369,7 +369,7 @@
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+  transition: background-color var(--duration-fast) var(--ease-smooth), color var(--duration-fast) var(--ease-smooth);
 }
 .toolbar-btn:hover {
   background-color: var(--glass-thick);
@@ -422,7 +422,7 @@
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   color: var(--text-primary);
-  transition: background-color 0.12s ease, color 0.12s ease;
+  transition: background-color 0.12s var(--ease-smooth), color 0.12s var(--ease-smooth);
 }
 .dropdown-item:hover {
   background-color: var(--glass-thick);
@@ -463,7 +463,7 @@
   border-radius: var(--radius-pill);
   padding: 4px 10px;
   font-size: var(--text-xs);
-  transition: all var(--duration-fast) ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
   cursor: pointer;
 }
 .reaction-pill:hover {
@@ -498,7 +498,7 @@
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  transition: opacity var(--duration-fast) ease;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
   z-index: 25;
   max-width: 200px;
   overflow: hidden;
@@ -533,7 +533,7 @@
   font-size: var(--text-xs);
   cursor: pointer;
   padding: 2px 0;
-  transition: color var(--duration-fast) ease;
+  transition: color var(--duration-fast) var(--ease-smooth);
 }
 .thread-indicator:hover {
   color: var(--accent);
@@ -563,7 +563,7 @@
 .picker-emoji-btn {
   font-size: 20px;
   padding: 6px 8px;
-  transition: all 0.12s ease;
+  transition: all 0.12s var(--ease-smooth);
   line-height: 1;
   border-radius: var(--radius-pill);
   background: none;
@@ -604,7 +604,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--duration-fast) ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
 }
 .edit-btn-action.confirm {
   background-color: var(--success);
@@ -719,7 +719,7 @@
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s var(--ease-smooth);
   text-align: left;
   width: 100%;
   margin-top: 0.3rem;
@@ -758,7 +758,7 @@
 .avatar-circle.clickable,
 .message-sender-name.clickable {
   cursor: pointer;
-  transition: opacity var(--duration-fast) ease;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
 }
 .avatar-circle.clickable:hover {
   opacity: 0.85;
@@ -867,7 +867,7 @@
   cursor: pointer;
   border: none;
   background: none;
-  transition: all var(--duration-fast) ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
 }
 .upc-close:hover {
   background: var(--glass-thick);
@@ -926,7 +926,7 @@
   font-weight: 500;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(255, 255, 255, 0.03);
-  transition: all var(--duration-fast) ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
   cursor: pointer;
 }
 .upc-action-btn:hover {
@@ -1021,7 +1021,7 @@
   font-size: var(--text-sm);
   color: var(--text-primary);
   white-space: nowrap;
-  transition: background-color 0.12s ease, color 0.12s ease;
+  transition: background-color 0.12s var(--ease-smooth), color 0.12s var(--ease-smooth);
 }
 .ctx-item:hover {
   background-color: var(--accent-glass);
@@ -1055,7 +1055,7 @@
   padding: 6px;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-spring), background-color var(--duration-fast) ease;
+  transition: transform var(--duration-fast) var(--ease-spring), background-color var(--duration-fast) var(--ease-smooth);
 }
 
 .ctx-quick-reaction-btn:hover {
@@ -1297,7 +1297,7 @@
   cursor: pointer;
   max-width: 90%;
   align-self: flex-start;
-  transition: all var(--duration-fast) ease;
+  transition: all var(--duration-fast) var(--ease-smooth);
   user-select: none;
 }
 
