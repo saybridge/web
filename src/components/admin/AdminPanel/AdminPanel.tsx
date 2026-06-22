@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { WebDynamicScreen } from '../../../engine/WebDynamicScreen';
 import type { UIManifest, UIScreen } from '../../../engine/types';
 import { X, Users, Settings, Activity, Package, Code2, Zap, BarChart3, ClipboardList, Globe, Plug, Brain } from 'lucide-react';
@@ -49,6 +50,7 @@ function getPluginIcon(iconName: string): React.ReactNode {
  * Used by both AdminSidebar and AdminContent.
  */
 export function useAdminTabs() {
+  const { t } = useTranslation();
   const initialTab = parseUrl().adminTab || 'overview';
   const [activeTab, setActiveTab] = useState<string>(initialTab);
   const _pluginsForReactivity = usePluginStore((s) => s.plugins);
@@ -76,7 +78,7 @@ export function useAdminTabs() {
 
   const allTabs = useMemo<AdminTabEntry[]>(() => {
     const coreTabs: AdminTabEntry[] = [
-      { id: 'overview', label: 'Tổng quan', icon: <Activity size={18} />, isPlugin: false },
+      { id: 'overview', label: t('adminPanel.tabOverview'), icon: <Activity size={18} />, isPlugin: false },
       { id: 'plugins', label: 'Plugins', icon: <Package size={18} />, isPlugin: false },
       { id: 'copilot', label: 'Copilot', icon: <Brain size={18} />, isPlugin: false },
     ];
@@ -124,15 +126,15 @@ export function useAdminTabs() {
       { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={18} />, isPlugin: false },
       { id: 'audit', label: 'Audit Log', icon: <ClipboardList size={18} />, isPlugin: false },
       { id: 'playground', label: 'App Playground', icon: <Code2 size={18} />, isPlugin: false, pluginSlug: 'ai-agent' },
-      { id: 'users', label: 'Người dùng', icon: <Users size={18} />, isPlugin: false },
-      { id: 'settings', label: 'Cài đặt', icon: <Settings size={18} />, isPlugin: false },
+      { id: 'users', label: t('adminPanel.tabUsers'), icon: <Users size={18} />, isPlugin: false },
+      { id: 'settings', label: t('adminPanel.tabSettings'), icon: <Settings size={18} />, isPlugin: false },
     ];
 
     const isEnabled = usePluginStore.getState().isEnabled;
-    const filteredEndTabs = endTabs.filter((t) => !t.pluginSlug || isEnabled(t.pluginSlug));
+    const filteredEndTabs = endTabs.filter((tab) => !tab.pluginSlug || isEnabled(tab.pluginSlug));
 
     return [...coreTabs, ...pluginTabs, ...filteredEndTabs];
-  }, [adminManifests, allManifests, _pluginsForReactivity]);
+  }, [adminManifests, allManifests, _pluginsForReactivity, t]);
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
@@ -154,7 +156,8 @@ interface AdminContentProps {
 }
 
 export function AdminContent({ activeTab, allTabs, allManifests, onNavigate }: AdminContentProps) {
-  const activePluginTab = allTabs.find((t) => t.id === activeTab && t.isPlugin);
+  const { t } = useTranslation();
+  const activePluginTab = allTabs.find((tab) => tab.id === activeTab && tab.isPlugin);
 
   return (
     <div className="admin-content">
@@ -180,7 +183,7 @@ export function AdminContent({ activeTab, allTabs, allManifests, onNavigate }: A
         ) : (
           <AdminPlaceholder
             title={activePluginTab.label}
-            description="Plugin này chưa có giao diện quản trị"
+            description={t('adminPanel.pluginNoAdminUi')}
             icon="📌"
           />
         )
@@ -192,6 +195,7 @@ export function AdminContent({ activeTab, allTabs, allManifests, onNavigate }: A
 
 /* ===================== Admin Overview ===================== */
 function AdminOverview({ pluginCount, onNavigate }: { pluginCount: number; onNavigate: (tab: string) => void }) {
+  const { t } = useTranslation();
   const [stats, setStats] = useState<{
     total_users: number;
     active_users: number;
@@ -225,17 +229,17 @@ function AdminOverview({ pluginCount, onNavigate }: { pluginCount: number; onNav
     : '—';
 
   const statCards = [
-    { label: 'Người dùng', value: stats ? String(stats.total_users) : '—', icon: '👥', color: 'hsl(220 80% 60%)' },
-    { label: 'Kênh hoạt động', value: stats ? String(stats.total_rooms) : '—', icon: '💬', color: 'hsl(160 60% 50%)' },
-    { label: 'Quản trị viên', value: stats ? String(stats.admin_count) : '—', icon: '🛡️', color: 'hsl(280 60% 60%)' },
-    { label: 'Dung lượng lưu trữ', value: storageLabel, icon: '💾', color: 'hsl(340 70% 55%)' },
-    { label: 'Plugins đang chạy', value: String(pluginCount), icon: '📦', color: 'hsl(30 80% 55%)' },
+    { label: t('adminPanel.statUsers'), value: stats ? String(stats.total_users) : '—', icon: '👥', color: 'hsl(220 80% 60%)' },
+    { label: t('adminPanel.statActiveChannels'), value: stats ? String(stats.total_rooms) : '—', icon: '💬', color: 'hsl(160 60% 50%)' },
+    { label: t('adminPanel.statAdmins'), value: stats ? String(stats.admin_count) : '—', icon: '🛡️', color: 'hsl(280 60% 60%)' },
+    { label: t('adminPanel.statStorage'), value: storageLabel, icon: '💾', color: 'hsl(340 70% 55%)' },
+    { label: t('adminPanel.statRunningPlugins'), value: String(pluginCount), icon: '📦', color: 'hsl(30 80% 55%)' },
   ];
 
   return (
     <PageContainer
-      title="Tổng quan Workspace"
-      subtitle="Dashboard quản trị tổng hợp cho Saybridge"
+      title={t('adminPanel.overviewTitle')}
+      subtitle={t('adminPanel.overviewSubtitle')}
       icon={<Activity size={24} />}
     >
       <div style={{ maxWidth: '960px' }}>
@@ -254,19 +258,19 @@ function AdminOverview({ pluginCount, onNavigate }: { pluginCount: number; onNav
         </div>
 
         <div className="admin-quick-actions">
-          <h3>Thao tác nhanh</h3>
+          <h3>{t('adminPanel.quickActions')}</h3>
           <div className="quick-actions-grid">
             <button className="quick-action-btn" onClick={() => onNavigate('users')}>
-              <span>📩</span> Quản lý người dùng
+              <span>📩</span> {t('adminPanel.manageUsers')}
             </button>
             <button className="quick-action-btn" onClick={() => onNavigate('plugins')}>
-              <span>📦</span> Quản lý Plugins
+              <span>📦</span> {t('adminPanel.managePlugins')}
             </button>
             <button className="quick-action-btn" onClick={() => onNavigate('settings')}>
-              <span>⚙️</span> Cài đặt hệ thống
+              <span>⚙️</span> {t('adminPanel.systemSettings')}
             </button>
             <button className="quick-action-btn" onClick={() => onNavigate('analytics')}>
-              <span>📊</span> Xem thống kê
+              <span>📊</span> {t('adminPanel.viewAnalytics')}
             </button>
           </div>
         </div>
@@ -276,12 +280,13 @@ function AdminOverview({ pluginCount, onNavigate }: { pluginCount: number; onNav
 }
 
 function AdminPlaceholder({ title, description, icon }: { title: string; description: string; icon: string }) {
+  const { t } = useTranslation();
   return (
     <div className="admin-placeholder">
       <span className="admin-placeholder-icon">{icon}</span>
       <h2>{title}</h2>
       <p>{description}</p>
-      <span className="admin-placeholder-badge">Đang phát triển</span>
+      <span className="admin-placeholder-badge">{t('adminPanel.inDevelopment')}</span>
     </div>
   );
 }

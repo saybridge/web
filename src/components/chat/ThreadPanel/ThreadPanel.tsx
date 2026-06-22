@@ -7,6 +7,7 @@ import { api } from '../../../services/api';
 import { sendMessageViaWS } from '../../../services/websocket';
 import { MessageComposer, MarkdownRenderer, parse } from '@saybridge/composer';
 import { MessageBubble } from '../MessageBubble/MessageBubble';
+import { useTranslation } from 'react-i18next';
 import './ThreadPanel.css';
 
 interface ThreadPanelProps {
@@ -26,6 +27,7 @@ const getSenderColor = (senderId: string) => {
 };
 
 export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
+  const { t } = useTranslation();
   const { activeRoomId, activeThreadParentId, messagesByRoom, setMessages } = useChatStore();
   const { user: currentUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -161,7 +163,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
         </div>
         <div className="tp-empty-full">
           <MessageCircle size={28} />
-          <p>Không tìm thấy tin nhắn gốc</p>
+          <p>{t('threadPanel.parentNotFound')}</p>
         </div>
       </div>
     );
@@ -194,7 +196,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
             <span className="tp-parent-time">{formatTime(parentMessage.created_at)}</span>
             {isOverflowed && (
               <button className="tp-parent-expand-btn" onClick={() => setIsModalOpen(true)}>
-                <Maximize2 size={12} /> Xem đầy đủ
+                <Maximize2 size={12} /> {t('threadPanel.viewFull')}
               </button>
             )}
           </div>
@@ -206,7 +208,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
       <div className="tp-divider">
         <span className="tp-divider-line" />
         <span className="tp-divider-text">
-          {threadReplies.length} trả lời
+          {t('threadPanel.replyCount', { count: threadReplies.length })}
         </span>
         <span className="tp-divider-line" />
       </div>
@@ -223,7 +225,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
         {!isLoading && threadReplies.length === 0 && (
           <div className="tp-empty">
             <MessageCircle size={22} />
-            <p>Chưa có phản hồi nào.<br />Hãy là người đầu tiên trả lời!</p>
+            <p>{t('threadPanel.noRepliesYet')}<br />{t('threadPanel.beFirstToReply')}</p>
           </div>
         )}
         {threadReplies.map((reply, index) => {
@@ -257,7 +259,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
       <div className="tp-composer">
         <MessageComposer
           onSend={handleSend}
-          placeholder="Trả lời thread..."
+          placeholder={t('threadPanel.replyPlaceholder')}
           enterBehavior={usePreferencesStore.getState().enterBehavior}
         />
       </div>
@@ -269,7 +271,7 @@ export const ThreadPanel: React.FC<ThreadPanelProps> = ({ onClose }) => {
             <div className="tp-modal-header">
               <div className="tp-modal-header-left">
                 <MessageCircle size={16} />
-                <span className="tp-modal-title">Chi tiết tin nhắn gốc</span>
+                <span className="tp-modal-title">{t('threadPanel.parentDetailTitle')}</span>
               </div>
               <button className="tp-modal-close" onClick={() => setIsModalOpen(false)}>
                 <X size={16} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, Search, MessageSquare } from 'lucide-react';
 import { api } from '../../../services/api';
 import { useChatStore, Room } from '../../../stores/useChatStore';
@@ -18,6 +19,7 @@ interface UserResult {
 }
 
 export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState<UserResult[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -49,7 +51,7 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
         }
       } catch (err: any) {
         console.error('Failed to search users', err);
-        setError(err.message || 'Không thể tải danh sách người dùng');
+        setError(err.message || t('startDm.loadUsersError'));
       } finally {
         setIsLoading(false);
       }
@@ -100,7 +102,7 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
       setError(
         err.response?.data?.error?.message ||
         err.message ||
-        'Không thể khởi tạo cuộc hội thoại'
+        t('startDm.createError')
       );
     } finally {
       setIsSubmitting(false);
@@ -117,7 +119,7 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
       <div className="dialog-card dm-start-card">
         {/* Header */}
         <div className="dialog-header">
-          <h3 className="dialog-title">Bắt đầu trò chuyện trực tiếp</h3>
+          <h3 className="dialog-title">{t('startDm.title')}</h3>
           <button className="dialog-close-btn" onClick={onClose} disabled={isSubmitting}>
             <X size={20} />
           </button>
@@ -129,13 +131,13 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
 
           {/* Search box */}
           <div className="form-group">
-            <label className="form-label">Tìm kiếm người dùng</label>
+            <label className="form-label">{t('startDm.searchLabel')}</label>
             <div className="input-with-prefix">
               <Search size={16} className="input-prefix-icon" />
               <input
                 type="text"
                 className="form-input prefix-padding"
-                placeholder="Nhập tên hiển thị hoặc username..."
+                placeholder={t('startDm.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 disabled={isSubmitting}
@@ -146,15 +148,15 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
 
           {/* Users List */}
           <div className="form-group">
-            <label className="form-label">Người dùng</label>
+            <label className="form-label">{t('startDm.usersLabel')}</label>
             <div className="dm-user-list-container">
               {isLoading ? (
                 <div className="dm-list-loading">
                   <div className="spinner" />
-                  <span>Đang tải người dùng...</span>
+                  <span>{t('startDm.loadingUsers')}</span>
                 </div>
               ) : users.length === 0 ? (
-                <div className="dm-list-empty">Không tìm thấy người dùng nào</div>
+                <div className="dm-list-empty">{t('startDm.noUsers')}</div>
               ) : (
                 <div className="dm-user-list">
                   {users.map((u) => (
@@ -195,7 +197,7 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
               onClick={onClose}
               disabled={isSubmitting}
             >
-              Hủy
+              {t('startDm.cancel')}
             </button>
             <button
               type="submit"
@@ -203,7 +205,7 @@ export const StartDMDialog: React.FC<StartDMDialogProps> = ({ onClose }) => {
               disabled={isSubmitting || !selectedUserId}
             >
               <MessageSquare size={16} style={{ marginRight: '6px' }} />
-              Bắt đầu chat
+              {t('startDm.submit')}
             </button>
           </div>
         </form>

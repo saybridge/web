@@ -4,6 +4,7 @@ import {
   Brain, Cpu, BarChart3, Save, Plus, Trash2, Edit3, 
   Loader2, RefreshCw, Key, Globe, Check, X, Play
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../../services/api';
 import './CopilotConfig.css';
 
@@ -93,6 +94,7 @@ const MODELS: Record<string, { value: string; label: string }[]> = {
 };
 
 export function CopilotConfig() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'agents' | 'gateway' | 'metrics'>('agents');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -104,7 +106,7 @@ export function CopilotConfig() {
     apiKey: '',
     temperature: 0.7,
     maxTokens: 2048,
-    systemPrompt: 'Bạn là AI trợ lý thân thiện, luôn trả lời bằng tiếng Việt.',
+    systemPrompt: t('copilotConfig.defaultSystemPrompt'),
     autoReply: false,
     moderationEnabled: true,
     orchestratorRules: '',
@@ -179,9 +181,9 @@ export function CopilotConfig() {
         payload.providers[payload.provider].model = payload.model || '';
       }
       await api.put('/copilot/config', payload);
-      alert('Đã lưu cấu hình AI Gateway thành công!');
+      alert(t('copilotConfig.saveGatewaySuccess'));
     } catch (err) {
-      alert('Lỗi khi lưu cấu hình AI Gateway.');
+      alert(t('copilotConfig.saveGatewayError'));
     } finally {
       setSaving(false);
     }
@@ -194,14 +196,14 @@ export function CopilotConfig() {
       await api.put(`/copilot/agents/${agent.id}`, updated);
       setAgents(prev => prev.map(a => a.id === agent.id ? updated : a));
     } catch (err) {
-      alert('Lỗi khi cập nhật trạng thái Agent.');
+      alert(t('copilotConfig.toggleAgentError'));
     }
   };
 
   // Save Agent (Create / Edit)
   const handleSaveAgent = async () => {
     if (!editingAgent?.name || !editingAgent?.username || !editingAgent?.systemPrompt) {
-      alert('Vui lòng điền đầy đủ các thông tin bắt buộc.');
+      alert(t('copilotConfig.requiredFieldsError'));
       return;
     }
 
@@ -219,7 +221,7 @@ export function CopilotConfig() {
       setShowAgentModal(false);
       setEditingAgent(null);
     } catch (err: any) {
-      alert(err.response?.data?.error || 'Lỗi khi lưu thông tin Agent.');
+      alert(err.response?.data?.error || t('copilotConfig.saveAgentError'));
     } finally {
       setSaving(false);
     }
@@ -227,19 +229,19 @@ export function CopilotConfig() {
 
   // Delete Agent
   const handleDeleteAgent = async (id: string) => {
-    if (!window.confirm('Bạn có chắc chắn muốn xóa Agent này không?')) return;
+    if (!window.confirm(t('copilotConfig.deleteAgentConfirm'))) return;
     try {
       await api.delete(`/copilot/agents/${id}`);
       setAgents(prev => prev.filter(a => a.id !== id));
     } catch (err) {
-      alert('Lỗi khi xóa Agent.');
+      alert(t('copilotConfig.deleteAgentError'));
     }
   };
 
   return (
     <PageContainer
       title="Copilot Configuration"
-      subtitle="Quản trị các tính năng hỗ trợ AI, dịch thuật và Multi-Agent"
+      subtitle={t('copilotConfig.subtitle')}
       icon={<Brain size={18} />}
       tabs={
         <>
@@ -253,13 +255,13 @@ export function CopilotConfig() {
           </button>
           <button className={activeTab === 'metrics' ? 'active' : ''} onClick={() => setActiveTab('metrics')}>
             <BarChart3 size={16} />
-            <span>Giám sát & Log</span>
+            <span>{t('copilotConfig.tabMonitoring')}</span>
           </button>
         </>
       }
       actions={
         <Button variant="secondary" onClick={fetchData} disabled={loading} icon={<RefreshCw size={14} className={loading ? 'spin' : ''} />}>
-          Làm mới
+          {t('copilotConfig.refresh')}
         </Button>
       }
     >
@@ -268,7 +270,7 @@ export function CopilotConfig() {
         {loading ? (
           <div className="cc-loading-state">
             <Loader2 size={32} className="spin" />
-            <p>Đang tải dữ liệu Copilot...</p>
+            <p>{t('copilotConfig.loading')}</p>
           </div>
         ) : (
           <>
@@ -276,9 +278,9 @@ export function CopilotConfig() {
             {activeTab === 'agents' && (
               <div className="cc-tab-pane">
                 <div className="cc-pane-header">
-                  <h3>Danh sách AIAgent hoạt động</h3>
+                  <h3>{t('copilotConfig.activeAgentsTitle')}</h3>
                   <Button variant="primary" icon={<Plus size={14} />} onClick={() => { setEditingAgent({ enabled: true, triggerType: 'mention' }); setShowAgentModal(true); }}>
-                    Thêm Agent mới
+                    {t('copilotConfig.addAgent')}
                   </Button>
                 </div>
 
@@ -298,15 +300,15 @@ export function CopilotConfig() {
 
                       <div className="cc-agent-meta">
                         <Badge variant="info">{agent.model}</Badge>
-                        <Badge variant="default">Trigger: {agent.triggerType}</Badge>
+                        <Badge variant="default">{t('copilotConfig.triggerBadge', { type: agent.triggerType })}</Badge>
                       </div>
 
                       <div className="cc-agent-actions">
                         <Button size="sm" variant="secondary" icon={<Edit3 size={12} />} onClick={() => { setEditingAgent(agent); setShowAgentModal(true); }}>
-                          Sửa
+                          {t('copilotConfig.edit')}
                         </Button>
                         <Button size="sm" variant="ghost" className="danger-btn" icon={<Trash2 size={12} />} onClick={() => handleDeleteAgent(agent.id)}>
-                          Xoá
+                          {t('copilotConfig.delete')}
                         </Button>
                       </div>
                     </div>
@@ -318,10 +320,10 @@ export function CopilotConfig() {
             {/* ─── TAB 2: GATEWAY ───────────────────────────────────────── */}
             {activeTab === 'gateway' && (
               <div className="cc-tab-pane cc-form-pane">
-                <h3>Cấu hình AI Gateway Cốt lõi</h3>
-                
+                <h3>{t('copilotConfig.gatewayConfigTitle')}</h3>
+
                 <div className="cc-form-grid">
-                  <FormField label="Nhà cung cấp AI mặc định" required>
+                  <FormField label={t('copilotConfig.defaultProvider')} required>
                     <Select
                       options={PROVIDERS}
                       value={config.provider}
@@ -332,7 +334,7 @@ export function CopilotConfig() {
                     />
                   </FormField>
 
-                  <FormField label="Model mặc định" required>
+                  <FormField label={t('copilotConfig.defaultModel')} required>
                     <Select
                       options={MODELS[config.provider] || []}
                       value={config.model}
@@ -340,17 +342,17 @@ export function CopilotConfig() {
                     />
                   </FormField>
 
-                  <FormField label="API Key mặc định">
+                  <FormField label={t('copilotConfig.defaultApiKey')}>
                     <TextInput
                       type="password"
-                      placeholder="Nhập API Key cung cấp..."
+                      placeholder={t('copilotConfig.apiKeyPlaceholder')}
                       value={config.apiKey || ''}
                       onChange={(e: any) => setConfig(prev => ({ ...prev, apiKey: e.target.value }))}
                     />
                   </FormField>
 
                   <div className="cc-form-row">
-                    <FormField label="Nhiệt độ (Temperature)">
+                    <FormField label={t('copilotConfig.temperature')}>
                       <div className="cc-range-slider">
                         <input
                           type="range"
@@ -364,7 +366,7 @@ export function CopilotConfig() {
                       </div>
                     </FormField>
 
-                    <FormField label="Số lượng Token phản hồi tối đa (Max Tokens)">
+                    <FormField label={t('copilotConfig.maxTokens')}>
                       <TextInput
                         type="number"
                         value={config.maxTokens}
@@ -373,10 +375,10 @@ export function CopilotConfig() {
                     </FormField>
                   </div>
 
-                  <FormField label="System Prompt Cốt lõi">
+                  <FormField label={t('copilotConfig.coreSystemPrompt')}>
                     <textarea
                       className="cc-textarea"
-                      placeholder="Mô tả hành vi mặc định của Copilot..."
+                      placeholder={t('copilotConfig.coreSystemPromptPlaceholder')}
                       value={config.systemPrompt}
                       onChange={(e) => setConfig(prev => ({ ...prev, systemPrompt: e.target.value }))}
                     />
@@ -385,34 +387,34 @@ export function CopilotConfig() {
                   <div className="cc-form-row toggles-row">
                     <div className="cc-toggle-item">
                       <div className="cc-toggle-info">
-                        <strong>Tự động phản hồi (Auto-Reply)</strong>
-                        <p>Tự động trả lời khi được nhắc đến (@) trong phòng chat.</p>
+                        <strong>{t('copilotConfig.autoReplyTitle')}</strong>
+                        <p>{t('copilotConfig.autoReplyDesc')}</p>
                       </div>
                       <Toggle checked={config.autoReply} onChange={() => setConfig(prev => ({ ...prev, autoReply: !prev.autoReply }))} />
                     </div>
 
                     <div className="cc-toggle-item">
                       <div className="cc-toggle-info">
-                        <strong>Kiểm duyệt nội dung AI (Moderation)</strong>
-                        <p>Kiểm duyệt tin nhắn độc hại trước khi gửi đi.</p>
+                        <strong>{t('copilotConfig.moderationTitle')}</strong>
+                        <p>{t('copilotConfig.moderationDesc')}</p>
                       </div>
                       <Toggle checked={config.moderationEnabled} onChange={() => setConfig(prev => ({ ...prev, moderationEnabled: !prev.moderationEnabled }))} />
                     </div>
                   </div>
 
-                  <FormField label="Quy tắc điều phối Multi-Agent (Orchestrator Rules)">
+                  <FormField label={t('copilotConfig.orchestratorRules')}>
                     <textarea
                       className="cc-textarea"
-                      placeholder="Hướng dẫn phân tích câu hỏi để giao việc cho các Agent khác nhau..."
+                      placeholder={t('copilotConfig.orchestratorRulesPlaceholder')}
                       value={config.orchestratorRules || ''}
                       onChange={(e) => setConfig(prev => ({ ...prev, orchestratorRules: e.target.value }))}
                     />
                   </FormField>
 
-                  <FormField label="Quy tắc kiểm duyệt nội dung (Moderation Rules)">
+                  <FormField label={t('copilotConfig.moderationRules')}>
                     <textarea
                       className="cc-textarea"
-                      placeholder="Chính sách lọc nội dung hoặc danh sách từ cấm..."
+                      placeholder={t('copilotConfig.moderationRulesPlaceholder')}
                       value={config.moderationRules || ''}
                       onChange={(e) => setConfig(prev => ({ ...prev, moderationRules: e.target.value }))}
                     />
@@ -421,7 +423,7 @@ export function CopilotConfig() {
 
                 <div className="cc-form-actions">
                   <Button variant="primary" disabled={saving} onClick={handleSaveConfig} icon={saving ? <Loader2 className="spin" size={14} /> : <Save size={14} />}>
-                    Lưu cấu hình Gateway
+                    {t('copilotConfig.saveGateway')}
                   </Button>
                 </div>
               </div>
@@ -433,36 +435,36 @@ export function CopilotConfig() {
                 {/* Cards */}
                 <div className="cc-metrics-grid">
                   <div className="cc-metric-card">
-                    <h4>Tổng số truy vấn</h4>
+                    <h4>{t('copilotConfig.totalQueries')}</h4>
                     <span className="cc-metric-value">{metrics.total_queries}</span>
                   </div>
                   <div className="cc-metric-card">
-                    <h4>Tokens Đầu vào</h4>
+                    <h4>{t('copilotConfig.inputTokens')}</h4>
                     <span className="cc-metric-value">{metrics.input_tokens.toLocaleString()}</span>
                   </div>
                   <div className="cc-metric-card">
-                    <h4>Tokens Đầu ra</h4>
+                    <h4>{t('copilotConfig.outputTokens')}</h4>
                     <span className="cc-metric-value">{metrics.output_tokens.toLocaleString()}</span>
                   </div>
                   <div className="cc-metric-card highlight-card">
-                    <h4>Ước tính Chi phí</h4>
+                    <h4>{t('copilotConfig.estimatedCost')}</h4>
                     <span className="cc-metric-value">${metrics.total_cost.toFixed(4)}</span>
                   </div>
                 </div>
 
                 {/* Logs Table */}
                 <div className="cc-logs-section">
-                  <h3>Lịch sử cuộc gọi AI gần đây</h3>
+                  <h3>{t('copilotConfig.recentCallsTitle')}</h3>
                   <div className="cc-table-wrapper">
                     <table className="cc-table">
                       <thead>
                         <tr>
-                          <th>Thời gian</th>
-                          <th>Agent</th>
-                          <th>Yêu cầu</th>
-                          <th>Phản hồi</th>
-                          <th>Tokens</th>
-                          <th>Chi phí</th>
+                          <th>{t('copilotConfig.colTime')}</th>
+                          <th>{t('copilotConfig.colAgent')}</th>
+                          <th>{t('copilotConfig.colRequest')}</th>
+                          <th>{t('copilotConfig.colResponse')}</th>
+                          <th>{t('copilotConfig.colTokens')}</th>
+                          <th>{t('copilotConfig.colCost')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -491,23 +493,23 @@ export function CopilotConfig() {
         <div className="cc-modal-backdrop">
           <div className="cc-modal">
             <div className="cc-modal-header">
-              <h3>{editingAgent.id ? 'Cập nhật Agent' : 'Tạo mới Agent'}</h3>
+              <h3>{editingAgent.id ? t('copilotConfig.modalEditTitle') : t('copilotConfig.modalCreateTitle')}</h3>
               <button className="cc-modal-close" onClick={() => { setShowAgentModal(false); setEditingAgent(null); }}>
                 <X size={18} />
               </button>
             </div>
             <div className="cc-modal-body">
-              <FormField label="Tên Agent" required>
+              <FormField label={t('copilotConfig.agentName')} required>
                 <TextInput
-                  placeholder="Ví dụ: Coder Bot"
+                  placeholder={t('copilotConfig.agentNamePlaceholder')}
                   value={editingAgent.name || ''}
                   onChange={(e: any) => setEditingAgent(prev => ({ ...prev, name: e.target.value }))}
                 />
               </FormField>
 
-              <FormField label="Username (Unique ID)" required>
+              <FormField label={t('copilotConfig.username')} required>
                 <TextInput
-                  placeholder="ví dụ: coder"
+                  placeholder={t('copilotConfig.usernamePlaceholder')}
                   value={editingAgent.username || ''}
                   onChange={(e: any) => setEditingAgent(prev => ({ ...prev, username: e.target.value }))}
                   disabled={!!editingAgent.id}
@@ -523,7 +525,7 @@ export function CopilotConfig() {
                   />
                 </FormField>
 
-                <FormField label="Model chỉ định">
+                <FormField label={t('copilotConfig.assignedModel')}>
                   <Select
                     options={MODELS[config.provider] || []}
                     value={editingAgent.model || config.model}
@@ -532,17 +534,17 @@ export function CopilotConfig() {
                 </FormField>
               </div>
 
-              <FormField label="System Prompt riêng cho Agent" required>
+              <FormField label={t('copilotConfig.agentSystemPrompt')} required>
                 <textarea
                   className="cc-textarea"
-                  placeholder="Hướng dẫn hành vi, nhiệm vụ cụ thể cho Agent này..."
+                  placeholder={t('copilotConfig.agentSystemPromptPlaceholder')}
                   value={editingAgent.systemPrompt || ''}
                   onChange={(e) => setEditingAgent(prev => ({ ...prev, systemPrompt: e.target.value }))}
                 />
               </FormField>
 
               <div className="cc-modal-row">
-                <FormField label="Trọng số phản hồi (Temperature)">
+                <FormField label={t('copilotConfig.agentTemperature')}>
                   <TextInput
                     type="number"
                     step="0.1"
@@ -553,11 +555,11 @@ export function CopilotConfig() {
                   />
                 </FormField>
 
-                <FormField label="Kịch bản kích hoạt (Trigger Type)">
+                <FormField label={t('copilotConfig.triggerType')}>
                   <Select
                     options={[
-                      { value: 'mention', label: 'Khi được tag (@username)' },
-                      { value: 'silent', label: 'Lắng nghe thụ động (Silent)' }
+                      { value: 'mention', label: t('copilotConfig.triggerMention') },
+                      { value: 'silent', label: t('copilotConfig.triggerSilent') }
                     ]}
                     value={editingAgent.triggerType || 'mention'}
                     onChange={(val: any) => setEditingAgent(prev => ({ ...prev, triggerType: val }))}
@@ -565,25 +567,25 @@ export function CopilotConfig() {
                 </FormField>
               </div>
 
-              <FormField label="Keyword kích hoạt (Trigger Keyword)">
+              <FormField label={t('copilotConfig.triggerKeyword')}>
                 <TextInput
-                  placeholder="Ví dụ: @sai_coder"
+                  placeholder={t('copilotConfig.triggerKeywordPlaceholder')}
                   value={editingAgent.triggerKeyword || ''}
                   onChange={(e: any) => setEditingAgent(prev => ({ ...prev, triggerKeyword: e.target.value }))}
                 />
               </FormField>
 
-              <FormField label="Các Room ID giới hạn (Phân cách bằng dấu phẩy)">
+              <FormField label={t('copilotConfig.roomIds')}>
                 <TextInput
-                  placeholder="Để trống nếu hoạt động toàn bộ room..."
+                  placeholder={t('copilotConfig.roomIdsPlaceholder')}
                   value={editingAgent.roomIds || ''}
                   onChange={(e: any) => setEditingAgent(prev => ({ ...prev, roomIds: e.target.value }))}
                 />
               </FormField>
             </div>
             <div className="cc-modal-footer">
-              <Button variant="secondary" onClick={() => { setShowAgentModal(false); setEditingAgent(null); }}>Hủy</Button>
-              <Button variant="primary" disabled={saving} onClick={handleSaveAgent} icon={saving ? <Loader2 className="spin" size={14} /> : <Check size={14} />}>Lưu lại</Button>
+              <Button variant="secondary" onClick={() => { setShowAgentModal(false); setEditingAgent(null); }}>{t('copilotConfig.cancel')}</Button>
+              <Button variant="primary" disabled={saving} onClick={handleSaveAgent} icon={saving ? <Loader2 className="spin" size={14} /> : <Check size={14} />}>{t('copilotConfig.save')}</Button>
             </div>
           </div>
         </div>

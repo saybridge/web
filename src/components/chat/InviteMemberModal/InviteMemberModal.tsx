@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search, Users, UserPlus, X } from 'lucide-react';
 import { api } from '../../../services/api';
 import { LiquidModal } from '@saybridge/ui';
@@ -31,6 +32,7 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
   inputRef,
   onClose,
 }) => {
+  const { t } = useTranslation();
   // Search users
   useEffect(() => {
     if (!inviteQuery.trim() || inviteQuery.length < 2) {
@@ -67,7 +69,7 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
     <LiquidModal
       isOpen={true}
       onClose={onClose}
-      title="Thêm thành viên"
+      title={t('inviteMember.title')}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {/* Search */}
@@ -76,7 +78,7 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
           <input
             ref={inputRef}
             type="text"
-            placeholder="Tìm theo tên, username hoặc email..."
+            placeholder={t('inviteMember.searchPlaceholder')}
             value={inviteQuery}
             onChange={(e) => setInviteQuery(e.target.value)}
             autoFocus
@@ -93,13 +95,13 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
           {inviteQuery.length < 2 && (
             <div className="invite-modal-empty" style={{ padding: '24px 0' }}>
               <Users size={28} />
-              <p>Nhập ít nhất 2 ký tự để tìm kiếm người dùng</p>
+              <p>{t('inviteMember.minChars')}</p>
             </div>
           )}
           {inviteQuery.length >= 2 && inviteResults.length === 0 && (
             <div className="invite-modal-empty" style={{ padding: '24px 0' }}>
               <Search size={28} />
-              <p>Không tìm thấy người dùng phù hợp</p>
+              <p>{t('inviteMember.noResults')}</p>
             </div>
           )}
           {inviteResults.map((u) => {
@@ -118,14 +120,14 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
                   </span>
                 </div>
                 {invited ? (
-                  <span className="invite-modal-badge">✓ Đã mời</span>
+                  <span className="invite-modal-badge">{t('inviteMember.invited')}</span>
                 ) : (
                   <button
                     className="invite-modal-invite-btn"
                     onClick={() => handleInvite(u.id)}
                     disabled={isInviting}
                   >
-                    Mời
+                    {t('inviteMember.invite')}
                   </button>
                 )}
               </div>

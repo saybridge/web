@@ -7,6 +7,15 @@ export type EnterBehavior = 'send' | 'newline';
 export type RoomSortOrder = 'activity' | 'alphabetical' | 'unread';
 export type AccentColor = 'gray' | 'indigo' | 'blue' | 'cyan' | 'green' | 'emerald' | 'orange' | 'rose' | 'pink' | 'red';
 export type WallpaperOption = 'ambient' | 'solid' | 'aurora' | 'sunset' | 'bubblegum' | 'custom';
+export type LiquidGlass = 'off' | 'subtle' | 'medium' | 'strong';
+
+// Liquid-glass intensity presets: SVG displacement scale + backdrop recipe + rim alpha.
+export const LIQUID_PRESETS: Record<LiquidGlass, { scale: number; blur: number; sat: number; bright: number; rim: number }> = {
+  off:    { scale: 0,  blur: 4, sat: 120, bright: 100, rim: 0.16 },
+  subtle: { scale: 22, blur: 6, sat: 130, bright: 103, rim: 0.26 },
+  medium: { scale: 42, blur: 5, sat: 140, bright: 104, rim: 0.34 },
+  strong: { scale: 66, blur: 4, sat: 125, bright: 102, rim: 0.43 },
+};
 
 // Accent color presets: [main, hover, r, g, b]
 export const ACCENT_PRESETS: Record<AccentColor, { main: string; hover: string; r: number; g: number; b: number }> = {
@@ -32,6 +41,7 @@ export interface Preferences {
   showReadReceipts: boolean;
   accentColor: AccentColor;
   wallpaper: WallpaperOption;
+  liquidGlass: LiquidGlass;
 }
 
 interface PreferencesStore extends Preferences {
@@ -53,6 +63,7 @@ const DEFAULTS: Preferences = {
   showReadReceipts: true,
   accentColor: 'gray',
   wallpaper: 'ambient',
+  liquidGlass: 'strong',
 };
 
 // Load from localStorage as fallback
@@ -85,6 +96,7 @@ function mapFromAPI(apiSettings: any): Partial<Preferences> {
   if (typeof apiSettings.show_read_receipts === 'boolean') result.showReadReceipts = apiSettings.show_read_receipts;
   if (apiSettings.accent_color) result.accentColor = apiSettings.accent_color;
   if (apiSettings.wallpaper) result.wallpaper = apiSettings.wallpaper;
+  if (apiSettings.liquid_glass) result.liquidGlass = apiSettings.liquid_glass;
   return result;
 }
 
@@ -100,6 +112,7 @@ function mapToAPI(key: keyof Preferences, value: any): Record<string, any> {
     showReadReceipts: 'show_read_receipts',
     accentColor: 'accent_color',
     wallpaper: 'wallpaper',
+    liquidGlass: 'liquid_glass',
   };
   return { [keyMap[key]]: value };
 }
@@ -132,7 +145,9 @@ export const usePreferencesStore = create<PreferencesStore>((set, get) => ({
       const data = res.data?.data || res.data;
       if (data?.settings) {
         const mapped = mapFromAPI(data.settings);
-        const merged = { ...DEFAULTS, ...mapped };
+        // localStorage fills any keys the API doesn't return (e.g. a newer pref the
+        // backend doesn't persist yet), so a local choice isn't reset on refresh.
+        const merged = { ...DEFAULTS, ...loadFromStorage(), ...mapped };
         set({ ...merged, loaded: true });
         saveToStorage(merged);
         get().applyToDOM();
@@ -162,6 +177,7 @@ export const usePreferencesStore = create<PreferencesStore>((set, get) => ({
       showReadReceipts: state.showReadReceipts,
       accentColor: state.accentColor,
       wallpaper: state.wallpaper,
+      liquidGlass: state.liquidGlass,
     };
     // Apply key update to prefs too since set is async
     (prefs as any)[key] = value;
@@ -206,6 +222,21 @@ export const usePreferencesStore = create<PreferencesStore>((set, get) => ({
     root.style.setProperty('--accent-muted', `rgba(${preset.r}, ${preset.g}, ${preset.b}, 0.15)`);
     root.style.setProperty('--accent-glow', `rgba(${preset.r}, ${preset.g}, ${preset.b}, 0.30)`);
     root.style.setProperty('--accent-glass', `rgba(${preset.r}, ${preset.g}, ${preset.b}, 0.08)`);
+
+    // Liquid glass intensity — drive the SVG displacement + backdrop recipe + rim.
+    const lg = LIQUID_PRESETS[state.liquidGlass] || LIQUID_PRESETS.strong;
+    const dispEl = document.querySelector('#sb-liquid-glass feDisplacementMap');
+    if (dispEl) dispEl.setAttribute('scale', String(lg.scale));
+    root.style.setProperty(
+      '--lg-backdrop',
+      lg.scale === 0
+        ? 'var(--blur-regular)'
+        : `blur(${lg.blur}px) saturate(${lg.sat}%) brightness(${lg.bright}%) url("#sb-liquid-glass")`
+    );
+    root.style.setProperty(
+      '--glass-rim',
+      `inset 0 1px 1px rgba(255, 255, 255, ${lg.rim}), inset 0 -1px 1px rgba(0, 0, 0, 0.28), inset 1px 0 1px rgba(255, 255, 255, 0.05), inset -1px 0 1px rgba(255, 255, 255, 0.05)`
+    );
 
     // Wallpaper
     root.setAttribute('data-wallpaper', state.wallpaper || 'ambient');

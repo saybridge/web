@@ -171,7 +171,7 @@ export function SetupWizard({ onComplete }: SetupWizardProps) {
         <input
           className={`setup-input ${fieldErrors.admin_name ? 'setup-input--error' : ''}`}
           type="text"
-          placeholder={t('setup.full_name_placeholder', 'Nguyễn Văn A')}
+          placeholder={t('setupWizard.fullNamePlaceholder', 'John Doe')}
           value={form.admin_name}
           onChange={(e) => updateField('admin_name', e.target.value)}
           autoFocus
@@ -254,7 +254,7 @@ export function SetupWizard({ onComplete }: SetupWizardProps) {
         <input
           className={`setup-input ${fieldErrors.workspace_name ? 'setup-input--error' : ''}`}
           type="text"
-          placeholder={t('setup.workspace_name_placeholder', 'Công ty ABC')}
+          placeholder={t('setupWizard.workspaceNamePlaceholder', 'ABC Company')}
           value={form.workspace_name}
           onChange={(e) => updateField('workspace_name', e.target.value)}
           autoFocus

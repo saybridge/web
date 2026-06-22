@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Settings, ChevronDown, Save, RotateCcw, Check, Image } from 'lucide-react';
 import { PageContainer } from '@saybridge/ui';
 import './SystemSettings.css';
@@ -109,6 +110,7 @@ function loadSettings(): AllSettings {
 
 /* ============ Component ============ */
 export function SystemSettings() {
+  const { t } = useTranslation();
   const [settings, setSettings] = useState<AllSettings>(loadSettings);
   const [savedSettings, setSavedSettings] = useState<AllSettings>(loadSettings);
   const [openSections, setOpenSections] = useState<Set<string>>(new Set(['workspace']));
@@ -189,15 +191,15 @@ export function SystemSettings() {
 
   return (
     <PageContainer
-      title="Cài đặt hệ thống"
-      subtitle="Quản lý cấu hình workspace, email, lưu trữ, thông báo và bảo mật"
+      title={t('systemSettings.title')}
+      subtitle={t('systemSettings.subtitle')}
       icon={<Settings size={24} />}
       actions={
         <div className="ss-header-actions">
           {isDirty && (
             <button className="sb-btn sb-btn-ghost ss-reset-btn" onClick={handleReset}>
               <RotateCcw size={14} />
-              Hoàn tác
+              {t('systemSettings.undo')}
             </button>
           )}
           <button
@@ -206,11 +208,11 @@ export function SystemSettings() {
             disabled={!isDirty || saving}
           >
             {saving ? (
-              <>Đang lưu...</>
+              <>{t('systemSettings.saving')}</>
             ) : (
               <>
                 <Save size={15} />
-                Lưu thay đổi
+                {t('systemSettings.saveChanges')}
                 {isDirty && <span className="ss-dirty-dot" />}
               </>
             )}
@@ -227,8 +229,8 @@ export function SystemSettings() {
             <div className="ss-section-header-left">
               <div className="ss-section-icon workspace">🏢</div>
               <div className="ss-section-title">
-                <h3>Thông tin Workspace</h3>
-                <p>Tên, URL và logo của workspace</p>
+                <h3>{t('systemSettings.workspaceInfoTitle')}</h3>
+                <p>{t('systemSettings.workspaceInfoDesc')}</p>
               </div>
             </div>
             <ChevronDown size={18} className="ss-section-chevron" />
@@ -236,25 +238,25 @@ export function SystemSettings() {
           <div className="ss-section-body">
             <div className="ss-form-grid">
               <div className="ss-field">
-                <label>Tên workspace</label>
+                <label>{t('systemSettings.workspaceNameLabel')}</label>
                 <input
                   type="text"
                   value={settings.workspace.workspaceName}
                   onChange={(e) => updateWorkspace('workspaceName', e.target.value)}
-                  placeholder="Nhập tên workspace..."
+                  placeholder={t('systemSettings.workspaceNamePlaceholder')}
                 />
               </div>
               <div className="ss-field">
-                <label>URL workspace</label>
+                <label>{t('systemSettings.workspaceUrlLabel')}</label>
                 <input
                   type="text"
                   value={settings.workspace.workspaceUrl}
                   readOnly
                 />
-                <span className="ss-field-hint">Được xác định tự động từ trình duyệt</span>
+                <span className="ss-field-hint">{t('systemSettings.workspaceUrlHint')}</span>
               </div>
               <div className="ss-field full-width">
-                <label>URL logo</label>
+                <label>{t('systemSettings.logoUrlLabel')}</label>
                 <input
                   type="text"
                   value={settings.workspace.logoUrl}
@@ -280,8 +282,8 @@ export function SystemSettings() {
                 )}
                 <span className="ss-logo-preview-text">
                   {settings.workspace.logoUrl
-                    ? 'Xem trước logo workspace'
-                    : 'Nhập URL để xem trước logo'}
+                    ? t('systemSettings.logoPreviewActive')
+                    : t('systemSettings.logoPreviewEmpty')}
                 </span>
               </div>
             </div>
@@ -294,8 +296,8 @@ export function SystemSettings() {
             <div className="ss-section-header-left">
               <div className="ss-section-icon email">📧</div>
               <div className="ss-section-title">
-                <h3>Email & SMTP</h3>
-                <p>Cấu hình máy chủ gửi email</p>
+                <h3>{t('systemSettings.smtpTitle')}</h3>
+                <p>{t('systemSettings.smtpDesc')}</p>
               </div>
             </div>
             <ChevronDown size={18} className="ss-section-chevron" />
@@ -303,8 +305,8 @@ export function SystemSettings() {
           <div className="ss-section-body">
             <div className="ss-toggle-row">
               <div className="ss-toggle-info">
-                <span className="ss-toggle-label">Bật SMTP</span>
-                <span className="ss-toggle-desc">Cho phép gửi email từ hệ thống</span>
+                <span className="ss-toggle-label">{t('systemSettings.smtpEnableLabel')}</span>
+                <span className="ss-toggle-desc">{t('systemSettings.smtpEnableDesc')}</span>
               </div>
               <label className="ss-toggle">
                 <input
@@ -336,7 +338,7 @@ export function SystemSettings() {
                 />
               </div>
               <div className="ss-field">
-                <label>Tên đăng nhập</label>
+                <label>{t('systemSettings.smtpUsernameLabel')}</label>
                 <input
                   type="text"
                   value={settings.smtp.smtpUsername}
@@ -345,7 +347,7 @@ export function SystemSettings() {
                 />
               </div>
               <div className="ss-field">
-                <label>Mật khẩu</label>
+                <label>{t('systemSettings.smtpPasswordLabel')}</label>
                 <input
                   type="password"
                   value={settings.smtp.smtpPassword}
@@ -354,7 +356,7 @@ export function SystemSettings() {
                 />
               </div>
               <div className="ss-field">
-                <label>Email gửi đi</label>
+                <label>{t('systemSettings.fromEmailLabel')}</label>
                 <input
                   type="email"
                   value={settings.smtp.fromEmail}
@@ -363,7 +365,7 @@ export function SystemSettings() {
                 />
               </div>
               <div className="ss-field">
-                <label>Tên người gửi</label>
+                <label>{t('systemSettings.fromNameLabel')}</label>
                 <input
                   type="text"
                   value={settings.smtp.fromName}
@@ -381,8 +383,8 @@ export function SystemSettings() {
             <div className="ss-section-header-left">
               <div className="ss-section-icon storage">💾</div>
               <div className="ss-section-title">
-                <h3>Lưu trữ tệp</h3>
-                <p>Cấu hình nơi lưu trữ tệp tin tải lên</p>
+                <h3>{t('systemSettings.storageTitle')}</h3>
+                <p>{t('systemSettings.storageDesc')}</p>
               </div>
             </div>
             <ChevronDown size={18} className="ss-section-chevron" />
@@ -390,14 +392,14 @@ export function SystemSettings() {
           <div className="ss-section-body">
             <div className="ss-form-grid">
               <div className="ss-field full-width">
-                <label>Nhà cung cấp lưu trữ</label>
+                <label>{t('systemSettings.storageProviderLabel')}</label>
                 <select
                   value={settings.storage.storageProvider}
                   onChange={(e) =>
                     updateStorage('storageProvider', e.target.value as StorageSettings['storageProvider'])
                   }
                 >
-                  <option value="local">Local (Máy chủ nội bộ)</option>
+                  <option value="local">{t('systemSettings.storageProviderLocal')}</option>
                   <option value="s3">Amazon S3</option>
                   <option value="minio">MinIO</option>
                 </select>
@@ -447,7 +449,7 @@ export function SystemSettings() {
 
               <div className="ss-slider-field">
                 <div className="ss-slider-header">
-                  <label>Kích thước tệp tối đa</label>
+                  <label>{t('systemSettings.maxFileSizeLabel')}</label>
                   <span className="ss-slider-value">{settings.storage.maxFileSizeMb} MB</span>
                 </div>
                 <input
@@ -476,8 +478,8 @@ export function SystemSettings() {
             <div className="ss-section-header-left">
               <div className="ss-section-icon notifications">🔔</div>
               <div className="ss-section-title">
-                <h3>Thông báo</h3>
-                <p>Quản lý kênh thông báo cho người dùng</p>
+                <h3>{t('systemSettings.notificationsTitle')}</h3>
+                <p>{t('systemSettings.notificationsDesc')}</p>
               </div>
             </div>
             <ChevronDown size={18} className="ss-section-chevron" />
@@ -485,8 +487,8 @@ export function SystemSettings() {
           <div className="ss-section-body">
             <div className="ss-toggle-row">
               <div className="ss-toggle-info">
-                <span className="ss-toggle-label">Thông báo đẩy (Push)</span>
-                <span className="ss-toggle-desc">Gửi thông báo đến thiết bị di động</span>
+                <span className="ss-toggle-label">{t('systemSettings.pushNotifLabel')}</span>
+                <span className="ss-toggle-desc">{t('systemSettings.pushNotifDesc')}</span>
               </div>
               <label className="ss-toggle">
                 <input
@@ -499,8 +501,8 @@ export function SystemSettings() {
             </div>
             <div className="ss-toggle-row">
               <div className="ss-toggle-info">
-                <span className="ss-toggle-label">Thông báo qua Email</span>
-                <span className="ss-toggle-desc">Gửi email khi có tin nhắn hoặc sự kiện quan trọng</span>
+                <span className="ss-toggle-label">{t('systemSettings.emailNotifLabel')}</span>
+                <span className="ss-toggle-desc">{t('systemSettings.emailNotifDesc')}</span>
               </div>
               <label className="ss-toggle">
                 <input
@@ -513,8 +515,8 @@ export function SystemSettings() {
             </div>
             <div className="ss-toggle-row">
               <div className="ss-toggle-info">
-                <span className="ss-toggle-label">Thông báo Desktop</span>
-                <span className="ss-toggle-desc">Hiển thị thông báo trên trình duyệt và ứng dụng desktop</span>
+                <span className="ss-toggle-label">{t('systemSettings.desktopNotifLabel')}</span>
+                <span className="ss-toggle-desc">{t('systemSettings.desktopNotifDesc')}</span>
               </div>
               <label className="ss-toggle">
                 <input
@@ -534,8 +536,8 @@ export function SystemSettings() {
             <div className="ss-section-header-left">
               <div className="ss-section-icon security">🔒</div>
               <div className="ss-section-title">
-                <h3>Bảo mật</h3>
-                <p>Xác thực, phiên đăng nhập và quyền truy cập</p>
+                <h3>{t('systemSettings.securityTitle')}</h3>
+                <p>{t('systemSettings.securityDesc')}</p>
               </div>
             </div>
             <ChevronDown size={18} className="ss-section-chevron" />
@@ -543,8 +545,8 @@ export function SystemSettings() {
           <div className="ss-section-body">
             <div className="ss-toggle-row">
               <div className="ss-toggle-info">
-                <span className="ss-toggle-label">Yêu cầu xác thực 2 yếu tố (2FA)</span>
-                <span className="ss-toggle-desc">Bắt buộc tất cả người dùng bật xác thực 2FA</span>
+                <span className="ss-toggle-label">{t('systemSettings.require2faLabel')}</span>
+                <span className="ss-toggle-desc">{t('systemSettings.require2faDesc')}</span>
               </div>
               <label className="ss-toggle">
                 <input
@@ -557,8 +559,8 @@ export function SystemSettings() {
             </div>
             <div className="ss-toggle-row">
               <div className="ss-toggle-info">
-                <span className="ss-toggle-label">Cho phép đăng ký</span>
-                <span className="ss-toggle-desc">Người dùng mới có thể tự tạo tài khoản</span>
+                <span className="ss-toggle-label">{t('systemSettings.allowRegistrationLabel')}</span>
+                <span className="ss-toggle-desc">{t('systemSettings.allowRegistrationDesc')}</span>
               </div>
               <label className="ss-toggle">
                 <input
@@ -572,7 +574,7 @@ export function SystemSettings() {
             <hr className="ss-divider" />
             <div className="ss-form-grid">
               <div className="ss-field">
-                <label>Thời gian hết hạn phiên (phút)</label>
+                <label>{t('systemSettings.sessionTimeoutLabel')}</label>
                 <input
                   type="number"
                   value={settings.security.sessionTimeoutMinutes}
@@ -583,10 +585,10 @@ export function SystemSettings() {
                   max={10080}
                   placeholder="60"
                 />
-                <span className="ss-field-hint">Phiên đăng nhập sẽ hết hạn sau khoảng thời gian này</span>
+                <span className="ss-field-hint">{t('systemSettings.sessionTimeoutHint')}</span>
               </div>
               <div className="ss-field">
-                <label>Số lần đăng nhập sai tối đa</label>
+                <label>{t('systemSettings.maxLoginAttemptsLabel')}</label>
                 <input
                   type="number"
                   value={settings.security.maxLoginAttempts}
@@ -597,7 +599,7 @@ export function SystemSettings() {
                   max={100}
                   placeholder="5"
                 />
-                <span className="ss-field-hint">Khóa tài khoản sau số lần thử đăng nhập thất bại</span>
+                <span className="ss-field-hint">{t('systemSettings.maxLoginAttemptsHint')}</span>
               </div>
             </div>
           </div>
@@ -608,7 +610,7 @@ export function SystemSettings() {
       {showToast && (
         <div className="ss-toast">
           <Check size={16} />
-          Cài đặt đã được lưu thành công!
+          {t('systemSettings.saveSuccessToast')}
         </div>
       )}
     </PageContainer>

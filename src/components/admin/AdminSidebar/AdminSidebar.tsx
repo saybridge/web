@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Puzzle } from 'lucide-react';
 import './AdminSidebar.css';
 
@@ -19,8 +20,9 @@ interface AdminSidebarProps {
 }
 
 export function AdminSidebar({ activeTab, onTabChange, onClose, tabs, loading }: AdminSidebarProps) {
-  const coreTabs = tabs.filter((t) => !t.isPlugin);
-  const pluginTabs = tabs.filter((t) => t.isPlugin);
+  const { t } = useTranslation();
+  const coreTabs = tabs.filter((tab) => !tab.isPlugin);
+  const pluginTabs = tabs.filter((tab) => tab.isPlugin);
 
   return (
     <div className="admin-sidebar-container">
@@ -30,7 +32,7 @@ export function AdminSidebar({ activeTab, onTabChange, onClose, tabs, loading }:
 
       <nav className="admin-sidebar-nav">
         {loading ? (
-          <div className="admin-nav-loading">Đang tải...</div>
+          <div className="admin-nav-loading">{t('adminSidebar.loading')}</div>
         ) : (
           <>
             {/* Core admin tabs */}
@@ -71,7 +73,7 @@ export function AdminSidebar({ activeTab, onTabChange, onClose, tabs, loading }:
 
       <div className="admin-sidebar-bottom">
         <button className="admin-back-btn" onClick={onClose}>
-          ← Quay lại Chat
+          ← {t('adminSidebar.backToChat')}
         </button>
       </div>
     </div>

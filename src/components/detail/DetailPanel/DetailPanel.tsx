@@ -6,6 +6,7 @@ import {
   Star, FileText, Ban, Bell, BellOff, BellRing, Edit3,
   Archive, Globe, MoreHorizontal, Search, Info
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useChatStore } from '../../../stores/useChatStore';
 import { useAuthStore } from '../../../stores/useAuthStore';
 import { api } from '../../../services/api';
@@ -47,6 +48,7 @@ const AccordionSection: React.FC<{
 };
 
 export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }) => {
+  const { t } = useTranslation();
   const { activeRoomId, rooms, setRooms, onlineUsers } = useChatStore();
   const { user: currentUser } = useAuthStore();
   const [roomDetails, setRoomDetails] = useState<any>(null);
@@ -118,13 +120,13 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
     try {
       const res = await api.post(`/rooms/${activeRoomId}/members`, { user_id: userId });
       if (res.data?.success) {
-        showToast('Đã mời thành viên!', 'success');
+        showToast(t('detail.memberInvited'), 'success');
         setInvitedIds(prev => new Set(prev).add(userId));
         const detailsRes = await api.get(`/rooms/${activeRoomId}`);
         setRoomDetails(detailsRes.data.data);
       }
     } catch (err: any) {
-      showToast('Lỗi: ' + (err.response?.data?.error?.message || err.message), 'error');
+      showToast(t('detail.errorPrefix') + (err.response?.data?.error?.message || err.message), 'error');
     } finally {
       setIsLoading(false);
     }
@@ -132,17 +134,17 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
 
   const handleLeave = async () => {
     if (!activeRoomId) return;
-    if (!window.confirm('Bạn có chắc chắn muốn rời khỏi kênh này?')) return;
+    if (!window.confirm(t('detail.leaveConfirm'))) return;
     setIsLoading(true);
     try {
       const res = await api.post(`/rooms/${activeRoomId}/leave`);
       if (res.data?.success) {
-        showToast('Đã rời khỏi kênh!', 'success');
+        showToast(t('detail.channelLeft'), 'success');
         setRooms(rooms.filter((r) => r.id !== activeRoomId));
         onClose();
       }
     } catch (err: any) {
-      showToast('Lỗi: ' + (err.response?.data?.error?.message || err.message), 'error');
+      showToast(t('detail.errorPrefix') + (err.response?.data?.error?.message || err.message), 'error');
     } finally {
       setIsLoading(false);
     }
@@ -179,8 +181,8 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
     activeRoom.type === 'dm' ? <MessageCircle size={20} /> :
       <Hash size={20} />;
 
-  const roomTypeLabel = activeRoom.type === 'public' ? 'Kênh công khai' :
-    activeRoom.type === 'private' ? 'Kênh riêng tư' : 'Tin nhắn trực tiếp';
+  const roomTypeLabel = activeRoom.type === 'public' ? t('detail.publicChannel') :
+    activeRoom.type === 'private' ? t('detail.privateChannel') : t('detail.directMessage');
 
   const resolvedRoomName = activeRoom.type === 'dm' && dmUser
     ? (dmUser.display_name || dmUser.username)
@@ -188,14 +190,14 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
 
   const resolvedRoomDesc = activeRoom.type === 'dm' && dmUser
     ? (dmUser.custom_status ? `"${dmUser.custom_status}"` : `@${dmUser.username}`)
-    : (roomDetails?.description || roomDetails?.topic || 'Chưa có mô tả');
+    : (roomDetails?.description || roomDetails?.topic || t('detail.noDescription'));
 
   // Quick actions config
   const quickActions = [
-    { id: 'pinned' as const, icon: <Pin size={16} />, label: 'Ghim', show: true },
-    { id: 'starred' as const, icon: <Star size={16} />, label: 'Đánh dấu', show: true },
-    { id: 'files' as const, icon: <FileText size={16} />, label: 'Tệp', show: true },
-    { id: 'banned' as const, icon: <Ban size={16} />, label: 'Cấm', show: activeRoom.type !== 'dm' },
+    { id: 'pinned' as const, icon: <Pin size={16} />, label: t('detail.pin'), show: true },
+    { id: 'starred' as const, icon: <Star size={16} />, label: t('detail.starred'), show: true },
+    { id: 'files' as const, icon: <FileText size={16} />, label: t('detail.files'), show: true },
+    { id: 'banned' as const, icon: <Ban size={16} />, label: t('detail.banned'), show: activeRoom.type !== 'dm' },
   ].filter(a => a.show);
 
   return (
@@ -213,7 +215,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
           <div className="dp-header-pill">
             <div className="dp-header-left">
               <Info size={16} />
-              <span className="dp-header-title">Chi tiết</span>
+              <span className="dp-header-title">{t('detail.headerTitle')}</span>
             </div>
             <button className="dp-header-close" onClick={onClose}>
               <X size={16} />
@@ -268,30 +270,30 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
                 }}
               >
                 <UserPlus size={15} />
-                <span>Thêm thành viên</span>
+                <span>{t('detail.addMember')}</span>
               </button>
             </div>
           )}
 
           {/* ── About Section ── */}
           {activeRoom.type === 'dm' ? (
-            <AccordionSection title="Thông tin người dùng" icon={<Info size={14} />} defaultOpen>
+            <AccordionSection title={t('detail.userInfo')} icon={<Info size={14} />} defaultOpen>
               {dmUser ? (
                 <div className="dp-about-grid">
                   <div className="dp-about-item">
-                    <span className="dp-about-label">Tên hiển thị</span>
+                    <span className="dp-about-label">{t('detail.displayName')}</span>
                     <span className="dp-about-value">{dmUser.display_name || '—'}</span>
                   </div>
                   <div className="dp-about-item">
-                    <span className="dp-about-label">Username</span>
+                    <span className="dp-about-label">{t('detail.username')}</span>
                     <span className="dp-about-value">@{dmUser.username}</span>
                   </div>
                   <div className="dp-about-item">
-                    <span className="dp-about-label">Email</span>
+                    <span className="dp-about-label">{t('detail.email')}</span>
                     <span className="dp-about-value" style={{ wordBreak: 'break-all' }}>{dmUser.email || '—'}</span>
                   </div>
                   <div className="dp-about-item">
-                    <span className="dp-about-label">Trạng thái</span>
+                    <span className="dp-about-label">{t('detail.status')}</span>
                     <span
                       className="dp-about-value"
                       style={{
@@ -305,20 +307,20 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
                     </span>
                   </div>
                   <div className="dp-about-item">
-                    <span className="dp-about-label">Vai trò</span>
+                    <span className="dp-about-label">{t('detail.role')}</span>
                     <span className="dp-about-value">{dmUser.system_role || 'user'}</span>
                   </div>
                   <div className="dp-about-item">
-                    <span className="dp-about-label">Ngày tạo</span>
+                    <span className="dp-about-label">{t('detail.createdDate')}</span>
                     <span className="dp-about-value">{formatDate(roomDetails?.created_at || activeRoom.created_at)}</span>
                   </div>
                 </div>
               ) : (
-                <p className="dp-about-desc">Đang tải thông tin người dùng...</p>
+                <p className="dp-about-desc">{t('detail.loadingUserInfo')}</p>
               )}
             </AccordionSection>
           ) : (
-            <AccordionSection title="Giới thiệu" icon={<Hash size={14} />} defaultOpen>
+            <AccordionSection title={t('detail.about')} icon={<Hash size={14} />} defaultOpen>
               {(roomDetails?.description || roomDetails?.topic) && (
                 <p className="dp-about-desc">
                   {roomDetails?.description || roomDetails?.topic}
@@ -327,18 +329,18 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
               <div className="dp-about-grid">
                 <div className="dp-about-item">
                   <Globe size={13} />
-                  <span className="dp-about-label">Loại</span>
+                  <span className="dp-about-label">{t('detail.type')}</span>
                   <span className="dp-about-value">{roomTypeLabel}</span>
                 </div>
                 <div className="dp-about-item">
                   <Calendar size={13} />
-                  <span className="dp-about-label">Ngày tạo</span>
+                  <span className="dp-about-label">{t('detail.createdDate')}</span>
                   <span className="dp-about-value">{formatDate(roomDetails?.created_at || activeRoom.created_at)}</span>
                 </div>
                 {activeRoom.is_encrypted && (
                   <div className="dp-about-item">
                     <Shield size={13} />
-                    <span className="dp-about-label">Mã hoá</span>
+                    <span className="dp-about-label">{t('detail.encryption')}</span>
                     <span className="dp-about-value dp-about-value--accent">E2EE</span>
                   </div>
                 )}
@@ -349,7 +351,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
           {/* ── Members Section ── */}
           {activeRoom.type !== 'dm' && (
             <AccordionSection
-              title="Thành viên"
+              title={t('detail.members')}
               icon={<Users size={14} />}
               badge={String(members.length)}
               defaultOpen
@@ -360,7 +362,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
                   <Search size={13} />
                   <input
                     type="text"
-                    placeholder="Tìm thành viên..."
+                    placeholder={t('detail.searchMember')}
                     value={memberFilter}
                     onChange={(e) => setMemberFilter(e.target.value)}
                   />
@@ -374,7 +376,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
                     setInvitedIds(new Set());
                     setTimeout(() => inviteInputRef.current?.focus(), 100);
                   }}
-                  title="Thêm thành viên"
+                  title={t('detail.addMember')}
                 >
                   <UserPlus size={14} />
                 </button>
@@ -391,7 +393,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
                     <div className="dp-member-info">
                       <span className="dp-member-name">
                         {member.user_id === currentUser?.id
-                          ? 'Bạn'
+                          ? t('detail.you')
                           : (member.username || member.user_id.slice(0, 8))}
                       </span>
                       <span className={`dp-member-role dp-member-role--${member.room_role}`}>
@@ -403,42 +405,42 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
               </div>
               {filteredMembers.length > 5 && !showAllMembers && (
                 <button className="dp-members-show-all" onClick={() => setShowAllMembers(true)}>
-                  Xem tất cả {filteredMembers.length} thành viên
+                  {t('detail.showAllMembers', { count: filteredMembers.length })}
                 </button>
               )}
               {showAllMembers && filteredMembers.length > 5 && (
                 <button className="dp-members-show-all" onClick={() => setShowAllMembers(false)}>
-                  Thu gọn
+                  {t('detail.collapse')}
                 </button>
               )}
             </AccordionSection>
           )}
 
           {/* ── Notifications Section ── */}
-          <AccordionSection title="Thông báo" icon={<Bell size={14} />}>
+          <AccordionSection title={t('detail.notifications')} icon={<Bell size={14} />}>
             <div className="dp-notif-options">
               <label className="dp-notif-option">
                 <input type="radio" name="notif" defaultChecked />
                 <BellRing size={14} />
                 <div>
-                  <span className="dp-notif-label">Tất cả tin nhắn</span>
-                  <span className="dp-notif-desc">Nhận thông báo cho mọi tin nhắn mới</span>
+                  <span className="dp-notif-label">{t('detail.allMessages')}</span>
+                  <span className="dp-notif-desc">{t('detail.allMessagesDesc')}</span>
                 </div>
               </label>
               <label className="dp-notif-option">
                 <input type="radio" name="notif" />
                 <Bell size={14} />
                 <div>
-                  <span className="dp-notif-label">Chỉ mention</span>
-                  <span className="dp-notif-desc">Chỉ khi được @mention hoặc @all</span>
+                  <span className="dp-notif-label">{t('detail.mentionsOnly')}</span>
+                  <span className="dp-notif-desc">{t('detail.mentionsOnlyDesc')}</span>
                 </div>
               </label>
               <label className="dp-notif-option">
                 <input type="radio" name="notif" />
                 <BellOff size={14} />
                 <div>
-                  <span className="dp-notif-label">Tắt tiếng</span>
-                  <span className="dp-notif-desc">Không nhận thông báo</span>
+                  <span className="dp-notif-label">{t('detail.muted')}</span>
+                  <span className="dp-notif-desc">{t('detail.mutedDesc')}</span>
                 </div>
               </label>
             </div>
@@ -446,10 +448,10 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
 
           {/* ── Integrations Section ── */}
           {activeRoom.type !== 'dm' && (
-            <AccordionSection title="Tích hợp" icon={<Zap size={14} />}>
+            <AccordionSection title={t('detail.integrations')} icon={<Zap size={14} />}>
               <div className="dp-integrations-empty">
                 <Zap size={20} />
-                <p>Chưa có tích hợp nào cho kênh này.</p>
+                <p>{t('detail.noIntegrations')}</p>
               </div>
             </AccordionSection>
           )}
@@ -458,10 +460,10 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
           {activeRoom.type !== 'dm' && (
             <div className="dp-danger-zone">
               <button className="dp-danger-btn dp-danger-btn--edit" disabled={isLoading}>
-                <Edit3 size={14} /> Chỉnh sửa kênh
+                <Edit3 size={14} /> {t('detail.editChannel')}
               </button>
               <button className="dp-danger-btn dp-danger-btn--leave" onClick={handleLeave} disabled={isLoading}>
-                <LogOut size={14} /> Rời khỏi kênh
+                <LogOut size={14} /> {t('detail.leaveChannel')}
               </button>
             </div>
           )}
@@ -473,7 +475,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
         <div className="dp-invite-overlay" onClick={() => setShowInvite(false)}>
           <div className="dp-invite-modal" onClick={(e) => e.stopPropagation()}>
             <div className="dp-invite-modal-header">
-              <h4>Thêm thành viên</h4>
+              <h4>{t('detail.addMember')}</h4>
               <button className="dp-invite-modal-close" onClick={() => setShowInvite(false)}>
                 <X size={16} />
               </button>
@@ -483,7 +485,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
               <input
                 ref={inviteInputRef}
                 type="text"
-                placeholder="Tìm theo tên, username hoặc email..."
+                placeholder={t('detail.inviteSearchPlaceholder')}
                 value={inviteQuery}
                 onChange={(e) => setInviteQuery(e.target.value)}
                 disabled={isLoading}
@@ -493,13 +495,13 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
               {inviteQuery.length < 2 && (
                 <div className="dp-invite-modal-hint">
                   <Users size={24} />
-                  <p>Nhập ít nhất 2 ký tự để tìm kiếm</p>
+                  <p>{t('detail.minCharsHint')}</p>
                 </div>
               )}
               {inviteQuery.length >= 2 && searchResults.length === 0 && (
                 <div className="dp-invite-modal-hint">
                   <Search size={24} />
-                  <p>Không tìm thấy người dùng nào</p>
+                  <p>{t('detail.noUsersFound')}</p>
                 </div>
               )}
               {searchResults.map((u) => {
@@ -519,16 +521,16 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({ onClose, onOpenPanel }
                       </span>
                     </div>
                     {alreadyMember ? (
-                      <span className="dp-invite-modal-badge dp-invite-modal-badge--member">Đã là TV</span>
+                      <span className="dp-invite-modal-badge dp-invite-modal-badge--member">{t('detail.alreadyMember')}</span>
                     ) : alreadyInvited ? (
-                      <span className="dp-invite-modal-badge dp-invite-modal-badge--invited">✓ Đã mời</span>
+                      <span className="dp-invite-modal-badge dp-invite-modal-badge--invited">{t('detail.invited')}</span>
                     ) : (
                       <button
                         className="dp-invite-modal-invite-btn"
                         onClick={() => handleInviteUser(u.id)}
                         disabled={isLoading}
                       >
-                        Mời
+                        {t('detail.invite')}
                       </button>
                     )}
                   </div>

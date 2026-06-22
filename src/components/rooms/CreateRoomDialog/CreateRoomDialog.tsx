@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, Hash, Lock, HelpCircle } from 'lucide-react';
 import { api } from '../../../services/api';
 import { useChatStore } from '../../../stores/useChatStore';
@@ -9,6 +10,7 @@ interface CreateRoomDialogProps {
 }
 
 export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) => {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [type, setType] = useState<'public' | 'private'>('public');
   const [description, setDescription] = useState('');
@@ -55,7 +57,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
       }
     } catch (err: any) {
       console.error('Failed to create room', err);
-      setError(err.response?.data?.error?.message || err.message || 'Tạo phòng thất bại');
+      setError(err.response?.data?.error?.message || err.message || t('createRoom.createFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +68,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
       <div className="dialog-card">
         {/* Header */}
         <div className="dialog-header">
-          <h3 className="dialog-title">Tạo kênh mới</h3>
+          <h3 className="dialog-title">{t('createRoom.title')}</h3>
           <button className="dialog-close-btn" onClick={onClose} disabled={isLoading}>
             <X size={20} />
           </button>
@@ -78,29 +80,29 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
 
           {/* Name input */}
           <div className="form-group">
-            <label className="form-label">Tên kênh</label>
+            <label className="form-label">{t('createRoom.nameLabel')}</label>
             <div className="input-with-prefix">
               <span className="prefix-symbol">#</span>
               <input
                 type="text"
                 className="form-input prefix-padding"
-                placeholder="e.g. ke-hoach-q3"
+                placeholder={t('createRoom.namePlaceholder')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
                 disabled={isLoading}
                 pattern="^[a-zA-Z0-9-_]+$"
-                title="Tên kênh chỉ chứa chữ cái, chữ số, dấu gạch ngang và dấu gạch dưới"
+                title={t('createRoom.nameTitle')}
               />
             </div>
             <span className="form-help-text">
-              Tên kênh được viết thường liền nhau, không dấu, phân tách bằng dấu gạch ngang.
+              {t('createRoom.nameHelp')}
             </span>
           </div>
 
           {/* Type toggles */}
           <div className="form-group">
-            <label className="form-label">Loại kênh</label>
+            <label className="form-label">{t('createRoom.typeLabel')}</label>
             <div className="type-toggle-group">
               <button
                 type="button"
@@ -110,8 +112,8 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
               >
                 <Hash size={18} />
                 <div className="type-btn-label">
-                  <span className="type-title-text">Công khai (Public)</span>
-                  <span className="type-desc-text">Mọi thành viên đều có thể tìm thấy và tham gia</span>
+                  <span className="type-title-text">{t('createRoom.publicTitle')}</span>
+                  <span className="type-desc-text">{t('createRoom.publicDesc')}</span>
                 </div>
               </button>
 
@@ -123,8 +125,8 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
               >
                 <Lock size={18} />
                 <div className="type-btn-label">
-                  <span className="type-title-text">Riêng tư (Private)</span>
-                  <span className="type-desc-text">Chỉ những thành viên được mời mới có thể tham gia</span>
+                  <span className="type-title-text">{t('createRoom.privateTitle')}</span>
+                  <span className="type-desc-text">{t('createRoom.privateDesc')}</span>
                 </div>
               </button>
             </div>
@@ -132,11 +134,11 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
 
           {/* Description */}
           <div className="form-group">
-            <label className="form-label">Mô tả (Tùy chọn)</label>
+            <label className="form-label">{t('createRoom.descriptionLabel')}</label>
             <input
               type="text"
               className="form-input"
-              placeholder="Mục đích của kênh này là gì?"
+              placeholder={t('createRoom.descriptionPlaceholder')}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               disabled={isLoading}
@@ -145,11 +147,11 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
 
           {/* Topic */}
           <div className="form-group">
-            <label className="form-label">Chủ đề (Tùy chọn)</label>
+            <label className="form-label">{t('createRoom.topicLabel')}</label>
             <input
               type="text"
               className="form-input"
-              placeholder="e.g. Phát triển tính năng Chat"
+              placeholder={t('createRoom.topicPlaceholder')}
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
               disabled={isLoading}
@@ -159,10 +161,10 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({ onClose }) =
           {/* Actions */}
           <div className="dialog-actions">
             <button type="button" className="dialog-btn-cancel" onClick={onClose} disabled={isLoading}>
-              Hủy
+              {t('createRoom.cancel')}
             </button>
             <button type="submit" className="dialog-btn-submit" disabled={isLoading || !name.trim()}>
-              Tạo kênh
+              {t('createRoom.submit')}
             </button>
           </div>
         </form>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../../services/api';
 import './MentionPopover.css';
 
@@ -24,6 +25,7 @@ const POPOVER_WIDTH = 260;
 const VIEWPORT_PADDING = 12;
 
 export const MentionPopover: React.FC<MentionPopoverProps> = ({ containerRef }) => {
+  const { t } = useTranslation();
   const [user, setUser] = useState<UserInfo | null>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [visible, setVisible] = useState(false);
@@ -151,10 +153,10 @@ export const MentionPopover: React.FC<MentionPopoverProps> = ({ containerRef }) 
   };
 
   const presenceLabel: Record<string, string> = {
-    online: 'Trực tuyến',
-    busy: 'Bận',
-    away: 'Vắng mặt',
-    offline: 'Ngoại tuyến',
+    online: t('mention.presenceOnline'),
+    busy: t('mention.presenceBusy'),
+    away: t('mention.presenceAway'),
+    offline: t('mention.presenceOffline'),
   };
 
   return (
@@ -204,7 +206,7 @@ export const MentionPopover: React.FC<MentionPopoverProps> = ({ containerRef }) 
           )}
           {user.system_role && user.system_role !== 'user' && (
             <div className="mention-popover-role">
-              {user.system_role === 'admin' ? '👑 Quản trị viên' : user.system_role}
+              {user.system_role === 'admin' ? `👑 ${t('mention.roleAdmin')}` : user.system_role}
             </div>
           )}
         </div>

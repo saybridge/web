@@ -112,11 +112,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       });
       setTranslatedText(res.data.translated_text);
     } catch (err) {
-      setAiError('Không thể dịch tin nhắn vào lúc này.');
+      setAiError(t('messageBubble.translateError'));
     } finally {
       setAiLoading(false);
     }
-  }, [displayContent]);
+  }, [displayContent, t]);
 
   const handleExplain = useCallback(async () => {
     setAiLoading(true);
@@ -129,11 +129,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       });
       setExplainedText(res.data.reply);
     } catch (err) {
-      setAiError('Không thể giải thích tin nhắn vào lúc này.');
+      setAiError(t('messageBubble.explainError'));
     } finally {
       setAiLoading(false);
     }
-  }, [displayContent, message.room_id]);
+  }, [displayContent, message.room_id, t]);
 
   useEffect(() => {
     let active = true;
@@ -213,7 +213,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     if (!acts.some(a => a.id === 'react')) {
       acts.push({
         id: 'react',
-        label: 'Thêm cảm xúc',
+        label: t('messageBubble.addReaction'),
         icon: 'Smile',
         slot: 'message_context_menu',
         section: 'default',
@@ -226,7 +226,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       acts = acts.filter(a => a.id !== 'react' && a.id !== 'reply' && a.id !== 'thread');
     }
     return message.parent_id ? acts.filter(a => a.id !== 'thread') : acts;
-  }, [getMessageActions, message.sender_id, message.parent_id, canPost]);
+  }, [getMessageActions, message.sender_id, message.parent_id, canPost, t]);
 
   const handleAction = useCallback(async (action: UIActionDefinition) => {
     setShowMoreDropdown(false);
@@ -342,7 +342,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   };
 
   const handleDelete = () => {
-    if (window.confirm('Bạn có muốn thu hồi tin nhắn này?')) {
+    if (window.confirm(t('messageBubble.deleteConfirm'))) {
       deleteMessageViaWS(activeRoomId || '', message.id, getTimeBucket());
     }
   };
@@ -507,7 +507,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
             className={`avatar-circle clickable ${isMe ? 'is-me-circle' : ''}`}
             ref={avatarRef}
             onClick={openUserCard}
-            title={isMe ? `Xem hồ sơ của bạn` : `Xem hồ sơ ${message.sender_name}`}
+            title={isMe ? t('messageBubble.viewYourProfile') : t('messageBubble.viewProfileOf', { name: message.sender_name })}
           >
             {avatarUrl ? (
               <img src={avatarUrl} alt={message.sender_name} className="avatar-img" />
@@ -568,7 +568,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
               style={{ color: isMe ? 'var(--accent)' : getSenderColor(message.sender_id) }}
               onClick={openUserCard}
             >
-              {isMe ? 'Bạn' : message.sender_name}
+              {isMe ? t('messageBubble.you') : message.sender_name}
             </span>
           </div>
         )}
@@ -603,7 +603,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           <div className="message-content-box">
             <div className="message-content-box-main">
               {isDeleted ? (
-                <span className="deleted-text">Tin nhắn đã bị thu hồi</span>
+                <span className="deleted-text">{t('messageBubble.deletedMessage')}</span>
               ) : isEditing ? (
                 <div className="message-edit-input-wrapper">
                   <input
@@ -643,7 +643,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
             {aiLoading && (
               <div className="copilot-inline-result loading">
                 <Loader2 size={14} className="copilot-spinner spin" />
-                <span>Copilot đang phân tích...</span>
+                <span>{t('messageBubble.copilotAnalyzing')}</span>
               </div>
             )}
             {aiError && (
@@ -657,7 +657,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                 <div className="copilot-inline-header">
                   <div className="copilot-inline-title">
                     <Globe size={13} />
-                    <span>Dịch sang Tiếng Việt:</span>
+                    <span>{t('messageBubble.translatedToVietnamese')}</span>
                   </div>
                   <button className="copilot-inline-close" onClick={() => setTranslatedText(null)}>✕</button>
                 </div>
@@ -669,7 +669,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                 <div className="copilot-inline-header">
                   <div className="copilot-inline-title">
                     <Sparkles size={13} />
-                    <span>Giải thích bởi Copilot:</span>
+                    <span>{t('messageBubble.explainedByCopilot')}</span>
                   </div>
                   <button className="copilot-inline-close" onClick={() => setExplainedText(null)}>✕</button>
                 </div>
@@ -723,7 +723,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         {!isDeleted && threadCount != null && threadCount > 0 && onOpenThread && (
           <div className="thread-indicator" onClick={() => onOpenThread(message)}>
             <MessageSquare size={14} />
-            <span>{threadCount} {threadCount === 1 ? 'trả lời' : 'trả lời'}</span>
+            <span>{t('messageBubble.replyCount', { count: threadCount })}</span>
           </div>
         )}
 

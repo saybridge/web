@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Users,
   Search,
@@ -43,6 +44,7 @@ interface InviteForm {
 
 /* ═══════════════════ Component ═══════════════════ */
 export function UserManagement() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,7 +79,7 @@ export function UserManagement() {
       }
     } catch {
       setUsers([]);
-      showToast('Không thể tải danh sách người dùng', 'error');
+      showToast(t('userManagement.loadUsersError'), 'error');
     } finally {
       setLoading(false);
     }
@@ -131,8 +133,8 @@ export function UserManagement() {
       await api.patch(`/admin/users/${user.id}`, { is_active: newStatus });
       showToast(
         newStatus
-          ? `Đã kích hoạt tài khoản ${user.display_name || user.username}`
-          : `Đã vô hiệu hóa tài khoản ${user.display_name || user.username}`,
+          ? t('userManagement.activateSuccess', { name: user.display_name || user.username })
+          : t('userManagement.deactivateSuccess', { name: user.display_name || user.username }),
         'success'
       );
     } catch {
@@ -140,7 +142,7 @@ export function UserManagement() {
       setUsers((prev) =>
         prev.map((u) => (u.id === user.id ? { ...u, is_active: !newStatus } : u))
       );
-      showToast('Không thể cập nhật trạng thái tài khoản', 'error');
+      showToast(t('userManagement.toggleActiveError'), 'error');
     }
   };
 
@@ -157,28 +159,28 @@ export function UserManagement() {
     try {
       await api.patch(`/admin/users/${user.id}`, { system_role: newRole });
       showToast(
-        `Đã đổi vai trò ${user.display_name || user.username} thành ${newRole}`,
+        t('userManagement.roleChangeSuccess', { name: user.display_name || user.username, role: newRole }),
         'success'
       );
     } catch {
       setUsers((prev) =>
         prev.map((u) => (u.id === user.id ? { ...u, system_role: oldRole } : u))
       );
-      showToast('Không thể cập nhật vai trò', 'error');
+      showToast(t('userManagement.roleChangeError'), 'error');
     }
   };
 
   /* ── Invite user ── */
   const validateInviteForm = (): boolean => {
     const errors: Partial<InviteForm> = {};
-    if (!inviteForm.username.trim()) errors.username = 'Tên đăng nhập là bắt buộc';
-    if (!inviteForm.email.trim()) errors.email = 'Email là bắt buộc';
+    if (!inviteForm.username.trim()) errors.username = t('userManagement.usernameRequired');
+    if (!inviteForm.email.trim()) errors.email = t('userManagement.emailRequired');
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inviteForm.email))
-      errors.email = 'Email không hợp lệ';
-    if (!inviteForm.password.trim()) errors.password = 'Mật khẩu là bắt buộc';
+      errors.email = t('userManagement.emailInvalid');
+    if (!inviteForm.password.trim()) errors.password = t('userManagement.passwordRequired');
     else if (inviteForm.password.length < 6)
-      errors.password = 'Mật khẩu ít nhất 6 ký tự';
-    if (!inviteForm.display_name.trim()) errors.display_name = 'Tên hiển thị là bắt buộc';
+      errors.password = t('userManagement.passwordMinLength');
+    if (!inviteForm.display_name.trim()) errors.display_name = t('userManagement.displayNameRequired');
     setInviteErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -193,7 +195,7 @@ export function UserManagement() {
         password: inviteForm.password,
         display_name: inviteForm.display_name.trim(),
       });
-      showToast(`Đã mời ${inviteForm.display_name} thành công!`, 'success');
+      showToast(t('userManagement.inviteSuccess', { name: inviteForm.display_name }), 'success');
       setShowInviteModal(false);
       setInviteForm({ username: '', email: '', password: '', display_name: '' });
       setInviteErrors({});
@@ -201,7 +203,7 @@ export function UserManagement() {
       fetchUsers();
     } catch (err: any) {
       const msg =
-        err?.response?.data?.message || err?.response?.data?.error || 'Không thể tạo tài khoản';
+        err?.response?.data?.message || err?.response?.data?.error || t('userManagement.createAccountError');
       showToast(msg, 'error');
     } finally {
       setInviteSubmitting(false);
@@ -225,13 +227,13 @@ export function UserManagement() {
   /* ═══════════════════ Render ═══════════════════ */
   return (
     <PageContainer
-      title="Quản lý người dùng"
-      subtitle="Quản lý tài khoản, vai trò và quyền truy cập hệ thống"
+      title={t('userManagement.title')}
+      subtitle={t('userManagement.subtitle')}
       icon={<Users size={24} />}
       actions={
         <button className="sb-btn sb-btn-primary" onClick={() => setShowInviteModal(true)}>
           <UserPlus size={18} />
-          Mời người dùng
+          {t('userManagement.inviteUser')}
         </button>
       }
       filters={
@@ -239,12 +241,12 @@ export function UserManagement() {
           <Search size={18} />
           <input
             type="text"
-            placeholder="Tìm kiếm theo tên, username hoặc email…"
+            placeholder={t('userManagement.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <span className="um-search-count">
-            {filteredUsers.length} / {totalUsers} người dùng
+            {t('userManagement.userCount', { filtered: filteredUsers.length, total: totalUsers })}
           </span>
         </div>
       }
@@ -257,7 +259,7 @@ export function UserManagement() {
           </div>
           <div className="um-stat-info">
             <h3>{totalUsers}</h3>
-            <span>Tổng người dùng</span>
+            <span>{t('userManagement.statTotalUsers')}</span>
           </div>
         </div>
         <div className="um-stat-card">
@@ -266,7 +268,7 @@ export function UserManagement() {
           </div>
           <div className="um-stat-info">
             <h3>{onlineUsers}</h3>
-            <span>Đang trực tuyến</span>
+            <span>{t('userManagement.statOnline')}</span>
           </div>
         </div>
         <div className="um-stat-card">
@@ -275,7 +277,7 @@ export function UserManagement() {
           </div>
           <div className="um-stat-info">
             <h3>{adminCount}</h3>
-            <span>Quản trị viên</span>
+            <span>{t('userManagement.statAdmins')}</span>
           </div>
         </div>
       </div>
@@ -291,8 +293,8 @@ export function UserManagement() {
             <UserX size={48} />
             <p>
               {searchQuery
-                ? 'Không tìm thấy người dùng phù hợp'
-                : 'Chưa có người dùng nào trong hệ thống'}
+                ? t('userManagement.emptyNoMatch')
+                : t('userManagement.emptyNoUsers')}
             </p>
           </div>
         ) : (
@@ -300,14 +302,14 @@ export function UserManagement() {
             <thead>
               <tr>
                 <th></th>
-                <th>Tên</th>
+                <th>{t('userManagement.colName')}</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Vai trò</th>
-                <th>Trạng thái</th>
-                <th>Kích hoạt</th>
-                <th>Ngày tạo</th>
-                <th>Thao tác</th>
+                <th>{t('userManagement.colRole')}</th>
+                <th>{t('userManagement.colStatus')}</th>
+                <th>{t('userManagement.colActive')}</th>
+                <th>{t('userManagement.colCreated')}</th>
+                <th>{t('userManagement.colActions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -397,7 +399,7 @@ export function UserManagement() {
                     <button
                       className={`um-active-toggle ${user.is_active ? 'active' : 'inactive'}`}
                       onClick={() => handleToggleActive(user)}
-                      title={user.is_active ? 'Đang kích hoạt' : 'Đã vô hiệu hóa'}
+                      title={user.is_active ? t('userManagement.activeTitle') : t('userManagement.inactiveTitle')}
                     />
                   </td>
 
@@ -412,7 +414,7 @@ export function UserManagement() {
                       <div className="um-role-dropdown-wrapper" ref={roleDropdownId === user.id ? dropdownRef : null}>
                         <button
                           className="sb-btn sb-btn-ghost um-action-btn"
-                          title="Đổi vai trò"
+                          title={t('userManagement.changeRoleTitle')}
                           onClick={() =>
                             setRoleDropdownId((prev) => (prev === user.id ? null : user.id))
                           }
@@ -455,15 +457,15 @@ export function UserManagement() {
       <LiquidModal
         isOpen={showInviteModal}
         onClose={() => setShowInviteModal(false)}
-        title="Mời người dùng mới"
+        title={t('userManagement.inviteModalTitle')}
       >
         <div className="um-modal-body" style={{ padding: 0 }}>
           <div className="sb-form-group">
-            <label className="sb-label">Tên hiển thị</label>
+            <label className="sb-label">{t('userManagement.displayNameLabel')}</label>
             <input
               type="text"
               className="sb-input"
-              placeholder="VD: Nguyễn Văn A"
+              placeholder={t('userManagement.displayNamePlaceholder')}
               value={inviteForm.display_name}
               onChange={(e) => {
                 setInviteForm((f) => ({ ...f, display_name: e.target.value }));
@@ -476,11 +478,11 @@ export function UserManagement() {
           </div>
 
           <div className="sb-form-group">
-            <label className="sb-label">Tên đăng nhập</label>
+            <label className="sb-label">{t('userManagement.usernameLabel')}</label>
             <input
               type="text"
               className="sb-input"
-              placeholder="VD: nguyenvana"
+              placeholder={t('userManagement.usernamePlaceholder')}
               value={inviteForm.username}
               onChange={(e) => {
                 setInviteForm((f) => ({ ...f, username: e.target.value }));
@@ -497,7 +499,7 @@ export function UserManagement() {
             <input
               type="email"
               className="sb-input"
-              placeholder="VD: user@example.com"
+              placeholder={t('userManagement.emailPlaceholder')}
               value={inviteForm.email}
               onChange={(e) => {
                 setInviteForm((f) => ({ ...f, email: e.target.value }));
@@ -510,11 +512,11 @@ export function UserManagement() {
           </div>
 
           <div className="sb-form-group">
-            <label className="sb-label">Mật khẩu</label>
+            <label className="sb-label">{t('userManagement.passwordLabel')}</label>
             <input
               type="password"
               className="sb-input"
-              placeholder="Ít nhất 6 ký tự"
+              placeholder={t('userManagement.passwordPlaceholder')}
               value={inviteForm.password}
               onChange={(e) => {
                 setInviteForm((f) => ({ ...f, password: e.target.value }));
@@ -535,7 +537,7 @@ export function UserManagement() {
               setInviteErrors({});
             }}
           >
-            Hủy
+            {t('userManagement.cancel')}
           </button>
           <button
             className="sb-btn sb-btn-primary"
@@ -545,12 +547,12 @@ export function UserManagement() {
             {inviteSubmitting ? (
               <>
                 <Loader2 size={16} className="um-btn-spinner" />
-                Đang tạo…
+                {t('userManagement.creating')}
               </>
             ) : (
               <>
                 <UserPlus size={16} />
-                Tạo tài khoản
+                {t('userManagement.createAccount')}
               </>
             )}
           </button>

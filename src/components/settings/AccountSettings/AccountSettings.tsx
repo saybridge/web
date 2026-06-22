@@ -22,7 +22,7 @@ type SectionId = 'profile' | 'preferences' | 'notifications' | 'security' | 'ses
 
 interface NavItem {
   id: SectionId;
-  label: string;
+  labelKey: string;
   icon: React.ReactNode;
 }
 
@@ -53,11 +53,11 @@ interface PasswordForm {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'profile', label: 'Hồ sơ', icon: <User size={18} /> },
-  { id: 'preferences', label: 'Tùy chỉnh', icon: <Palette size={18} /> },
-  { id: 'notifications', label: 'Thông báo', icon: <Bell size={18} /> },
-  { id: 'security', label: 'Bảo mật', icon: <Shield size={18} /> },
-  { id: 'sessions', label: 'Phiên hoạt động', icon: <Monitor size={18} /> },
+  { id: 'profile', labelKey: 'account.navProfile', icon: <User size={18} /> },
+  { id: 'preferences', labelKey: 'account.navPreferences', icon: <Palette size={18} /> },
+  { id: 'notifications', labelKey: 'account.navNotifications', icon: <Bell size={18} /> },
+  { id: 'security', labelKey: 'account.navSecurity', icon: <Shield size={18} /> },
+  { id: 'sessions', labelKey: 'account.navSessions', icon: <Monitor size={18} /> },
 ];
 
 const TIMEZONE_OPTIONS = [
@@ -89,11 +89,11 @@ const LANGUAGE_OPTIONS = [
 ];
 
 const SOUND_OPTIONS = [
-  { value: 'default', label: 'Mặc định' },
-  { value: 'chime', label: 'Chime' },
-  { value: 'ding', label: 'Ding' },
-  { value: 'pop', label: 'Pop' },
-  { value: 'none', label: 'Không âm thanh' },
+  { value: 'default', labelKey: 'account.soundDefault' },
+  { value: 'chime', labelKey: 'account.soundChime' },
+  { value: 'ding', labelKey: 'account.soundDing' },
+  { value: 'pop', labelKey: 'account.soundPop' },
+  { value: 'none', labelKey: 'account.soundNone' },
 ];
 
 export type { SectionId as SettingsSectionId };
@@ -287,10 +287,10 @@ export function AccountSettings({ onClose: _onClose, activeSection = 'profile' }
       if (url) {
         setProfile((prev) => ({ ...prev, avatar_url: url }));
       }
-      showToast('success', 'Đã cập nhật ảnh đại diện');
+      showToast('success', t('account.avatarUpdated'));
     } catch (err) {
       console.error('[AccountSettings] Avatar upload failed:', err);
-      showToast('error', 'Không thể tải ảnh đại diện lên');
+      showToast('error', t('account.avatarUploadError'));
     }
   };
 
@@ -311,7 +311,7 @@ export function AccountSettings({ onClose: _onClose, activeSection = 'profile' }
         {loading ? (
           <div className="acct-loading">
             <Loader2 size={32} className="acct-spinner" />
-            <p>Đang tải thông tin...</p>
+            <p>{t('account.loading')}</p>
           </div>
         ) : (
           <>
@@ -420,7 +420,7 @@ function ProfileSection({
           </div>
           <div className="acct-avatar-info">
             <span className="acct-avatar-name">{profile.display_name || profile.username}</span>
-            <span className="acct-avatar-role">{profile.system_role || 'Thành viên'}</span>
+            <span className="acct-avatar-role">{profile.system_role || t('account.memberRole')}</span>
           </div>
         </div>
 
@@ -571,7 +571,7 @@ function PreferencesSection({
       usePreferencesStore.getState().applyToDOM();
     } catch (err) {
       console.error('Failed to upload custom wallpaper:', err);
-      alert('Không thể tải hoặc xử lý ảnh nền này. Vui lòng chọn ảnh khác.');
+      alert(t('account.wallpaperUploadError'));
     } finally {
       e.target.value = '';
     }
@@ -586,7 +586,7 @@ function PreferencesSection({
       />
 
       {/* ─── Group 1: Giao diện ─── */}
-      <GlassCard title="Giao diện" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.groupAppearance')} style={{ padding: '28px', marginBottom: '20px' }}>
 
         {/* Theme picker */}
         <div className="acct-theme-picker">
@@ -598,7 +598,7 @@ function PreferencesSection({
               <div className="acct-theme-bar" />
               <div className="acct-theme-lines"><div /><div /><div /></div>
             </div>
-            <span>Tối</span>
+            <span>{t('account.themeDark')}</span>
           </button>
           <button
             className={`acct-theme-option ${currentTheme === 'light' ? 'active' : ''}`}
@@ -608,7 +608,7 @@ function PreferencesSection({
               <div className="acct-theme-bar" />
               <div className="acct-theme-lines"><div /><div /><div /></div>
             </div>
-            <span>Sáng</span>
+            <span>{t('account.themeLight')}</span>
           </button>
           <button
             className={`acct-theme-option ${currentTheme === 'system' ? 'active' : ''}`}
@@ -618,15 +618,15 @@ function PreferencesSection({
               <div className="acct-theme-bar" />
               <div className="acct-theme-lines"><div /><div /><div /></div>
             </div>
-            <span>Hệ thống</span>
+            <span>{t('account.themeSystem')}</span>
           </button>
         </div>
 
         {/* Accent Color Picker */}
         <div className="pref-item" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
           <div className="pref-item-info">
-            <span className="pref-item-label">Màu chủ đạo</span>
-            <span className="pref-hint">Chọn màu sắc yêu thích cho giao diện</span>
+            <span className="pref-item-label">{t('account.accentColor')}</span>
+            <span className="pref-hint">{t('account.accentColorHint')}</span>
           </div>
           <div className="acct-accent-picker">
             {(Object.keys(ACCENT_PRESETS) as AccentColor[]).map((colorKey) => {
@@ -651,17 +651,17 @@ function PreferencesSection({
         {/* Wallpaper Picker */}
         <div className="pref-item" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '10px', marginTop: '20px' }}>
           <div className="pref-item-info">
-            <span className="pref-item-label">Hình nền</span>
-            <span className="pref-hint">Chọn kiểu hình nền phía sau của ứng dụng</span>
+            <span className="pref-item-label">{t('account.wallpaper')}</span>
+            <span className="pref-hint">{t('account.wallpaperHint')}</span>
           </div>
           <div className="acct-wallpaper-picker">
             {[
-              { id: 'ambient', label: 'Ambient', previewClass: 'wp-preview--ambient' },
-              { id: 'solid', label: 'Tối giản', previewClass: 'wp-preview--solid' },
-              { id: 'aurora', label: 'Cực quang', previewClass: 'wp-preview--aurora' },
-              { id: 'sunset', label: 'Hoàng hôn', previewClass: 'wp-preview--sunset' },
-              { id: 'bubblegum', label: 'Kẹo ngọt', previewClass: 'wp-preview--bubblegum' },
-              { id: 'custom', label: 'Tự chọn...', previewClass: 'wp-preview--custom' },
+              { id: 'ambient', labelKey: 'account.wpAmbient', previewClass: 'wp-preview--ambient' },
+              { id: 'solid', labelKey: 'account.wpSolid', previewClass: 'wp-preview--solid' },
+              { id: 'aurora', labelKey: 'account.wpAurora', previewClass: 'wp-preview--aurora' },
+              { id: 'sunset', labelKey: 'account.wpSunset', previewClass: 'wp-preview--sunset' },
+              { id: 'bubblegum', labelKey: 'account.wpBubblegum', previewClass: 'wp-preview--bubblegum' },
+              { id: 'custom', labelKey: 'account.wpCustom', previewClass: 'wp-preview--custom' },
             ].map((wp) => {
               const isActive = prefs.wallpaper === wp.id || (!prefs.wallpaper && wp.id === 'ambient');
               const onClick = () => {
@@ -695,7 +695,7 @@ function PreferencesSection({
                       </div>
                     )}
                   </div>
-                  <span>{wp.id === 'custom' && customWallpaper ? 'Tự chọn' : wp.label}</span>
+                  <span>{wp.id === 'custom' && customWallpaper ? t('account.wpCustomSelected') : t(wp.labelKey)}</span>
                 </button>
               );
             })}
@@ -714,46 +714,46 @@ function PreferencesSection({
                 style={{ padding: '6px 12px', fontSize: '0.8rem', height: '32px' }}
                 onClick={() => wallpaperInputRef.current?.click()}
               >
-                <Upload size={14} /> Thay đổi ảnh nền...
+                <Upload size={14} /> {t('account.changeWallpaper')}
               </button>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="pref-hint" style={{ margin: 0, fontSize: '0.8rem' }}>Kiểu hiển thị:</span>
+                <span className="pref-hint" style={{ margin: 0, fontSize: '0.8rem' }}>{t('account.displayMode')}</span>
                 <div className="pref-toggle-group" style={{ margin: 0, height: '32px' }}>
                   <button
                     className={`pref-toggle-btn ${customWallpaperMode === 'cover' ? 'active' : ''}`}
                     style={{ padding: '0 10px', fontSize: '0.75rem', height: '100%' }}
                     onClick={() => handleWallpaperModeChange('cover')}
                   >
-                    Trải rộng
+                    {t('account.wpModeCover')}
                   </button>
                   <button
                     className={`pref-toggle-btn ${customWallpaperMode === 'contain' ? 'active' : ''}`}
                     style={{ padding: '0 10px', fontSize: '0.75rem', height: '100%' }}
                     onClick={() => handleWallpaperModeChange('contain')}
                   >
-                    Vừa vặn
+                    {t('account.wpModeContain')}
                   </button>
                   <button
                     className={`pref-toggle-btn ${customWallpaperMode === 'repeat' ? 'active' : ''}`}
                     style={{ padding: '0 10px', fontSize: '0.75rem', height: '100%' }}
                     onClick={() => handleWallpaperModeChange('repeat')}
                   >
-                    Lặp lại
+                    {t('account.wpModeRepeat')}
                   </button>
                   <button
                     className={`pref-toggle-btn ${customWallpaperMode === 'stretch' ? 'active' : ''}`}
                     style={{ padding: '0 10px', fontSize: '0.75rem', height: '100%' }}
                     onClick={() => handleWallpaperModeChange('stretch')}
                   >
-                    Kéo giãn
+                    {t('account.wpModeStretch')}
                   </button>
                 </div>
               </div>
 
               {customWallpaperMode === 'repeat' && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '180px' }}>
-                  <span className="pref-hint" style={{ margin: 0, fontSize: '0.8rem' }}>Cỡ hình lặp:</span>
+                  <span className="pref-hint" style={{ margin: 0, fontSize: '0.8rem' }}>{t('account.repeatSize')}</span>
                   <input
                     type="range"
                     min={20}
@@ -773,9 +773,9 @@ function PreferencesSection({
         {/* Message Density */}
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Mật độ tin nhắn</span>
+            <span className="pref-item-label">{t('account.messageDensity')}</span>
             <span className="pref-hint">
-              {prefs.messageDensity === 'cozy' ? 'Thoải mái — khoảng cách lớn giữa các tin nhắn' : 'Gọn — hiển thị nhiều tin nhắn hơn'}
+              {prefs.messageDensity === 'cozy' ? t('account.messageDensityCozyHint') : t('account.messageDensityCompactHint')}
             </span>
           </div>
           <div className="pref-toggle-group">
@@ -783,21 +783,42 @@ function PreferencesSection({
               className={`pref-toggle-btn ${prefs.messageDensity === 'cozy' ? 'active' : ''}`}
               onClick={() => updatePref('messageDensity', 'cozy')}
             >
-              Thoải mái
+              {t('account.densityCozy')}
             </button>
             <button
               className={`pref-toggle-btn ${prefs.messageDensity === 'compact' ? 'active' : ''}`}
               onClick={() => updatePref('messageDensity', 'compact')}
             >
-              Gọn
+              {t('account.densityCompact')}
             </button>
+          </div>
+        </div>
+
+        {/* Liquid Glass */}
+        <div className="pref-item">
+          <div className="pref-item-info">
+            <span className="pref-item-label">{t('account.liquidGlass')}</span>
+            <span className="pref-hint">
+              {t('account.liquidGlassHint')}
+            </span>
+          </div>
+          <div className="pref-toggle-group">
+            {([['off', 'account.glassOff'], ['subtle', 'account.glassSubtle'], ['medium', 'account.glassMedium'], ['strong', 'account.glassStrong']] as const).map(([val, labelKey]) => (
+              <button
+                key={val}
+                className={`pref-toggle-btn ${prefs.liquidGlass === val ? 'active' : ''}`}
+                onClick={() => updatePref('liquidGlass', val)}
+              >
+                {t(labelKey)}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Font Size */}
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Cỡ chữ tin nhắn</span>
+            <span className="pref-item-label">{t('account.fontSize')}</span>
             <span className="pref-hint">{prefs.fontSize}px</span>
           </div>
           <div className="pref-slider-wrapper">
@@ -818,8 +839,8 @@ function PreferencesSection({
         {/* Reduce Motion */}
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Giảm chuyển động</span>
-            <span className="pref-hint">Tắt animation và hiệu ứng chuyển động</span>
+            <span className="pref-item-label">{t('account.reduceMotion')}</span>
+            <span className="pref-hint">{t('account.reduceMotionHint')}</span>
           </div>
           <label className="pref-switch">
             <input
@@ -834,8 +855,8 @@ function PreferencesSection({
         {/* Compact Mode */}
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Chế độ thu gọn</span>
-            <span className="pref-hint">Hiển thị giao diện thu gọn</span>
+            <span className="pref-item-label">{t('account.compactMode')}</span>
+            <span className="pref-hint">{t('account.compactModeHint')}</span>
           </div>
           <label className="pref-switch">
             <input
@@ -849,15 +870,15 @@ function PreferencesSection({
       </GlassCard>
 
       {/* ─── Group 2: Soạn tin ─── */}
-      <GlassCard title="Soạn tin" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.groupComposing')} style={{ padding: '28px', marginBottom: '20px' }}>
 
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Phím Enter gửi tin nhắn</span>
+            <span className="pref-item-label">{t('account.enterToSend')}</span>
             <span className="pref-hint">
               {prefs.enterBehavior === 'send'
-                ? 'Enter gửi tin · Shift+Enter xuống dòng'
-                : 'Enter xuống dòng · Ctrl+Enter gửi tin'}
+                ? t('account.enterToSendHint')
+                : t('account.enterNewlineHint')}
             </span>
           </div>
           <label className="pref-switch">
@@ -872,12 +893,12 @@ function PreferencesSection({
       </GlassCard>
 
       {/* ─── Group 3: Hiển thị nội dung ─── */}
-      <GlassCard title="Hiển thị nội dung" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.groupContent')} style={{ padding: '28px', marginBottom: '20px' }}>
 
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Xem trước liên kết</span>
-            <span className="pref-hint">Tự động hiển thị preview khi gửi URL</span>
+            <span className="pref-item-label">{t('account.linkPreview')}</span>
+            <span className="pref-hint">{t('account.linkPreviewHint')}</span>
           </div>
           <label className="pref-switch">
             <input
@@ -895,28 +916,28 @@ function PreferencesSection({
 
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Sắp xếp kênh</span>
-            <span className="pref-hint">Thứ tự hiển thị kênh trong sidebar</span>
+            <span className="pref-item-label">{t('account.channelSort')}</span>
+            <span className="pref-hint">{t('account.channelSortHint')}</span>
           </div>
           <select
             className="sb-select"
             value={prefs.roomSortOrder}
             onChange={(e) => updatePref('roomSortOrder', e.target.value as any)}
           >
-            <option value="activity">Hoạt động gần nhất</option>
-            <option value="alphabetical">Theo tên (A-Z)</option>
-            <option value="unread">Chưa đọc trước</option>
+            <option value="activity">{t('account.sortActivity')}</option>
+            <option value="alphabetical">{t('account.sortAlphabetical')}</option>
+            <option value="unread">{t('account.sortUnread')}</option>
           </select>
         </div>
       </GlassCard>
 
       {/* ─── Group 5: Quyền riêng tư ─── */}
-      <GlassCard title="Quyền riêng tư" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.groupPrivacy')} style={{ padding: '28px', marginBottom: '20px' }}>
 
         <div className="pref-item">
           <div className="pref-item-info">
-            <span className="pref-item-label">Xác nhận đã đọc</span>
-            <span className="pref-hint">Cho người khác thấy khi bạn đã đọc tin nhắn</span>
+            <span className="pref-item-label">{t('account.readReceipts')}</span>
+            <span className="pref-hint">{t('account.readReceiptsHint')}</span>
           </div>
           <label className="pref-switch">
             <input
@@ -986,15 +1007,16 @@ function NotificationsSection({
   onSave: () => void;
   saving: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="acct-section">
       <PageHeader
-        title="Thông báo"
-        subtitle="Quản lý cách bạn nhận thông báo từ Saybridge"
+        title={t('account.notificationsTitle')}
+        subtitle={t('account.notificationsSubtitle')}
         icon={<Bell size={20} />}
       />
 
-      <GlassCard title="Tùy chọn thông báo" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.notificationOptions')} style={{ padding: '28px', marginBottom: '20px' }}>
 
         <div className="acct-toggle-list">
           {/* Desktop notifications */}
@@ -1002,9 +1024,9 @@ function NotificationsSection({
             <div className="acct-toggle-info">
               <Monitor size={18} />
               <div>
-                <span className="acct-toggle-label">Thông báo trên máy tính</span>
+                <span className="acct-toggle-label">{t('account.desktopNotifications')}</span>
                 <span className="acct-toggle-desc">
-                  Hiển thị thông báo popup khi có tin nhắn mới
+                  {t('account.desktopNotificationsDesc')}
                 </span>
               </div>
             </div>
@@ -1025,9 +1047,9 @@ function NotificationsSection({
             <div className="acct-toggle-info">
               <Smartphone size={18} />
               <div>
-                <span className="acct-toggle-label">Thông báo đẩy</span>
+                <span className="acct-toggle-label">{t('account.pushNotifications')}</span>
                 <span className="acct-toggle-desc">
-                  Nhận thông báo trên điện thoại khi không online
+                  {t('account.pushNotificationsDesc')}
                 </span>
               </div>
             </div>
@@ -1051,7 +1073,7 @@ function NotificationsSection({
           <div className="sb-form-group">
             <label className="sb-label">
               <Volume2 size={14} style={{ marginRight: 6, verticalAlign: -2 }} />
-              Âm thanh thông báo
+              {t('account.notificationSound')}
             </label>
             <select
               className="sb-select"
@@ -1062,7 +1084,7 @@ function NotificationsSection({
             >
               {SOUND_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </option>
               ))}
             </select>
@@ -1072,7 +1094,7 @@ function NotificationsSection({
         <div className="acct-actions">
           <button className="acct-btn acct-btn--primary" onClick={onSave} disabled={saving}>
             {saving ? <Loader2 size={16} className="acct-spinner" /> : <Check size={16} />}
-            Lưu cài đặt
+            {t('account.saveSettings')}
           </button>
         </div>
       </GlassCard>
@@ -1210,14 +1232,14 @@ function SecuritySection({
       </GlassCard>
 
       {/* 2FA */}
-      <GlassCard title="Xác thực hai yếu tố (2FA)" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.twoFactorTitle')} style={{ padding: '28px', marginBottom: '20px' }}>
         <p className="acct-card-desc">
-          Thêm một lớp bảo mật bổ sung cho tài khoản của bạn bằng ứng dụng xác thực.
+          {t('account.twoFactorDesc')}
         </p>
         <div className="acct-actions">
           <button className="acct-btn acct-btn--outline">
             <Shield size={16} />
-            Thiết lập 2FA
+            {t('account.setup2FA')}
           </button>
         </div>
       </GlassCard>
@@ -1227,6 +1249,7 @@ function SecuritySection({
 
 /* ==================== Sessions Section ==================== */
 function SessionsSection() {
+  const { t } = useTranslation();
   const currentSession = {
     device: navigator.userAgent.includes('Mac') ? 'macOS' : navigator.userAgent.includes('Windows') ? 'Windows' : 'Linux',
     browser: navigator.userAgent.includes('Chrome')
@@ -1235,20 +1258,20 @@ function SessionsSection() {
         ? 'Firefox'
         : navigator.userAgent.includes('Safari')
           ? 'Safari'
-          : 'Trình duyệt khác',
+          : t('account.otherBrowser'),
     ip: '—',
-    lastActive: 'Hiện tại',
+    lastActive: t('account.now'),
   };
 
   return (
     <div className="acct-section">
       <PageHeader
-        title="Phiên hoạt động"
-        subtitle="Xem các thiết bị đang đăng nhập vào tài khoản của bạn"
+        title={t('account.sessionsTitle')}
+        subtitle={t('account.sessionsSubtitle')}
         icon={<Smartphone size={20} />}
       />
 
-      <GlassCard title="Phiên hiện tại" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.currentSession')} style={{ padding: '28px', marginBottom: '20px' }}>
 
         <div className="acct-session-card acct-session-card--current">
           <div className="acct-session-icon">
@@ -1259,21 +1282,21 @@ function SessionsSection() {
               {currentSession.device} — {currentSession.browser}
             </span>
             <span className="acct-session-meta">
-              IP: {currentSession.ip} · Hoạt động: {currentSession.lastActive}
+              {t('account.ipLabel')}: {currentSession.ip} · {t('account.activeLabel')}: {currentSession.lastActive}
             </span>
           </div>
           <span className="acct-session-badge acct-session-badge--active">
-            Phiên hiện tại
+            {t('account.currentSession')}
           </span>
         </div>
       </GlassCard>
 
-      <GlassCard title="Các phiên khác" style={{ padding: '28px', marginBottom: '20px' }}>
+      <GlassCard title={t('account.otherSessions')} style={{ padding: '28px', marginBottom: '20px' }}>
         <div className="acct-empty-state">
           <Monitor size={32} />
-          <p>Không có phiên hoạt động nào khác</p>
+          <p>{t('account.noOtherSessions')}</p>
           <span className="acct-empty-hint">
-            Các thiết bị đăng nhập khác sẽ xuất hiện tại đây
+            {t('account.noOtherSessionsHint')}
           </span>
         </div>
       </GlassCard>

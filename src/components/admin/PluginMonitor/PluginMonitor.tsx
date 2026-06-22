@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Package, RefreshCw, Shield, Cpu, AlertTriangle, ChevronDown, User, X, Monitor, Settings } from 'lucide-react';
 import { api } from '../../../services/api';
 import { usePluginStore } from '../../../stores/usePluginStore';
@@ -43,6 +44,7 @@ interface ComposerExtension {
 
 /* ============ Component ============ */
 export function PluginMonitor() {
+  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -102,9 +104,9 @@ export function PluginMonitor() {
   const [selectedPlugin, setSelectedPlugin] = useState<PluginManifest | null>(null);
 
   const categoryLabels: Record<string, string> = {
-    all: 'Tất cả', core: 'Core', communication: 'Giao tiếp', fun: 'Vui vẻ',
-    productivity: 'Năng suất', security: 'Bảo mật', integrations: 'Tích hợp',
-    dev_tools: 'Dev Tools', bots: 'Bots', other: 'Khác',
+    all: t('pluginMonitor.categoryAll'), core: 'Core', communication: t('pluginMonitor.categoryCommunication'), fun: t('pluginMonitor.categoryFun'),
+    productivity: t('pluginMonitor.categoryProductivity'), security: t('pluginMonitor.categorySecurity'), integrations: t('pluginMonitor.categoryIntegrations'),
+    dev_tools: 'Dev Tools', bots: 'Bots', other: t('pluginMonitor.categoryOther'),
   };
 
   const categories = useMemo(() => {
@@ -121,7 +123,7 @@ export function PluginMonitor() {
   if (loading) {
     return (
       <div className="pm-loading">
-        <div className="pm-loading-spinner">Đang tải plugin…</div>
+        <div className="pm-loading-spinner">{t('pluginMonitor.loading')}</div>
       </div>
     );
   }
@@ -131,7 +133,7 @@ export function PluginMonitor() {
       <div className="pm-error">
         <span>⚠️</span>
         <p>{error}</p>
-        <button onClick={handleRefresh}>Thử lại</button>
+        <button onClick={handleRefresh}>{t('pluginMonitor.retry')}</button>
       </div>
     );
   }
@@ -139,14 +141,14 @@ export function PluginMonitor() {
   return (
     <PageContainer
       title="Plugins"
-      subtitle={`${stats.active}/${stats.total} plugin đang hoạt động từ thư mục plugins/`}
+      subtitle={t('pluginMonitor.subtitle', { active: stats.active, total: stats.total })}
       icon={<Package size={24} />}
       actions={
         <div className="pm-header-actions">
           <button
             className={`pm-refresh-btn ${refreshing ? 'is-spinning' : ''}`}
             onClick={handleRefresh}
-            title="Làm mới"
+            title={t('pluginMonitor.refresh')}
           >
             <RefreshCw size={16} />
           </button>
@@ -174,7 +176,7 @@ export function PluginMonitor() {
             <div className="pm-empty-icon">
               <Package size={28} />
             </div>
-            <h4>Không có plugin nào trong danh mục này</h4>
+            <h4>{t('pluginMonitor.emptyCategory')}</h4>
           </div>
         ) : (
           <div className="pm-cards-grid">
@@ -367,11 +369,12 @@ function PluginDetailModal({
   onToggle: () => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const infoItems = [
-    { label: 'Phiên bản', value: `v${manifest.version || '1.0.0'}` },
-    { label: 'Danh mục', value: (manifest as any).category || 'core' },
-    { label: 'Giấy phép', value: (manifest as any).license || 'free' },
-    { label: 'Tác giả', value: manifest.author || 'Saybridge Official' },
+    { label: t('pluginMonitor.infoVersion'), value: `v${manifest.version || '1.0.0'}` },
+    { label: t('pluginMonitor.infoCategory'), value: (manifest as any).category || 'core' },
+    { label: t('pluginMonitor.infoLicense'), value: (manifest as any).license || 'free' },
+    { label: t('pluginMonitor.infoAuthor'), value: manifest.author || 'Saybridge Official' },
   ];
 
   const hooks: string[] = manifest.hooks || [];
@@ -397,9 +400,9 @@ function PluginDetailModal({
           <div className="plugin-modal-status-row" style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '12px' }}>
             <span className={`plugin-modal-status-pill ${enabled ? 'active' : 'inactive'}`}>
               <span className="plugin-status-dot" />
-              {enabled ? 'Hoạt động' : 'Đã tắt'}
+              {enabled ? t('pluginMonitor.statusActive') : t('pluginMonitor.statusDisabled')}
             </span>
-            <label className="pref-switch" title={enabled ? 'Tắt plugin' : 'Bật plugin'}>
+            <label className="pref-switch" title={enabled ? t('pluginMonitor.disablePlugin') : t('pluginMonitor.enablePlugin')}>
               <input type="checkbox" checked={enabled} onChange={onToggle} />
               <span className="pref-switch-slider" />
             </label>
@@ -420,7 +423,7 @@ function PluginDetailModal({
           {/* Hooks */}
           {hooks.length > 0 && (
             <div className="plugin-modal-section">
-              <h4>Hooks đăng ký</h4>
+              <h4>{t('pluginMonitor.registeredHooks')}</h4>
               <div className="plugin-modal-hooks">
                 {hooks.map((hook: string) => (
                   <span key={hook} className="plugin-hook-chip">{hook}</span>
@@ -432,7 +435,7 @@ function PluginDetailModal({
           {/* Screens */}
           {(screens.length > 0 || adminScreens.length > 0) && (
             <div className="plugin-modal-section">
-              <h4>Màn hình UI</h4>
+              <h4>{t('pluginMonitor.uiScreens')}</h4>
               <div className="plugin-modal-screens">
                 {screens.map((s: any) => (
                   <div key={s.id} className="plugin-screen-item">

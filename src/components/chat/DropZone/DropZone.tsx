@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload } from 'lucide-react';
 import './DropZone.css';
 
@@ -8,6 +9,7 @@ interface DropZoneProps {
 }
 
 export const DropZone: React.FC<DropZoneProps> = ({ onFilesDropped, children }) => {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -47,8 +49,8 @@ export const DropZone: React.FC<DropZoneProps> = ({ onFilesDropped, children }) 
         <div className="dropzone-overlay">
           <div className="dropzone-box">
             <Upload size={48} className="dropzone-icon" />
-            <h3 className="dropzone-title">Thả tập tin để tải lên</h3>
-            <p className="dropzone-subtitle">Hỗ trợ tài liệu, hình ảnh, video lên tới 50MB</p>
+            <h3 className="dropzone-title">{t('dropzone.title')}</h3>
+            <p className="dropzone-subtitle">{t('dropzone.subtitle')}</p>
           </div>
         </div>
       )}

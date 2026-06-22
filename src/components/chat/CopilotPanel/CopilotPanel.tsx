@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Button, TextInput } from '@saybridge/ui';
 import { Send, FileText, Sparkles, Loader2, Trash2, X } from 'lucide-react';
 import { api } from '../../../services/api';
+import { useTranslation } from 'react-i18next';
 import './CopilotPanel.css';
 
 interface Message {
@@ -16,6 +17,7 @@ interface CopilotPanelProps {
 }
 
 export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,18 +41,18 @@ export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
         message: text,
         room_id: roomId,
       });
-      const aiMsg: Message = { role: 'assistant', content: res.data.reply || 'Không có phản hồi.', timestamp: Date.now() };
+      const aiMsg: Message = { role: 'assistant', content: res.data.reply || t('copilotPanel.noResponse'), timestamp: Date.now() };
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err) {
-      setMessages((prev) => [...prev, { role: 'assistant', content: '⚠️ Lỗi khi gọi AI.', timestamp: Date.now() }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: t('copilotPanel.aiCallError'), timestamp: Date.now() }]);
     } finally {
       setLoading(false);
     }
-  }, [input, loading, roomId]);
+  }, [input, loading, roomId, t]);
 
   const handleSummarize = useCallback(async () => {
     setLoading(true);
-    setMessages((prev) => [...prev, { role: 'user', content: '📋 Tóm tắt cuộc trò chuyện', timestamp: Date.now() }]);
+    setMessages((prev) => [...prev, { role: 'user', content: t('copilotPanel.summarizeConversation'), timestamp: Date.now() }]);
 
     try {
       const res = await api.post<{ summary: string }>('/copilot/summarize', {
@@ -58,14 +60,14 @@ export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
       });
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: res.data.summary || 'Không có gì để tóm tắt.', timestamp: Date.now() },
+        { role: 'assistant', content: res.data.summary || t('copilotPanel.nothingToSummarize'), timestamp: Date.now() },
       ]);
     } catch (err) {
-      setMessages((prev) => [...prev, { role: 'assistant', content: '⚠️ Lỗi khi tóm tắt.', timestamp: Date.now() }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content: t('copilotPanel.summarizeError'), timestamp: Date.now() }]);
     } finally {
       setLoading(false);
     }
-  }, [roomId]);
+  }, [roomId, t]);
 
   return (
     <div className="copilot-panel">
@@ -76,12 +78,12 @@ export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
           <span>Copilot Assistant</span>
         </div>
         <div className="copilot-panel-actions">
-          <button className="copilot-icon-btn" title="Tóm tắt" onClick={handleSummarize} disabled={loading}>
+          <button className="copilot-icon-btn" title={t('copilotPanel.summarizeTooltip')} onClick={handleSummarize} disabled={loading}>
             <FileText size={14} />
           </button>
           <button
             className="copilot-icon-btn"
-            title="Xoá lịch sử"
+            title={t('copilotPanel.clearHistoryTooltip')}
             onClick={() => setMessages([])}
             disabled={loading}
           >
@@ -100,10 +102,10 @@ export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
             <div className="copilot-panel-empty-icon">
               <Sparkles size={28} />
             </div>
-            <h4>Hỏi Copilot bất cứ điều gì</h4>
-            <p>Hỏi AI trợ lý của bạn hoặc nhấn nút tóm tắt để xem diễn biến phòng chat.</p>
+            <h4>{t('copilotPanel.emptyTitle')}</h4>
+            <p>{t('copilotPanel.emptyDescription')}</p>
             <Button variant="secondary" size="sm" onClick={handleSummarize}>
-              Tóm tắt cuộc trò chuyện
+              {t('copilotPanel.summarizeButton')}
             </Button>
           </div>
         )}
@@ -116,7 +118,7 @@ export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
           <div className="copilot-msg copilot-msg--assistant">
             <div className="copilot-msg-bubble copilot-msg-loading">
               <Loader2 size={14} className="copilot-spinner" />
-              Đang suy nghĩ...
+              {t('copilotPanel.thinking')}
             </div>
           </div>
         )}
@@ -125,7 +127,7 @@ export function CopilotPanel({ roomId, onClose }: CopilotPanelProps) {
       {/* Input */}
       <div className="copilot-panel-input-bar">
         <TextInput
-          placeholder="Hỏi Copilot..."
+          placeholder={t('copilotPanel.inputPlaceholder')}
           value={input}
           onChange={(e: any) => setInput(e.target.value)}
           onKeyDown={(e: any) => e.key === 'Enter' && !e.shiftKey && handleSend()}
