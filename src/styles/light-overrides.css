@@ -35,7 +35,7 @@
 /* Drag handle */
 [data-theme="light"] .drag-handle:hover,
 [data-theme="light"] .drag-handle.active {
-  background: rgba(79, 70, 229, 0.10);
+  background: rgba(var(--accent-rgb), 0.10);
 }
 [data-theme="light"] .drag-handle::after {
   background: rgba(0, 0, 0, 0.15);
@@ -55,7 +55,7 @@
   color: rgba(0, 0, 0, 0.80);
 }
 [data-theme="light"] .sidebar-icon-btn.active {
-  background: rgba(79, 70, 229, 0.10);
+  background: rgba(var(--accent-rgb), 0.10);
   color: var(--accent);
 }
 
@@ -64,7 +64,7 @@
   text-shadow: none;
 }
 [data-theme="light"] .sidebar-logo svg {
-  filter: drop-shadow(0 1px 3px rgba(79, 70, 229, 0.15));
+  filter: drop-shadow(0 1px 3px rgba(var(--accent-rgb), 0.15));
 }
 
 /* Room list header */
@@ -79,7 +79,7 @@
   color: var(--text-primary);
 }
 [data-theme="light"] .roomlist-search-input:focus {
-  border-color: rgba(79, 70, 229, 0.40);
+  border-color: rgba(var(--accent-rgb), 0.40);
   background: rgba(0, 0, 0, 0.02);
 }
 [data-theme="light"] .roomlist-search-input::placeholder {
@@ -196,8 +196,8 @@
   background: rgba(0, 0, 0, 0.06);
 }
 [data-theme="light"] .reaction-pill.reacted {
-  background: rgba(79, 70, 229, 0.08);
-  border-color: rgba(79, 70, 229, 0.20);
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.20);
 }
 
 /* Detail panel sections */
@@ -243,7 +243,7 @@
 }
 
 [data-theme="light"] .glass-modal-confirm {
-  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.15);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.15);
 }
 [data-theme="light"] .glass-modal-confirm::before {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.30), transparent);
@@ -266,8 +266,8 @@
 [data-theme="light"] .sb-input:focus,
 [data-theme="light"] .sb-select:focus {
   background: rgba(255, 255, 255, 0.6) !important;
-  border-color: rgba(79, 70, 229, 0.40) !important;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10) !important;
+  border-color: rgba(var(--accent-rgb), 0.40) !important;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.10) !important;
 }
 [data-theme="light"] .sb-input::placeholder {
   color: rgba(0, 0, 0, 0.35) !important;
@@ -414,9 +414,9 @@
 [data-theme="light"] .app-card:hover,
 [data-theme="light"] .wf-card:hover {
   background: rgba(255, 255, 255, 0.75) !important;
-  border-color: rgba(99, 102, 241, 0.40) !important;
+  border-color: rgba(var(--accent-rgb), 0.40) !important;
   box-shadow: 
-    0 8px 24px rgba(99, 102, 241, 0.08), 
+    0 8px 24px rgba(var(--accent-rgb), 0.08), 
     inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
   transform: translateY(-2px) !important;
 }
@@ -609,7 +609,7 @@
 
 /* Text selection */
 [data-theme="light"] ::selection {
-  background: rgba(79, 70, 229, 0.15);
+  background: rgba(var(--accent-rgb), 0.15);
   color: var(--text-primary);
 }
 
@@ -634,7 +634,7 @@
 
 /* Focus rings */
 [data-theme="light"] :focus-visible {
-  outline-color: rgba(79, 70, 229, 0.40);
+  outline-color: rgba(var(--accent-rgb), 0.40);
 }
 
 /* HR / Dividers */
@@ -707,6 +707,6 @@
 [data-theme="light"] .federation-table tbody tr:hover,
 [data-theme="light"] .workflow-table tbody tr:hover,
 [data-theme="light"] .analytics-rooms-table tbody tr:hover {
-  background: rgba(99, 102, 241, 0.04) !important;
+  background: rgba(var(--accent-rgb), 0.04) !important;
 }
 

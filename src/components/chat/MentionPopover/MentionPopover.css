@@ -32,7 +32,7 @@
 .mention-popover-content {
   background: var(--bg-glass-panel);
   border: var(--border-glass);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 14px 16px;
   width: 100%;
   box-sizing: border-box;

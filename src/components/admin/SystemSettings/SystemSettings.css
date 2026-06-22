@@ -109,7 +109,7 @@
   background: var(--glass-regular);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.1);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--duration-normal) var(--ease-smooth);
@@ -124,11 +124,11 @@
 .ss-section:nth-child(5) { animation-delay: 0.25s; }
 
 .ss-section:hover {
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(var(--accent-rgb), 0.2);
 }
 
 .ss-section.is-open {
-  border-color: rgba(99, 102, 241, 0.25);
+  border-color: rgba(var(--accent-rgb), 0.25);
   box-shadow: var(--shadow-glass-sm);
 }
 
@@ -279,7 +279,7 @@
 .ss-field input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
 }
 
 .ss-field input:read-only {
@@ -310,7 +310,7 @@
 .ss-field select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
 }
 
 .ss-field select option {
@@ -324,7 +324,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--glass-regular);
 }
 
 .ss-toggle-row:last-child {
@@ -377,7 +377,7 @@
   right: 0;
   bottom: 0;
   background: var(--glass-thick);
-  border-radius: 24px;
+  border-radius: var(--radius-2xl);
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -403,7 +403,7 @@
 }
 
 .ss-toggle input:focus + .ss-toggle-slider {
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2);
 }
 
 /* ---- Range Slider ---- */
@@ -434,7 +434,7 @@
   color: var(--accent-hover);
   background: var(--accent-muted);
   padding: 2px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .ss-slider-track {
@@ -457,13 +457,13 @@
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.4);
   transition: all var(--duration-fast);
 }
 
 .ss-slider-track::-webkit-slider-thumb:hover {
   transform: scale(1.15);
-  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.6);
+  box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.6);
 }
 
 .ss-slider-track::-moz-range-thumb {
@@ -473,7 +473,7 @@
   background: var(--accent);
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.4);
 }
 
 .ss-slider-labels {
@@ -513,7 +513,7 @@
   align-items: center;
   justify-content: center;
   background: var(--accent-glass);
-  border: 1px dashed rgba(99, 102, 241, 0.25);
+  border: 1px dashed rgba(var(--accent-rgb), 0.25);
   color: var(--text-secondary);
   font-size: 20px;
 }

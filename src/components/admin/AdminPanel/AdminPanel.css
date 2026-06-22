@@ -103,7 +103,7 @@
 }
 
 .admin-nav-item.active {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(99, 102, 241, 0.08));
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15), rgba(var(--accent-rgb), 0.08));
   color: var(--accent-hover);
   font-weight: 600;
 }
@@ -278,7 +278,7 @@
 
 .quick-action-btn:hover {
   background: var(--glass-thick);
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: rgba(var(--accent-rgb), 0.3);
   color: var(--text-primary);
   transform: translateY(-1px);
 }
@@ -325,7 +325,7 @@
   padding: 4px 14px;
   border-radius: var(--radius-pill);
   background: var(--accent-muted);
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
   color: var(--accent-hover);
   font-size: 0.75rem;
   font-weight: 600;
@@ -474,7 +474,7 @@
 }
 
 .plugin-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: rgba(var(--accent-rgb), 0.3);
   transform: translateY(-2px);
   box-shadow: var(--shadow-glass-md);
 }
@@ -623,7 +623,7 @@
   position: absolute;
   inset: 0;
   background: var(--glass-thick);
-  border-radius: 22px;
+  border-radius: var(--radius-2xl);
   cursor: pointer;
   transition: background var(--duration-normal) var(--ease-smooth), box-shadow var(--duration-normal) var(--ease-smooth);
 }
@@ -642,7 +642,7 @@
 
 .plugin-toggle input:checked+.plugin-toggle-slider {
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.35);
 }
 
 .plugin-toggle input:checked+.plugin-toggle-slider::before {
@@ -904,9 +904,9 @@
 
 .plugin-hook-chip {
   padding: 0.25rem 0.65rem;
-  border-radius: 6px;
-  background: rgba(99, 102, 241, 0.12);
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: var(--radius-sm);
+  background: rgba(var(--accent-rgb), 0.12);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
   color: var(--text-accent);
   font-size: 0.72rem;
   font-family: var(--font-mono);

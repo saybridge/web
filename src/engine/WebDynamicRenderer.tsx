@@ -3,9 +3,14 @@ import { SDUIRenderer, SDUINode, registerComponent, SDUIAction } from '@saybridg
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 import { UIComponent } from './types';
+import { DEFAULT_API_URL } from '../services/api';
 import './WebDynamicRenderer.css';
 
-const API_BASE = 'http://localhost:8080';
+// Derive the backend origin from the configured API URL so SDUI calls work in every
+// environment (dev, staging, prod) instead of being pinned to localhost. DEFAULT_API_URL
+// includes the /api/v1 path, while manifest endpoints already carry their own absolute
+// path (e.g. "GET /api/v1/..."), so here we only need the scheme + host.
+const API_BASE = new URL(DEFAULT_API_URL).origin;
 
 // ─── Utility API fetch ────────────────────────────────────────────────────────
 

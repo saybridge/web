@@ -205,7 +205,7 @@
 /* ── Unread Badge ── */
 .unread-badge {
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 10px;
   font-weight: 700;
   padding: 2px 7px;
@@ -282,7 +282,7 @@
 [data-theme="light"] .search-box:focus {
   background-color: rgba(255, 255, 255, 0.55);
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
 }
 
 [data-theme="light"] .room-item:hover {
@@ -298,11 +298,11 @@
 }
 
 [data-theme="light"] .dm-avatar-fallback {
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(0, 0, 0, 0.04));
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.12), rgba(0, 0, 0, 0.04));
 }
 
 [data-theme="light"] .unread-badge {
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.22);
+  box-shadow: 0 2px 6px rgba(var(--accent-rgb), 0.22);
 }
 
 /* ── Room List Footer ── */
@@ -347,7 +347,7 @@
   height: 100%;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-  color: #ffffff;
+  color: var(--accent-contrast);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -44,13 +44,13 @@
 
 .dm-user-item.selected {
   background: var(--glass-thick);
-  border-color: rgba(99, 102, 241, 0.25);
+  border-color: rgba(var(--accent-rgb), 0.25);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="light"] .dm-user-item.selected {
-  background: rgba(99, 102, 241, 0.06);
-  border-color: rgba(99, 102, 241, 0.3);
+  background: rgba(var(--accent-rgb), 0.06);
+  border-color: rgba(var(--accent-rgb), 0.3);
 }
 
 .dm-user-avatar-wrapper {

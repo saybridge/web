@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, ChevronRight, ChevronLeft, Check, Hash, Megaphone, Shuffle, Loader2 } from 'lucide-react';
+import { DEFAULT_API_URL } from '../../../services/api';
 import './SetupWizard.css';
 
 interface SetupWizardProps {
@@ -94,7 +95,7 @@ export function SetupWizard({ onComplete }: SetupWizardProps) {
     setError(null);
 
     try {
-      const res = await fetch('http://localhost:8080/api/v1/system/setup', {
+      const res = await fetch(`${DEFAULT_API_URL}/system/setup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

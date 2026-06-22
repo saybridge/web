@@ -194,10 +194,15 @@ export const usePreferencesStore = create<PreferencesStore>((set, get) => ({
     }
 
     // Accent color
-    const preset = ACCENT_PRESETS[state.accentColor] || ACCENT_PRESETS.indigo;
+    const preset = ACCENT_PRESETS[state.accentColor] || ACCENT_PRESETS.gray;
+    // Pick a readable text/icon color for content placed ON the accent fill:
+    // dark text on light accents (e.g. slate), white on dark/saturated ones (YIQ).
+    const yiq = (preset.r * 299 + preset.g * 587 + preset.b * 114) / 1000;
+    const accentContrast = yiq > 150 ? '#0c1020' : '#ffffff';
     root.style.setProperty('--accent', preset.main);
     root.style.setProperty('--accent-hover', preset.hover);
     root.style.setProperty('--accent-rgb', `${preset.r}, ${preset.g}, ${preset.b}`);
+    root.style.setProperty('--accent-contrast', accentContrast);
     root.style.setProperty('--accent-muted', `rgba(${preset.r}, ${preset.g}, ${preset.b}, 0.15)`);
     root.style.setProperty('--accent-glow', `rgba(${preset.r}, ${preset.g}, ${preset.b}, 0.30)`);
     root.style.setProperty('--accent-glass', `rgba(${preset.r}, ${preset.g}, ${preset.b}, 0.08)`);

@@ -39,8 +39,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 22px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
 }
@@ -81,7 +81,7 @@
 .tp-parent {
   margin-top: 68px; /* sits below the header */
   background: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--glass-regular);
   padding: 12px 16px 14px;
   flex-shrink: 0;
   display: flex;
@@ -137,8 +137,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-md);
   padding: 10px 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   max-height: 260px;
@@ -167,7 +167,7 @@
   transition: background 0.2s ease;
 }
 .tp-parent-text:hover::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-thick);
 }
 
 /* ── Divider ── */
@@ -216,7 +216,7 @@
   transition: background 0.2s ease;
 }
 .tp-replies:hover::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-thick);
 }
 
 /* ── Empty states ── */
@@ -338,7 +338,7 @@
   backdrop-filter: var(--blur-heavy);
   -webkit-backdrop-filter: var(--blur-heavy);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
@@ -431,7 +431,7 @@
   transition: background 0.2s ease;
 }
 .tp-modal-body:hover::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-thick);
 }
 
 /* ── Expand button in meta row ── */
@@ -439,9 +439,9 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-regular);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 2px 8px;
   color: var(--text-muted);
   font-size: 10px;
@@ -452,7 +452,7 @@
 }
 .tp-parent-expand-btn:hover {
   background: var(--glass-thick);
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--glass-ultra);
   color: var(--text-primary);
 }
 

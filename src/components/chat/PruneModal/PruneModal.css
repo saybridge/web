@@ -32,7 +32,7 @@
   width: 32px;
   height: 32px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
@@ -93,7 +93,7 @@
 .prune-form-group input {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--border-light);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 9px 12px;
   font-size: 13px;
   color: var(--text-bright);
@@ -108,7 +108,7 @@
 .prune-form-group input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
 }
 
 .prune-form-group input:disabled {
@@ -126,7 +126,7 @@
 .prune-cancel-btn {
   padding: 8px 18px;
   border: 1px solid var(--border-light);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-secondary);
   font-size: 13px;
@@ -136,14 +136,14 @@
 }
 
 .prune-cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-regular);
   color: var(--text-bright);
 }
 
 .prune-submit-btn {
   padding: 8px 18px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: var(--danger);
   color: #fff;
   font-size: 13px;

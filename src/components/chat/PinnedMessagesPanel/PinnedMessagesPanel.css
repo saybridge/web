@@ -177,7 +177,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
   border-radius: var(--radius-sm);
   background: var(--accent-glass);
   color: var(--accent-hover);
@@ -189,7 +189,7 @@
 
 .pinned-item-unpin:hover:not(:disabled) {
   background: var(--accent-muted);
-  border-color: rgba(99, 102, 241, 0.4);
+  border-color: rgba(var(--accent-rgb), 0.4);
 }
 
 .pinned-item-unpin:disabled {

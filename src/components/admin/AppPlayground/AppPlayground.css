@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--border-color, var(--glass-thick));
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
@@ -57,7 +57,7 @@
 .playground-editor-panel {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-right: 1px solid var(--border-color, var(--glass-thick));
   overflow: hidden;
 }
 
@@ -78,15 +78,15 @@
   font-weight: 600;
   color: var(--text-secondary, var(--text-secondary));
   background: var(--glass-thick);
-  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--border-color, var(--glass-thick));
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .panel-badge {
   padding: 2px 8px;
-  border-radius: 12px;
-  background: rgba(99, 102, 241, 0.15);
+  border-radius: var(--radius-md);
+  background: rgba(var(--accent-rgb), 0.15);
   color: var(--accent-hover);
   font-size: 10px;
   font-weight: 500;
@@ -111,13 +111,13 @@
 }
 
 .playground-editor::selection {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(var(--accent-rgb), 0.3);
 }
 
 /* ── Event Simulator ─────────────────────────────────────────────────────── */
 
 .playground-events-panel {
-  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--border-color, var(--glass-thick));
   display: flex;
   flex-direction: column;
 }
@@ -135,8 +135,8 @@
 
 .event-preset-btn {
   padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color, var(--glass-thick));
   background: transparent;
   color: var(--text-secondary, var(--text-secondary));
   font-size: 11px;
@@ -150,7 +150,7 @@
 }
 
 .event-preset-btn.active {
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(var(--accent-rgb), 0.15);
   border-color: var(--accent);
   color: var(--accent-hover);
 }
@@ -171,8 +171,8 @@
 
 .event-input {
   padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color, var(--glass-thick));
   background: var(--bg-glass-input);
   color: var(--text-primary, var(--text-primary));
   font-family: monospace;
@@ -186,8 +186,8 @@
 
 .event-payload {
   padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color, var(--glass-thick));
   background: var(--bg-glass-input);
   color: var(--text-primary, var(--text-primary));
   font-family: monospace;

@@ -67,7 +67,7 @@
 .cc-tab-btn.active {
   background: var(--accent-glass);
   color: var(--accent);
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(var(--accent-rgb), 0.15);
 }
 
 /* Content Area */
@@ -143,7 +143,7 @@
 }
 
 .cc-agent-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: rgba(var(--accent-rgb), 0.3);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
@@ -350,7 +350,7 @@
 
 .cc-metric-card.highlight-card {
   background: var(--accent-glass);
-  border-color: rgba(99, 102, 241, 0.25);
+  border-color: rgba(var(--accent-rgb), 0.25);
 }
 
 .cc-metric-card h4 {

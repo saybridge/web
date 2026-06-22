@@ -53,8 +53,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   padding: 6px 16px 6px 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   height: 44px;
@@ -124,8 +124,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   padding: 0 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   height: 44px;
@@ -141,7 +141,7 @@
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
   border: 1px solid rgba(16, 185, 129, 0.40);
-  border-radius: 24px;
+  border-radius: var(--radius-2xl);
   padding: 0 16px;
   box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
   height: 44px;
@@ -168,7 +168,7 @@
 .header-call-status-pill.inline-pill {
   margin-left: auto;
   height: 32px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 0 12px;
   font-size: var(--text-xs);
   box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
@@ -404,7 +404,7 @@
   background: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-thick);
   border-radius: var(--radius-xl);
   padding: 6px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
@@ -420,7 +420,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, var(--glass-ultra), transparent);
   pointer-events: none;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
@@ -444,7 +444,7 @@
 }
 
 .kebab-item.kebab-active {
-  background: rgba(99, 102, 241, 0.08);
+  background: rgba(var(--accent-rgb), 0.08);
   color: var(--accent);
 }
 
@@ -499,8 +499,8 @@
   align-items: center;
   gap: 10px;
   padding: 0 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-xl);
   background: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
@@ -597,7 +597,7 @@
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 4px 14px;
   text-transform: none;
   letter-spacing: 0;
@@ -625,7 +625,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-regular);
   flex-shrink: 0;
   animation: skeletonPulse 1.5s ease-in-out infinite;
 }
@@ -644,14 +644,14 @@
 .skeleton-name {
   width: 90px;
   height: 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.06);
   animation: skeletonPulse 1.5s ease-in-out infinite;
 }
 
 .skeleton-line {
   height: 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.03);
   animation: skeletonPulse 1.5s ease-in-out infinite;
 }
@@ -848,8 +848,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-md);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   animation: cp-typingIn 0.25s var(--ease-spring);
 }
@@ -1229,7 +1229,7 @@
   width: 380px;
   height: 100%;
   background: var(--glass-bg, rgba(17, 24, 39, 0.95));
-  border-left: 1px solid var(--glass-border, rgba(99, 102, 241, 0.12));
+  border-left: 1px solid var(--glass-border, rgba(var(--accent-rgb), 0.12));
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -1243,7 +1243,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  border-bottom: 1px solid var(--glass-border, rgba(99, 102, 241, 0.12));
+  border-bottom: 1px solid var(--glass-border, rgba(var(--accent-rgb), 0.12));
 }
 
 .chat-side-panel-header h3 {
@@ -1254,8 +1254,8 @@
 
 .chat-side-panel-close {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-sm);
   width: 32px;
   height: 32px;
   display: flex;

@@ -124,7 +124,7 @@
 }
 .type-toggle-btn:hover {
   background-color: var(--glass-regular);
-  border-color: rgba(255,255,255,0.12);
+  border-color: var(--glass-ultra);
 }
 .type-toggle-btn.selected {
   background-color: var(--accent-muted);

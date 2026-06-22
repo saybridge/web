@@ -39,8 +39,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 22px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
 }
@@ -111,13 +111,13 @@
 .dp-hero-icon {
   width: 56px;
   height: 56px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-  color: #fff;
+  color: var(--accent-contrast);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.25);
   margin-bottom: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -152,7 +152,7 @@
   align-items: center;
   gap: 6px;
   padding: 10px 4px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.06);
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
@@ -174,8 +174,8 @@
 .dp-quick-icon {
   width: 28px;
   height: 28px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  background: var(--glass-regular);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,7 +184,7 @@
 }
 
 .dp-quick-btn:hover .dp-quick-icon {
-  background: rgba(99, 102, 241, 0.18);
+  background: rgba(var(--accent-rgb), 0.18);
   color: var(--accent);
 }
 
@@ -206,9 +206,9 @@
   gap: 8px;
   width: 100%;
   padding: 10px 16px;
-  border-radius: 12px;
-  border: 1px dashed rgba(99, 102, 241, 0.35);
-  background: rgba(99, 102, 241, 0.06);
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(var(--accent-rgb), 0.35);
+  background: rgba(var(--accent-rgb), 0.06);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
   color: var(--accent);
@@ -221,9 +221,9 @@
 }
 
 .dp-add-member-btn:hover {
-  background: rgba(99, 102, 241, 0.12);
-  border-color: rgba(99, 102, 241, 0.6);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: rgba(var(--accent-rgb), 0.6);
+  box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.15), inset 0 1px 0 var(--glass-thick);
 }
 
 /* ── Accordion Sections ── */
@@ -240,7 +240,7 @@
   padding: 10px 10px;
   border: none;
   background: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-primary);
   font-size: 12px;
@@ -268,8 +268,8 @@
   font-size: 10px;
   font-weight: 700;
   padding: 1px 7px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  background: var(--glass-thick);
   color: var(--text-secondary);
 }
 
@@ -308,7 +308,7 @@
   color: var(--text-secondary);
   margin: 0 4px 12px;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background-color: var(--bg-glass-panel);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
@@ -364,7 +364,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: var(--bg-glass-panel);
   border: 1px solid rgba(255, 255, 255, 0.06);
   color: var(--text-muted);
@@ -375,7 +375,7 @@
 .dp-members-search:focus-within {
   border-color: var(--accent);
   background: var(--glass-thick);
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .dp-members-search input {
@@ -395,7 +395,7 @@
 .dp-members-add-btn {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -409,8 +409,8 @@
 }
 
 .dp-members-add-btn:hover {
-  background: rgba(99, 102, 241, 0.15);
-  border-color: rgba(99, 102, 241, 0.3);
+  background: rgba(var(--accent-rgb), 0.15);
+  border-color: rgba(var(--accent-rgb), 0.3);
   color: var(--accent);
 }
 
@@ -426,7 +426,7 @@
   align-items: center;
   gap: 12px;
   padding: 8px 10px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   transition: background 0.15s ease;
 }
 
@@ -438,7 +438,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(255, 255, 255, 0.1));
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.2), rgba(255, 255, 255, 0.1));
   color: var(--text-primary);
   font-size: 11px;
   font-weight: 700;
@@ -447,7 +447,7 @@
   justify-content: center;
   flex-shrink: 0;
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-thick);
 }
 
 .dp-member-status {
@@ -484,7 +484,7 @@
   font-weight: 700;
   text-transform: uppercase;
   padding: 2px 7px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   letter-spacing: 0.03em;
   flex-shrink: 0;
 }
@@ -504,7 +504,7 @@
 .dp-member-role--member {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-thick);
 }
 
 .dp-members-show-all {
@@ -522,7 +522,7 @@
 }
 
 .dp-members-show-all:hover {
-  background: rgba(99, 102, 241, 0.06);
+  background: rgba(var(--accent-rgb), 0.06);
 }
 
 /* ── Notifications Option ── */
@@ -538,10 +538,10 @@
   align-items: flex-start;
   gap: 12px;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-regular);
   background: var(--bg-glass-panel);
 }
 
@@ -550,8 +550,8 @@
 }
 
 .dp-notif-option:has(input:checked) {
-  background: rgba(99, 102, 241, 0.08);
-  border-color: rgba(99, 102, 241, 0.2);
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.2);
 }
 
 .dp-notif-option input[type="radio"] {
@@ -621,7 +621,7 @@
   gap: 8px;
   padding: 10px 14px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: var(--bg-glass-panel);
   font-size: 12px;
@@ -637,7 +637,7 @@
 
 .dp-danger-btn--edit:hover {
   background: var(--glass-thick);
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--glass-ultra);
   color: var(--text-primary);
 }
 
@@ -664,7 +664,7 @@
   left: 16px;
   right: 16px;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   font-size: 12px;
   font-weight: 600;
   z-index: 100;
@@ -719,10 +719,10 @@
   backdrop-filter: var(--blur-ultra);
   -webkit-backdrop-filter: var(--blur-ultra);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 0 var(--glass-thick);
   animation: dpModalIn 0.2s var(--ease-smooth);
   overflow: hidden;
 }
@@ -737,7 +737,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--glass-thick);
 }
 
 .dp-invite-modal-header h4 {
@@ -831,7 +831,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   transition: background 0.12s ease;
 }
 
@@ -844,7 +844,7 @@
   height: 36px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 12px;
   font-weight: 700;
   display: flex;
@@ -881,20 +881,20 @@
 
 .dp-invite-modal-invite-btn {
   padding: 6px 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
   background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-  color: #fff;
+  color: var(--accent-contrast);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.2);
 }
 
 .dp-invite-modal-invite-btn:hover:not(:disabled) {
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.35);
   transform: translateY(-1px);
 }
 
@@ -907,14 +907,14 @@
   font-size: 10px;
   font-weight: 600;
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   flex-shrink: 0;
 }
 
 .dp-invite-modal-badge--member {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-thick);
 }
 
 .dp-invite-modal-badge--invited {
@@ -938,7 +938,7 @@
 }
 
 [data-theme="light"] .dp-hero-icon {
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 6px 16px rgba(var(--accent-rgb), 0.15);
   border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -959,18 +959,18 @@
 }
 
 [data-theme="light"] .dp-quick-btn:hover .dp-quick-icon {
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 [data-theme="light"] .dp-add-member-btn {
-  background: rgba(99, 102, 241, 0.04);
-  border-color: rgba(99, 102, 241, 0.25);
+  background: rgba(var(--accent-rgb), 0.04);
+  border-color: rgba(var(--accent-rgb), 0.25);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 [data-theme="light"] .dp-add-member-btn:hover {
-  background: rgba(99, 102, 241, 0.08);
-  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.4);
 }
 
 [data-theme="light"] .dp-accordion {
@@ -1013,8 +1013,8 @@
 }
 
 [data-theme="light"] .dp-members-add-btn:hover {
-  background: rgba(99, 102, 241, 0.08);
-  border-color: rgba(99, 102, 241, 0.2);
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.2);
 }
 
 [data-theme="light"] .dp-member:hover {
@@ -1022,7 +1022,7 @@
 }
 
 [data-theme="light"] .dp-member-avatar {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(0, 0, 0, 0.03));
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.08), rgba(0, 0, 0, 0.03));
   border-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -1036,7 +1036,7 @@
 }
 
 [data-theme="light"] .dp-members-show-all:hover {
-  background: rgba(99, 102, 241, 0.04);
+  background: rgba(var(--accent-rgb), 0.04);
 }
 
 [data-theme="light"] .dp-notif-option {
@@ -1049,8 +1049,8 @@
 }
 
 [data-theme="light"] .dp-notif-option:has(input:checked) {
-  background: rgba(99, 102, 241, 0.05);
-  border-color: rgba(99, 102, 241, 0.18);
+  background: rgba(var(--accent-rgb), 0.05);
+  border-color: rgba(var(--accent-rgb), 0.18);
 }
 
 [data-theme="light"] .dp-danger-zone {
@@ -1119,9 +1119,9 @@
 }
 
 [data-theme="light"] .dp-invite-modal-invite-btn {
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.15);
 }
 
 [data-theme="light"] .dp-invite-modal-invite-btn:hover:not(:disabled) {
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.25);
 }

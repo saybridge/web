@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
 import { PageHeader } from '@saybridge/ui';
+import { DEFAULT_API_URL } from '../../../services/api';
 import './AppPlayground.css';
 
 const DEFAULT_SOURCE = `//go:build tinygo
@@ -165,7 +166,7 @@ export function AppPlayground() {
 
     try {
       const token = localStorage.getItem('saybridge_access_token');
-      const resp = await fetch('http://localhost:8080/api/v1/admin/playground/run', {
+      const resp = await fetch(`${DEFAULT_API_URL}/admin/playground/run`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

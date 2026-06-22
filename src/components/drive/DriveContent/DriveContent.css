@@ -42,8 +42,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   padding: 0 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   height: 44px;
@@ -61,7 +61,7 @@
 .drive-toolbar-divider {
   width: 1px;
   height: 18px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-thick);
   flex-shrink: 0;
 }
 
@@ -69,9 +69,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-regular);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: 0 12px;
   width: 180px;
   height: 28px;
@@ -79,8 +79,8 @@
 }
 
 .drive-search-box:focus-within {
-  border-color: rgba(148, 163, 184, 0.35);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(var(--accent-rgb), 0.35);
+  background: var(--glass-thick);
   width: 220px;
 }
 
@@ -127,8 +127,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   padding: 0 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   height: 44px;
@@ -144,7 +144,7 @@
   font-family: inherit;
   padding: 0 12px;
   height: 28px;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -171,8 +171,8 @@
   background-color: var(--bg-glass-panel);
   backdrop-filter: var(--blur-regular);
   -webkit-backdrop-filter: var(--blur-regular);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
+  border: 1px solid var(--glass-thick);
+  border-radius: var(--radius-2xl);
   padding: 0 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   height: 44px;
@@ -220,7 +220,7 @@
   font-family: inherit;
   padding: 0 12px;
   height: 28px;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all var(--duration-normal) var(--ease-smooth);
   border: none;
@@ -283,7 +283,7 @@
 }
 
 .drive-explorer.dragging {
-  background-color: rgba(148, 163, 184, 0.03);
+  background-color: rgba(var(--accent-rgb), 0.03);
 }
 
 /* ==========================================================================
@@ -380,7 +380,7 @@
 
 .drive-explorer.dragging .empty-icon-container {
   background: var(--accent-muted);
-  border-color: rgba(148, 163, 184, 0.2);
+  border-color: rgba(var(--accent-rgb), 0.2);
 }
 
 .drive-upload-dropzone h3 {
@@ -417,7 +417,7 @@
 
 .dropzone-upload-btn:hover {
   background: var(--accent-muted);
-  border-color: rgba(148, 163, 184, 0.2);
+  border-color: rgba(var(--accent-rgb), 0.2);
   color: var(--accent-hover);
 }
 
@@ -517,7 +517,7 @@
   border: none;
   color: var(--text-tertiary);
   padding: 5px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -558,7 +558,7 @@
 
 .grid-card:hover {
   background: var(--glass-regular);
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--glass-ultra);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
@@ -574,7 +574,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--glass-regular);
   position: relative;
 }
 
@@ -646,7 +646,7 @@
   border: var(--border-glass);
   color: var(--text-secondary);
   padding: 5px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -714,7 +714,7 @@
   cursor: pointer;
   padding: 5px;
   display: flex;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   transition: all var(--duration-fast) var(--ease-smooth);
 }
 
@@ -775,7 +775,7 @@
   align-items: center;
   font-size: 0.8125rem;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--glass-regular);
 }
 
 .meta-item:last-child {
@@ -922,7 +922,7 @@
   border: var(--border-glass);
   color: var(--text-secondary);
   padding: 7px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -986,7 +986,7 @@
   justify-content: center;
   box-shadow: 0 8px 32px var(--accent-glow);
   animation: rotate 8s linear infinite;
-  border: 3px solid rgba(255, 255, 255, 0.04);
+  border: 3px solid var(--glass-regular);
   user-select: none;
 }
 
